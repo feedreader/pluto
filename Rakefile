@@ -1,5 +1,5 @@
 require 'hoe'
-require './lib/pluto.rb'
+require './lib/pluto/version.rb'
 
 Hoe.spec 'pluto' do
   

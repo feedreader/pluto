@@ -1,0 +1,13 @@
+feeds:
+  - rubyflow
+  - rubysource
+
+rubyflow:
+  feed: http://feeds.feedburner.com/Rubyflow?format=xml
+
+rubysource:
+  feed: http://rubysource.com/feed
+
+
+# add rubyonrails blog
+# add more feeds  (see all top ruby??)

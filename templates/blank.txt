@@ -1,0 +1,3 @@
+# pakman manifest
+
+__file__.html  blank.html.erb
