@@ -3,115 +3,118 @@ module Pluto
 
 class Fetcher
 
-  def initialize( logger, opts )
+  def initialize( logger, opts, config )
     @logger  = logger
     @opts    = opts
-    
-    @config = YAML.load_file( 'pluto.yml')
-    
-    pp @config
-    
-    setup_db
+    @config  = config
   end
 
-  attr_reader :logger, :opts
+  attr_reader :logger, :opts, :config
 
-  def setup_db
-    
-    db_config = {
-      :adapter  => 'sqlite3',
-      :database => './pluto.sqlite'
-    }
-    
-    ActiveRecord::Base.establish_connection( db_config )
-    
-    unless Feed.table_exists?
-      ActiveRecord::Schema.define do
-        create_table :feeds do |t|
-          t.string  :title         # todo: add null => false
-          t.string  :url
-          t.string  :feed_url
-          t.string  :key  # import/export key
-          t.timestamps
-        end
-        
-        create_table :items do |t|
-          t.string   :title
-          t.string   :url
-          t.string   :guid
-          t.text     :content
-          t.datetime :published_at
-          t.references :feed    # , :null => false
-          t.timestamps
-        end
-      end
-    end
-  end
-  
   
   def run
-    
-    logger = Logger.new( STDOUT )
     worker = ::Fetcher::Worker.new( logger )
 
-=begin    
-    @config[ 'feeds' ].each do |feed_key|
+    config[ 'feeds' ].each do |feed_key|
       
-      feed_hash = @config[ feed_key ]
-      feed = feed_hash[ 'feed' ]
+      feed_hash  = config[ feed_key ]
+      feed_url   = feed_hash[ 'feed_url' ]
       
-      puts "Fetch feed >#{feed}<..."
+      puts "Fetching feed >#{feed_key}< using >#{feed_url}<..."
 
-      worker.copy( feed, "./#{feed_key}.xml" )      
+      feed_rec = Feed.find_by_key( feed_key )
+      if feed_rec.nil?
+        feed_rec      = Feed.new
+        feed_rec.key  = feed_key
+      end
+      feed_rec.feed_url = feed_url
+      feed_rec.url      = feed_hash[ 'url' ]
+      feed_rec.title    = feed_hash[ 'title' ]    # todo: use title from feed?
+      feed_rec.save!
+
+      worker.copy( feed_url, "./#{feed_key}.xml" )
     end
-=end
 
-    puts "*** RSS::VERSION #{RSS::VERSION}"
+    logger.debug "RSS::VERSION #{RSS::VERSION}"
     
-    pp RSS::AVAILABLE_PARSERS
-
-    @config[ 'feeds' ].each do |feed_key|
+    config[ 'feeds' ].each do |feed_key|
       
-      feed_hash = @config[ feed_key ]
-      
-      puts "Parsing feed >#{feed_key}<..."
+      feed_hash = config[ feed_key ]
+      feed_rec  = Feed.find_by_key!( feed_key )
 
       xml = File.read( "./#{feed_key}.xml" )
+      
+      puts "Before parsing feed >#{feed_key}<..."
 
       parser = RSS::Parser.new( xml )
-      parser.do_validate = false
+      parser.do_validate            = false
       parser.ignore_unknown_element = true
+
+      puts "Parsing feed >#{feed_key}<..."
       feed = parser.parse
+      puts "After parsing feed >#{feed_key}<..."
       
       puts "feed.class=#{feed.class.name}"
 
-      puts "==  #{feed.channel.title} =="
 
+      if feed.class == RSS::Atom::Feed
+         puts "== #{feed.title.content} =="  
+      else  # assume RSS::Rss
+         puts "==  #{feed.channel.title} =="
+      end
+      
       feed.items.each do |item|
+
+        if feed.class == RSS::Atom::Feed
+
+        ## todo: if content.content empty use summary for example
+        item_attribs = {
+          :title        => item.title.content,
+          :url          => item.link.href,
+          :published_at => item.updated.content,
+          # :content      => item.content.content,
+          :feed_id      => feed_rec.id
+        }
+        guid = item.id.content
+
+        puts "- #{item.title.content}"
+        puts "  link >#{item.link.href}<"
+        puts "  id (~guid) >#{item.id.content}<"
+        
+        ### todo: use/try published first? why? why not?
+        puts "  updated (~pubDate) >#{item.updated.content}< : #{item.updated.content.class.name}"
+        puts
+        
+        else  # assume RSS::Rss
+        item_attribs = {
+          :title        => item.title,
+          :url          => item.link,
+          :published_at => item.pubDate,
+          :content      => item.content_encoded,
+          :feed_id      => feed_rec.id
+        }
+        guid = item.guid.content
+        
         puts "- #{item.title}"
         puts "  link (#{item.link})"
         puts "  guid (#{item.guid.content})"
         puts "  pubDate (#{item.pubDate}) : #{item.pubDate.class.name}"
         puts
-        
-        rec = Item.find_by_guid( item.guid.content )
-        if rec.nil?
-          rec = Item.new
-          rec.guid = item.guid.content
+
         end
         
-        item_attribs = {
-          :title        => item.title,
-          :url          => item.link,
-          :published_at => item.pubDate
-        }
-        
+        rec = Item.find_by_guid( guid )
+        if rec.nil?
+          rec      = Item.new
+          rec.guid = guid
+        end
+                
         rec.update_attributes!( item_attribs )
         
         # puts "*** dump item:"
         # pp item
         
-       end
+        end  # each item
     end # each feed
 
   end # method run

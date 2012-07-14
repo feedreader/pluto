@@ -10,7 +10,10 @@ class Item < ActiveRecord::Base
   self.table_name = 'items'
 
   belongs_to :feed
-  # has_many :comments  # add??
+  
+  def self.latest
+    self.order( 'published_at desc' ).all
+  end
 end
 
 end # module Pluto

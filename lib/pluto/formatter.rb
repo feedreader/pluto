@@ -2,24 +2,15 @@ module Pluto
 
 class Formatter
 
-
-  def initialize( logger, opts )
+  def initialize( logger, opts, config )
     @logger  = logger
     @opts    = opts
+    @config  = config
   end
 
   attr_reader :logger, :opts
 
-  ## fix: use hash? for binding - do not use "standard" binding of class formatter??
-  def feeds
-    Feed.all
-  end
-  
-  def items
-    Item.all
-  end
-
-  def run
+  def run( arg )
     manifest_name = opts.manifest
     manifest_name = manifest_name.downcase.gsub('.txt', '' )  # remove .txt if present
     
@@ -37,7 +28,7 @@ class Formatter
     pakpath     = opts.output_path
     
         
-    name = 'pluto'
+    name = arg
     Pakman::Templater.new( logger ).merge_pak( manifestsrc, pakpath, binding, name )
   end
 

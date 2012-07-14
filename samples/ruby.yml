@@ -3,11 +3,14 @@ feeds:
   - rubysource
 
 rubyflow:
-  feed: http://feeds.feedburner.com/Rubyflow?format=xml
+  title: Ruby Flow
+  feed_url: http://feeds.feedburner.com/Rubyflow?format=xml
+  url: http://rubyflow.com
 
 rubysource:
-  feed: http://rubysource.com/feed
-
+  title: Ruby Source
+  feed_url: http://rubysource.com/feed
+  url: http://rubysource.com
 
 # add rubyonrails blog
 # add more feeds  (see all top ruby??)

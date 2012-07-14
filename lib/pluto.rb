@@ -8,7 +8,6 @@
 
 require 'yaml'
 require 'pp'
-require 'erb'
 require 'logger'
 require 'optparse'
 require 'fileutils'

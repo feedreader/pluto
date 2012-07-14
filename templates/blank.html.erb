@@ -1,7 +1,15 @@
 
 <h1>Pluto Planet Blank Template Sample</h1>
 
-<% items.each do |item| %>
+<p>Subscriptions:</p>
+<ul>
+  <% Feed.all.each do |feed| %>
+  <li><%= feed.title %> (<%= feed.items.count %>)</li>
+  <% end %>
+</ul>
+
+
+<% Item.latest.each do |item| %>
 
 <p>
   <%= item.published_at %>
@@ -9,6 +17,8 @@
 
 <p>
   <%= item.title %>
+
+(<%= item.feed.title %>)
 </p>
 
 <hr>

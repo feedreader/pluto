@@ -1,0 +1,13 @@
+feeds:
+  - functionsource
+  - dailyjs
+
+functionsource:
+  title: Function Source
+  url: http://functionsource.com
+  feed_url: http://functionsource.com/feeds/entries
+
+dailyjs:
+  title: DailyJS
+  url: http://dailyjs.com
+  feed_url: http://feeds.feedburner.com/dailyjs

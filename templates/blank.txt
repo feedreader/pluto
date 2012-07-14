@@ -1,3 +1,4 @@
 # pakman manifest
 
 __file__.html  blank.html.erb
+__file__.top.html  blank.top.html.erb

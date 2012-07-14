@@ -2,4 +2,14 @@ History.markdown
 Manifest.txt
 README.markdown
 Rakefile
+bin/pluto
 lib/pluto.rb
+lib/pluto/fetcher.rb
+lib/pluto/formatter.rb
+lib/pluto/models.rb
+lib/pluto/opts.rb
+lib/pluto/runner.rb
+lib/pluto/version.rb
+templates/blank.html.erb
+templates/blank.top.html.erb
+templates/blank.txt
