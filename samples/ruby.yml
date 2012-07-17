@@ -3,6 +3,13 @@ title: Planet Ruby
 feeds:
   - rubyflow
   - rubysource
+  - afreshcup
+  - edgerails
+  - rubyonrails
+  - railstutorial
+  - railscasts
+  - rubynews
+  - railstips
 
 rubyflow:
   title: Ruby Flow
@@ -14,5 +21,38 @@ rubysource:
   feed_url: http://rubysource.com/feed
   url: http://rubysource.com
 
-# add rubyonrails blog
-# add more feeds  (see all top ruby??)
+afreshcup:
+  title: A Fresh Cup by Mike Gunderloy
+  feed_url: http://afreshcup.com/home/rss.xml
+  url: http://afreshcup.com
+
+edgerails:
+  title: What's new in Edge Rails?
+  feed_url:  http://www.edgerails.info/blog.atom
+  url: http://www.edgerails.info
+
+rubyonrails:
+  title: Ruby on Rails Blog
+  feed_url: http://weblog.rubyonrails.org/feed/atom.xml
+  url: http://weblog.rubyonrails.org
+
+railstutorial:
+  title: Rails Tutorial News
+  feed_url: http://feeds.feedburner.com/railstutorial?format=xml
+  url: http://news.railstutorial.org
+
+railscasts:
+  title: Railscasts
+  feed_url: http://feeds.feedburner.com/railscasts
+  url: http://railscasts.com
+
+rubynews:
+  title: Ruby News
+  feed_url: http://www.ruby-lang.org/en/feeds/news.rss
+  url: http://www.ruby-lang.org/en/news
+
+railstips:
+  title: Rails Tips by John Nunemaker
+  feed_url: http://feeds.feedburner.com/railstips
+  url: http://railstips.org
+

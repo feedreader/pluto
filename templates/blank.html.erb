@@ -1,20 +1,52 @@
 <html>
 <head>
+  <meta charset="UTF-8">
+  <title><%= headers['title'] %></title>
+  <meta name="generator" content="<%= Pluto.banner %>">
   <style>
    body {
     font-family: sans-serif;
+    background-color: #F4F4F4;
    }
    
    a, a:visited {
     text-decoration: none;
-    color: black;
+    color: #0069D6;
    }
    
    a:hover {
     text-decoration: underline;
-    background-color: aqua;
+    color: #00438A;
+    background-color: yellow;
+   }
+
+   .item {
+    background-color: white;
+    border: 1px solid #9E9E9E;
+    padding: 15px;
    }
    
+   .item_title {
+    margin-top: 0;
+   }
+   
+   .feed_title {
+     margin-bottom: 5px;
+   }
+   
+   .colright {
+     margin-left: 20px;
+   }
+   
+   ul.subscriptions {
+     list-style: none;
+     margin-left: 0;
+     padding-left: 0;
+   }
+   
+   .smaller {
+     font-size: 80%;        
+   }
   </style>
 </head>
 <body>
@@ -33,24 +65,25 @@
      
      
              
-<h3 style='background-color: #eeeeee; padding: 2px 6px; border: 1px solid #7d7d7d;'>
+<h3>
   <%= item.published_at.strftime('%A, %d. %B %Y') %>
 </h3>
 
 <% end %><!-- if new day? -->
- 
-<p style='font-size: 80%; margin-bottom: 6px;'>
-(<a href='<%= item.feed.url %>'><%= item.feed.title %></a>)
-</p>
 
-<h2 style='margin-top: 0;'>
+<h4 class='feed_title'>
+  <a href='<%= item.feed.url %>'><%= item.feed.title %></a>
+</h4>
+
+<div class='item'>
+<h2 class='item_title'>
  <a href='<%= item.url %>'><%= item.title %></a>
 </h2>
 
 <div class='content'>
 <%= item.content %>
 </div>
-
+</div> 
 <!--
 <p>
    <%= item.published_at.strftime('%H:%M') %>
@@ -63,20 +96,22 @@
   </td>
   <td style='vertical-align:top;'><!-- second column -->
 
+    <div class='colright'>
     <p>
       Last Updated
     </p>
-    <p style='font-size: 80%;'><%= Time.now.strftime('%A, %d. %B %Y %H:%M') %>
+    <p class='smaller'><%= Time.now.strftime('%A, %d. %B %Y %H:%M') %>
     </p>
 
     <p>Subscriptions</p>
-    <ul style='list-style: none; margin-left: 0; padding-left: 0; font-size: 80%;'>
+    <ul class='subscriptions smaller' >
      <% Feed.all.each do |feed| %>
-      <li><a href='<%= feed.url %>'><%= feed.title %></a></li>
+      <li>
+        <a href='<%= feed.feed_url %>'><img src='feed-icon-10x10.png'></a>         
+        <a href='<%= feed.url %>'><%= feed.title %></a></li>
      <% end %>
      </ul>
-
-
+    </div>
 
   </td>
 </tr>

@@ -2,3 +2,4 @@
 
 __file__.html  blank.html.erb
 __file__.top.html  blank.top.html.erb
+feed-icon-10x10.png
