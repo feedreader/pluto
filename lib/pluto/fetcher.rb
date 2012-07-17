@@ -71,34 +71,54 @@ class Fetcher
         item_attribs = {
           :title        => item.title.content,
           :url          => item.link.href,
-          :published_at => item.updated.content,
+          :published_at => item.updated.content.utc.strftime( "%Y-%m-%d %H:%M" ),
           # :content      => item.content.content,
           :feed_id      => feed_rec.id
         }
         guid = item.id.content
+
+        if item.summary
+          item_attribs[ :content ] = item.summary.content
+        else
+          if item.content
+            text  = item.content.content.dup
+            ## strip all html tags
+            text = text.gsub( /<[^>]+>/, '' )
+            text = text[ 0..400 ] # get first 400 chars
+            ## todo: check for length if > 400 add ... at the end???
+            item_attribs[ :content ] = text
+          end
+        end
 
         puts "- #{item.title.content}"
         puts "  link >#{item.link.href}<"
         puts "  id (~guid) >#{item.id.content}<"
         
         ### todo: use/try published first? why? why not?
-        puts "  updated (~pubDate) >#{item.updated.content}< : #{item.updated.content.class.name}"
+        puts "  updated (~pubDate) >#{item.updated.content}< >#{item.updated.content.utc.strftime( "%Y-%m-%d %H:%M" )}< : #{item.updated.content.class.name}"
         puts
         
         else  # assume RSS::Rss
+          
         item_attribs = {
           :title        => item.title,
           :url          => item.link,
-          :published_at => item.pubDate,
-          :content      => item.content_encoded,
+          :published_at => item.pubDate.utc.strftime( "%Y-%m-%d %H:%M" ),
+          # :content      => item.content_encoded,
           :feed_id      => feed_rec.id
         }
+        
+        # if item.content_encoded.nil?
+          # puts " using description for content"
+          item_attribs[ :content ] = item.description
+        # end
+        
         guid = item.guid.content
         
         puts "- #{item.title}"
         puts "  link (#{item.link})"
         puts "  guid (#{item.guid.content})"
-        puts "  pubDate (#{item.pubDate}) : #{item.pubDate.class.name}"
+        puts "  pubDate >#{item.pubDate}< >#{item.pubDate.utc.strftime( "%Y-%m-%d %H:%M" )}< : #{item.pubDate.class.name}"
         puts
 
         end
@@ -107,6 +127,9 @@ class Fetcher
         if rec.nil?
           rec      = Item.new
           rec.guid = guid
+          puts "** NEW"
+        else
+          puts "UPDATE"
         end
                 
         rec.update_attributes!( item_attribs )

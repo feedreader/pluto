@@ -1,26 +1,85 @@
+<html>
+<head>
+  <style>
+   body {
+    font-family: sans-serif;
+   }
+   
+   a, a:visited {
+    text-decoration: none;
+    color: black;
+   }
+   
+   a:hover {
+    text-decoration: underline;
+    background-color: aqua;
+   }
+   
+  </style>
+</head>
+<body>
+<h1><%= headers['title'] %></h1>
 
-<h1>Pluto Planet Blank Template Sample</h1>
+<table>
+<tr>
+  <td style='vertical-align:top;'><!-- first column -->
 
-<p>Subscriptions:</p>
-<ul>
-  <% Feed.all.each do |feed| %>
-  <li><%= feed.title %> (<%= feed.items.count %>)</li>
-  <% end %>
-</ul>
+<% last_published_at = Time.local( 1999, 1, 1 )
+   Item.latest.each do |item| %>
 
+ <% unless last_published_at.year   == item.published_at.year  &&
+           last_published_at.month  == item.published_at.month &&
+           last_published_at.day    == item.published_at.day      %>
+     
+     
+             
+<h3 style='background-color: #eeeeee; padding: 2px 6px; border: 1px solid #7d7d7d;'>
+  <%= item.published_at.strftime('%A, %d. %B %Y') %>
+</h3>
 
-<% Item.latest.each do |item| %>
-
-<p>
-  <%= item.published_at %>
+<% end %><!-- if new day? -->
+ 
+<p style='font-size: 80%; margin-bottom: 6px;'>
+(<a href='<%= item.feed.url %>'><%= item.feed.title %></a>)
 </p>
 
+<h2 style='margin-top: 0;'>
+ <a href='<%= item.url %>'><%= item.title %></a>
+</h2>
+
+<div class='content'>
+<%= item.content %>
+</div>
+
+<!--
 <p>
-  <%= item.title %>
-
-(<%= item.feed.title %>)
+   <%= item.published_at.strftime('%H:%M') %>
 </p>
+-->
 
-<hr>
+<% last_published_at = item.published_at
+   end %><!-- each item -->
   
-<% end %>
+  </td>
+  <td style='vertical-align:top;'><!-- second column -->
+
+    <p>
+      Last Updated
+    </p>
+    <p style='font-size: 80%;'><%= Time.now.strftime('%A, %d. %B %Y %H:%M') %>
+    </p>
+
+    <p>Subscriptions</p>
+    <ul style='list-style: none; margin-left: 0; padding-left: 0; font-size: 80%;'>
+     <% Feed.all.each do |feed| %>
+      <li><a href='<%= feed.url %>'><%= feed.title %></a></li>
+     <% end %>
+     </ul>
+
+
+
+  </td>
+</tr>
+</table>
+<body>
+</html>

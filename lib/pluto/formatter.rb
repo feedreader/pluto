@@ -10,6 +10,10 @@ class Formatter
 
   attr_reader :logger, :opts
 
+  def headers
+    @config
+  end
+
   def run( arg )
     manifest_name = opts.manifest
     manifest_name = manifest_name.downcase.gsub('.txt', '' )  # remove .txt if present
