@@ -10,6 +10,7 @@ feeds:
   - railscasts
   - rubynews
   - railstips
+  - rubymine
 
 rubyflow:
   title: Ruby Flow
@@ -55,4 +56,9 @@ railstips:
   title: Rails Tips by John Nunemaker
   feed_url: http://feeds.feedburner.com/railstips
   url: http://railstips.org
+
+rubymine:
+  title: JetBrains RubyMine Blog
+  url: http://blog.jetbrains.com/ruby
+  feed_url: http://feeds.feedburner.com/jetbrains_rubymine?format=xml
 

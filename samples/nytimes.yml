@@ -1,0 +1,38 @@
+# The New York Times Sample
+#
+# See http://nytimes.com/rss for available feeds
+
+
+title: Planet New York Times
+
+feeds:
+  - technology
+  - bitsblog
+  - internet
+  - poguesblog
+  - startups
+
+technology:
+  title: Technology
+  feed_url: http://feeds.nytimes.com/nyt/rss/Technology
+  url: http://www.nytimes.com/pages/technology
+
+internet:
+  title: Internet
+  feed_url: http://feeds.nytimes.com/nyt/rss/internet
+  url: http://www.nytimes.com/pages/technology/internet
+
+startups:
+  title: Start-Ups
+  feed_url: http://feeds.nytimes.com/nyt/rss/start-ups
+  url: http://www.nytimes.com/pages/technology/start-ups
+
+bitsblog:
+  title:  Bits Blog
+  feed_url: http://bits.blogs.nytimes.com/feed
+  url: http://bits.blogs.nytimes.com
+
+poguesblog:
+  title: "Pogue's Posts Blog"
+  feed_url: http://pogue.blogs.nytimes.com/feed
+  url: http://pogue.blogs.nytimes.com

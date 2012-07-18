@@ -3,6 +3,13 @@ title: Planet JavaScript
 feeds:
   - functionsource
   - dailyjs
+  - nodejs
+#  - brendaneich
+  - thomasfuchs
+  - chromium
+  - html5rocks
+  - jquerymobile
+  - jqueryui
 
 functionsource:
   title: Function Source
@@ -13,3 +20,38 @@ dailyjs:
   title: DailyJS
   url: http://dailyjs.com
   feed_url: http://feeds.feedburner.com/dailyjs
+
+nodejs:
+  title: Node.js Blog
+  url: http://blog.nodejs.org
+  feed_url: http://blog.nodejs.org/feed
+
+brendaneich:
+  title: Brendan Eich's Blog
+  url: http://brendaneich.com
+  feed_url: https://brendaneich.com/feed
+
+thomasfuchs:
+  title: mir.aculo.us by Thomas Fuchs
+  url: http://mir.aculo.us
+  feed_url: http://feeds2.feedburner.com/miraculous
+
+chromium:
+  title: The Chromium Blog
+  url: http://blog.chromium.org
+  feed_url: http://blog.chromium.org/feeds/posts/default
+
+html5rocks:
+  title: HTML5 Rocks
+  url: http://html5rocks.com
+  feed_url: http://feeds.feedburner.com/html5rocks?format=xml
+
+jquerymobile:
+  title: jQuery Mobile Blog
+  url: http://jquerymobile.com/blog
+  feed_url: http://jquerymobile.com/feed
+
+jqueryui:
+  title: jQuery UI blog
+  feed_url: http://feeds2.feedburner.com/jquery-ui
+  url: http://blog.jqueryui.com
