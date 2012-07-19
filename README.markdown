@@ -76,6 +76,13 @@ Just install the gem:
     $ gem install pluto
 
 
+## Alternatives
+
+planet.rb by Akira Yamada [(Site)](http://planet.rubyforge.org)
+
+Planet.rb by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Genereator 
+
+
 ## License
 
 The `pluto` scripts are dedicated to the public domain.

@@ -13,3 +13,4 @@ lib/pluto/version.rb
 templates/blank.html.erb
 templates/blank.top.html.erb
 templates/blank.txt
+templates/feed-icon-10x10.png
