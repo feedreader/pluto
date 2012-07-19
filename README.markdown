@@ -80,7 +80,7 @@ Just install the gem:
 
 planet.rb by Akira Yamada [(Site)](http://planet.rubyforge.org)
 
-Planet.rb by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Genereator 
+Planet.rb by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Generator
 
 
 ## License
