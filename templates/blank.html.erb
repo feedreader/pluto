@@ -4,34 +4,39 @@
   <title><%= headers['title'] %></title>
   <meta name="generator" content="<%= Pluto.banner %>">
   <style>
+    /* fix: use sass w/ variables */
    body {
     font-family: sans-serif;
     background-color: #F4F4F4;
+    color: #333333;
    }
    
    a, a:visited {
     text-decoration: none;
-    color: #0069D6;
+    color: #1E68A6;
    }
    
    a:hover {
     text-decoration: underline;
-    color: #00438A;
+    color: #1E68A6;
     background-color: yellow;
    }
 
    .item {
     background-color: white;
     border: 1px solid #9E9E9E;
-    padding: 15px;
+    padding: 0px 15px 15px 15px;
+    margin-bottom:  12px;
    }
    
    .item_title {
     margin-top: 0;
+    font-size: 16px;
    }
    
    .feed_title {
      margin-bottom: 5px;
+     font-size: 12px;
    }
    
    .colright {
@@ -44,8 +49,14 @@
      padding-left: 0;
    }
    
+   /* fix: use .small instead */
    .smaller {
-     font-size: 80%;        
+     font-size: 12px;
+     /* color: #666666; */ /* lighter gray than text gray */
+   }
+   
+   .item_content {
+    font-size: 14px;
    }
   </style>
 </head>
@@ -71,16 +82,18 @@
 
 <% end %><!-- if new day? -->
 
+
+<div class='item'>
+
 <h4 class='feed_title'>
   <a href='<%= item.feed.url %>'><%= item.feed.title %></a>
 </h4>
 
-<div class='item'>
 <h2 class='item_title'>
  <a href='<%= item.url %>'><%= item.title %></a>
 </h2>
 
-<div class='content'>
+<div class='item_content'>
 <%= item.content %>
 </div>
 </div> 

@@ -34,14 +34,9 @@ title: Planet Ruby
 feeds:
   - rubyflow
   - rubysource
-  - afreshcup
   - edgerails
   - rubyonrails
   - railstutorial
-  - railscasts
-  - rubynews
-  - railstips
-  - rubymine
 
 rubyflow:
   title: Ruby Flow
@@ -52,11 +47,6 @@ rubysource:
   title: Ruby Source
   feed_url: http://rubysource.com/feed
   url: http://rubysource.com
-
-afreshcup:
-  title: A Fresh Cup by Mike Gunderloy
-  feed_url: http://afreshcup.com/home/rss.xml
-  url: http://afreshcup.com
 
 edgerails:
   title: What's new in Edge Rails?
