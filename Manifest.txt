@@ -10,6 +10,13 @@ lib/pluto/fetcher.rb
 lib/pluto/formatter.rb
 lib/pluto/models.rb
 lib/pluto/schema.rb
+lib/pluto/server.rb
+lib/pluto/server/public/style.css
+lib/pluto/server/views/_debug.erb
+lib/pluto/server/views/_version.erb
+lib/pluto/server/views/debug.erb
+lib/pluto/server/views/index.erb
+lib/pluto/server/views/layout.erb
 lib/pluto/version.rb
 templates/blank.html.erb
 templates/blank.top.html.erb

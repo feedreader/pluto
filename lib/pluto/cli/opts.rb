@@ -7,7 +7,7 @@ class Opts
   end
   
   def manifest
-    @manifest || 'blank.txt'
+    @manifest || 'blank.txt'   ## todo - just return blank  (no .txt extension - possible?)
   end
 
   def verbose=(value)
