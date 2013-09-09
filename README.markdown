@@ -27,13 +27,13 @@ This will
 Open up `ruby.html` to see your planet web page. Voila!
 
 
-### Command Line
+### Command Line Tool
 
 ~~~
 pluto - Lets you build web pages from published web feeds.
 
-Usage: pluto [options]
-    -t, --template MANIFEST          Generate Templates
+Usage: pluto [options] FILE
+    -t, --template MANIFEST          Template Manifest (default is blank)
     -c, --config PATH                Configuration Path (default is ~/.pluto)
     -o, --output PATH                Output Path (default is .)
     -v, --version                    Show version

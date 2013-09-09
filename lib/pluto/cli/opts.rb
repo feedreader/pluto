@@ -10,6 +10,13 @@ class Opts
     @manifest || 'blank.txt'
   end
 
+  def verbose=(value)
+    @verbose = true  # note: assumes true; default is false
+  end
+
+  def verbose?
+    @verbose || false
+  end
 
   def config_path=(value)
     @config_path = value
