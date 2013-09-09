@@ -1,7 +1,6 @@
 ###
 # NB: for local testing run like:
 #
-# 1.8.x: ruby -Ilib -rrubygems lib/pakman.rb
 # 1.9.x: ruby -Ilib lib/pakman.rb
 
 # core and stlibs
@@ -18,17 +17,22 @@ require 'rss'
 
 require 'active_record'   ## todo: add sqlite3? etc.
 
+
+require 'logutils'
 require 'fetcher'   # fetch (download) files
 require 'pakman'    # template pack manager 
 
+
 # our own code
 
+require 'pluto/version'   # let version always get first
+require 'pluto/schema'
 require 'pluto/models'
-require 'pluto/version'
-require 'pluto/opts'
-require 'pluto/runner'
 require 'pluto/fetcher'
 require 'pluto/formatter'
+
+require 'pluto/cli/opts'
+require 'pluto/cli/runner'
 
 module Pluto
 

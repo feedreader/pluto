@@ -3,21 +3,22 @@ module Pluto
 
 class Runner
 
+  include LogUtils::Logging
+  
   def initialize
-    @logger = Logger.new(STDOUT)
-    @logger.level = Logger::INFO
-
-    @opts    = Opts.new
+   @opts = Opts.new
   end
 
-  attr_reader :logger, :opts
+  attr_reader :opts
 
   def run( args )
     opt=OptionParser.new do |cmd|
     
-      cmd.banner = "Usage: pluto [options]"
+      cmd.banner = "Usage: pluto [options] FILE"
 
-      cmd.on( '-t', '--template MANIFEST',  'Generate Templates' ) do |manifest|
+      ## fix/todo: remove .txt from default manifest 
+
+      cmd.on( '-t', '--template MANIFEST',  "Template Manifest (default is #{opts.manifest})" ) do |manifest|
         opts.manifest = manifest
       end
     
@@ -33,10 +34,10 @@ class Runner
       end
 
       cmd.on( "--verbose", "Show debug trace" )  do
-        logger.datetime_format = "%H:%H:%S"
-        logger.level = Logger::DEBUG
+        LogUtils::Logger.root.level = :debug
       end
 
+      ## todo: add/allow -?  too
       cmd.on_tail( "-h", "--help", "Show this message" ) do
         puts <<EOS
 
@@ -45,10 +46,10 @@ pluto - Lets you build web pages from published web feeds.
 #{cmd.help}
 
 Examples:
-    pluto ruby                          # to be done
+    pluto ruby
 
 Further information:
-  http://geraldb.github.com/pluto
+  https://github.com/geraldb/pluto
   
 EOS
         exit
@@ -64,8 +65,8 @@ EOS
       name = File.basename( arg, '.*' )
  
       db_config = {
-        :adapter  => 'sqlite3',
-        :database => "#{opts.output_path}/#{name}.sqlite"
+        adapter:  'sqlite3',
+        database: "#{opts.output_path}/#{name}.sqlite"
       }
  
       setup_db( db_config )
@@ -78,8 +79,8 @@ EOS
       puts "dump >#{config_path}<:"
       pp config
     
-      Fetcher.new( logger, opts, config ).run
-      Formatter.new( logger, opts, config ).run( name )
+      Fetcher.new( opts, config ).run
+      Formatter.new( opts, config ).run( name )
       
     end
     
@@ -91,29 +92,13 @@ EOS
 private
 
   def setup_db( db_config )
-        
+    puts 'db settings:'
+    pp db_config
+
     ActiveRecord::Base.establish_connection( db_config )
     
     unless Feed.table_exists?
-      ActiveRecord::Schema.define do
-        create_table :feeds do |t|
-          t.string  :title,    :null => false
-          t.string  :url,      :null => false
-          t.string  :feed_url, :null => false
-          t.string  :key,      :null => false
-          t.timestamps
-        end
-
-        create_table :items do |t|
-          t.string   :title   # todo: add some :null => false ??
-          t.string   :url
-          t.string   :guid
-          t.text     :content
-          t.datetime :published_at
-          t.references :feed, :null => false
-          t.timestamps
-        end
-      end
+       CreateDb.new.up  # run db migratation, that is, create db tables 
     end
   end # method setup_db
 

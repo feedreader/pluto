@@ -12,7 +12,7 @@ class Item < ActiveRecord::Base
   belongs_to :feed
   
   def self.latest
-    self.order( 'published_at desc' ).all
+    self.order( 'published_at desc' )
   end
 end
 

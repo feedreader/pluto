@@ -3,15 +3,18 @@
 Another Planet Generator in Ruby - Lets You Build Web Pages
 from Published Web Feeds
 
-* [geraldb.github.com/pluto](http://geraldb.github.com/pluto)
+* home  :: [github.com/geraldb/pluto](https://github.com/geraldb/pluto)
+* bugs  :: [github.com/geraldb/pluto/issues](https://github.com/geraldb/pluto/issues)
+* gem   :: [rubygems.org/gems/pluto](https://rubygems.org/gems/pluto)
+* rdoc  :: [rubydoc.info/gems/pluto](http://rubydoc.info/gems/pluto)
 
 
 ## Usage
 
-Use the `pluto` command line tool and pass in one or more planet configuration files. Example:
+Use the `pluto` command line tool and pass in one or more planet configuration files.
+Example:
 
     pluto ruby.yml
-
 
 This will
 
@@ -22,6 +25,21 @@ This will
 3) generate a planet web page, that is, `ruby.html` using the builtin [`blank` template](https://github.com/geraldb/pluto/blob/master/templates/blank.html.erb) in your working folder using all feed entries from the local database.
 
 Open up `ruby.html` to see your planet web page. Voila!
+
+
+### Command Line
+
+~~~
+pluto - Lets you build web pages from published web feeds.
+
+Usage: pluto [options]
+    -t, --template MANIFEST          Generate Templates
+    -c, --config PATH                Configuration Path (default is ~/.pluto)
+    -o, --output PATH                Output Path (default is .)
+    -v, --version                    Show version
+        --verbose                    Show debug trace
+    -h, --help                       Show this message
+~~~
 
 
 ### Planet Configuration Sample 

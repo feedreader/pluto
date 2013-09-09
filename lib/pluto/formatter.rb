@@ -2,13 +2,14 @@ module Pluto
 
 class Formatter
 
-  def initialize( logger, opts, config )
-    @logger  = logger
+  include LogUtils::Logging
+
+  def initialize( opts, config )
     @opts    = opts
     @config  = config
   end
 
-  attr_reader :logger, :opts
+  attr_reader :opts
 
   def headers
     @config
@@ -33,7 +34,7 @@ class Formatter
     
         
     name = arg
-    Pakman::Templater.new( logger ).merge_pak( manifestsrc, pakpath, binding, name )
+    Pakman::Templater.new.merge_pak( manifestsrc, pakpath, binding, name )
   end
 
 private
@@ -68,7 +69,7 @@ private
       "*/Manifest.txt"
     ]    
     
-    Pakman::Finder.new( logger ).find_manifests( installed_template_manifest_patterns, excludes )
+    Pakman::Finder.new.find_manifests( installed_template_manifest_patterns, excludes )
   end
 
 end # class Formatter

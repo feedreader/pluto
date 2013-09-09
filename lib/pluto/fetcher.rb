@@ -3,17 +3,18 @@ module Pluto
 
 class Fetcher
 
-  def initialize( logger, opts, config )
-    @logger  = logger
+  include LogUtils::Logging
+
+  def initialize( opts, config )
     @opts    = opts
     @config  = config
   end
 
-  attr_reader :logger, :opts, :config
+  attr_reader :opts, :config
 
-  
+
   def run
-    worker = ::Fetcher::Worker.new( logger )
+    worker = ::Fetcher::Worker.new
 
     config[ 'feeds' ].each do |feed_key|
       
@@ -69,11 +70,11 @@ class Fetcher
 
         ## todo: if content.content empty use summary for example
         item_attribs = {
-          :title        => item.title.content,
-          :url          => item.link.href,
-          :published_at => item.updated.content.utc.strftime( "%Y-%m-%d %H:%M" ),
-          # :content      => item.content.content,
-          :feed_id      => feed_rec.id
+          title:        item.title.content,
+          url:          item.link.href,
+          published_at: item.updated.content.utc.strftime( "%Y-%m-%d %H:%M" ),
+          # content:   item.content.content,
+          feed_id:      feed_rec.id
         }
         guid = item.id.content
 
@@ -101,11 +102,11 @@ class Fetcher
         else  # assume RSS::Rss
           
         item_attribs = {
-          :title        => item.title,
-          :url          => item.link,
-          :published_at => item.pubDate.utc.strftime( "%Y-%m-%d %H:%M" ),
-          # :content      => item.content_encoded,
-          :feed_id      => feed_rec.id
+          title:        item.title,
+          url:          item.link,
+          published_at: item.pubDate.utc.strftime( "%Y-%m-%d %H:%M" ),
+          # content:  item.content_encoded,
+          feed_id:      feed_rec.id
         }
         
         # if item.content_encoded.nil?
