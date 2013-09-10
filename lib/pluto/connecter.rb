@@ -48,7 +48,7 @@ class Connecter
     ActiveRecord::Base.establish_connection( config )
     
     # first time? - auto-run db migratation, that is, create db tables
-    unless Feed.table_exists?
+    unless Models::Feed.table_exists?
        CreateDb.new.up  
     end
   end # method connect!

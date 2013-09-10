@@ -54,6 +54,14 @@ module Pluto
     Connecter.new.connect!( config )
   end
 
+  def self.update_subscriptions( config )
+    Updater.new.update_subscriptions( config )
+  end
+
+  def self.update_feeds
+    Updater.new.update_feeds
+  end
+
 
   def self.main
     Runner.new.run(ARGV)
