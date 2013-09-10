@@ -95,17 +95,17 @@ class Updater
   
   def update_feeds( opts={} )
 
-    logger.debug "RSS::VERSION #{RSS::VERSION}"
+    logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
 
     Feed.all.each do |feed_rec|
 
       feed_key = feed_rec.key
-      feed_url = feed_rec.url
+      feed_url = feed_rec.feed_url
       
       feed_xml = fetch_feed( feed_url )
 
-      logger.debug "xml:"
-      logger.debug text[ 0..400 ] # get first 400 chars
+      logger.debug "feed_xml:"
+      logger.debug feed_xml[ 0..400 ] # get first 400 chars
 
       #  if opts.verbose?  # also write a copy to disk
       if debug?

@@ -11,7 +11,7 @@ class Opts
   end
 
   def verbose=(value)
-    @verbose = true  # note: assumes true; default is false
+    @verbose = true  # note: always assumes true for now; default is false
   end
 
   def verbose?

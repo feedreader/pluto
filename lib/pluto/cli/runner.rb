@@ -5,7 +5,7 @@ class Runner
 
   include LogUtils::Logging
   
-  include Models  # e.g. Feed,Item,etc.
+  include Models  # e.g. Feed,Item,Site,etc.
 
   def initialize
    @opts = Opts.new
@@ -69,10 +69,10 @@ EOS
  
       db_config = {
         adapter:  'sqlite3',
-        database: "#{opts.output_path}/#{name}.sqlite"
+        database: "#{opts.output_path}/#{name}.db"
       }
  
-      setup_db( db_config )
+      Connecter.new.connect!( db_config )
 
       config_path = arg.dup   # add .yml file extension if missing (for convenience)
       config_path << '.yml'  unless config_path.ends_with?( '.yml' )
@@ -91,19 +91,6 @@ EOS
     
   end   # method run
 
-
-private
-
-  def setup_db( db_config )
-    puts 'db settings:'
-    pp db_config
-
-    ActiveRecord::Base.establish_connection( db_config )
-    
-    unless Feed.table_exists?
-       CreateDb.new.up  # run db migratation, that is, create db tables 
-    end
-  end # method setup_db
 
 end # class Runner
 end # module Pakman

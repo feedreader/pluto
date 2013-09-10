@@ -31,19 +31,29 @@ class Server < Sinatra::Base
   set :static, true   # set up static file routing
 
 
-  set :site_config, {}   # empty hash by default; use site_config
-
   #######################
   # Models
   
-  include Models   # e.g. Feed, Item, etc.
+  include Models   # e.g. Feed, Item, Site, etc.
 
+  #################
+  # Utilities 
+
+  def site_config_hash
+    h = {}
+    site = Site.first      # FIX: for now assume one planet per DB (fix later; allow planet key or similar)
+    if site.present?
+      h['title']  = site.title
+    else
+      h['title']  = 'Planet Untitled'
+    end
+  end
 
   ##############################################
   # Controllers / Routing / Request Handlers
 
   get '/' do
-    erb :index, locals: { site: settings.site_config }
+    erb :index, locals: { site: site_config_hash }
   end
 
   # todo/fix: make a generic route for erb w /regex

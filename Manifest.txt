@@ -6,6 +6,7 @@ bin/pluto
 lib/pluto.rb
 lib/pluto/cli/opts.rb
 lib/pluto/cli/runner.rb
+lib/pluto/connecter.rb
 lib/pluto/fetcher.rb
 lib/pluto/formatter.rb
 lib/pluto/models.rb

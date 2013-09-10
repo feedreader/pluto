@@ -6,10 +6,14 @@
 # core and stlibs
 
 require 'yaml'
+require 'json'
+require 'uri'
 require 'pp'
 require 'logger'
 require 'optparse'
 require 'fileutils'
+
+
 
 require 'rss'
 
@@ -28,6 +32,7 @@ require 'pakman'    # template pack manager
 require 'pluto/version'   # let version always get first
 require 'pluto/schema'
 require 'pluto/models'
+require 'pluto/connecter'
 require 'pluto/updater'
 require 'pluto/fetcher'
 require 'pluto/formatter'
@@ -45,6 +50,11 @@ module Pluto
     "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
   end
 
+  def self.connect!( config=nil )  # convenience shortcut
+    Connecter.new.connect!( config )
+  end
+
+
   def self.main
     Runner.new.run(ARGV)
   end
@@ -52,4 +62,8 @@ module Pluto
 end  # module Pluto
 
 
-Pluto.main if __FILE__ == $0
+if __FILE__ == $0
+  Pluto.main
+else
+  puts Pluto.banner    # say hello
+end
