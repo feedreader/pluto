@@ -1,5 +1,6 @@
 module Pluto
-
+  module Models
+  
 class Feed < ActiveRecord::Base
   self.table_name = 'feeds'
   
@@ -16,4 +17,5 @@ class Item < ActiveRecord::Base
   end
 end
 
+  end # module Models
 end # module Pluto

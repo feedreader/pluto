@@ -30,12 +30,24 @@ class Server < Sinatra::Base
 
   set :static, true   # set up static file routing
 
+
+  set :site_config, {}   # empty hash by default; use site_config
+
+  #######################
+  # Models
+  
+  include Models   # e.g. Feed, Item, etc.
+
+
   ##############################################
   # Controllers / Routing / Request Handlers
 
   get '/' do
-    erb :index
+    erb :index, locals: { site: settings.site_config }
   end
+
+  # todo/fix: make a generic route for erb w /regex
+  #  to auto-allow all routes not just / w/ site data
 
   get '/d*' do
     erb :debug

@@ -4,6 +4,9 @@ class Formatter
 
   include LogUtils::Logging
 
+  include Models
+
+
   def initialize( opts, config )
     @opts    = opts
     @config  = config
@@ -11,7 +14,7 @@ class Formatter
 
   attr_reader :opts
 
-  def headers
+  def site
     @config
   end
 

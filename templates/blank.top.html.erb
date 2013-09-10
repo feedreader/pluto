@@ -3,7 +3,7 @@
 <% Feed.all.each do |feed| %>
 <h3><%= feed.title %> </h3>
 <ul>
-  <% feed.items.latest.each do |item| %>
+  <% feed.items.latest.limit(11).each do |item| %>
     <li><%= item.title %> (<%= item.published_at %>)</li>
   <% end %>
 </ul>

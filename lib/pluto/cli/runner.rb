@@ -5,6 +5,8 @@ class Runner
 
   include LogUtils::Logging
   
+  include Models  # e.g. Feed,Item,etc.
+
   def initialize
    @opts = Opts.new
   end

@@ -5,6 +5,8 @@ class Fetcher
 
   include LogUtils::Logging
 
+  include Models
+
   def initialize( opts, config )
     @opts    = opts
     @config  = config
