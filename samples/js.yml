@@ -1,7 +1,6 @@
 title: Planet JavaScript
 
 feeds:
-  - functionsource
   - dailyjs
   - nodejs
 #  - brendaneich
@@ -11,10 +10,6 @@ feeds:
   - jquerymobile
   - jqueryui
 
-functionsource:
-  title: Function Source
-  url: http://functionsource.com
-  feed_url: http://functionsource.com/feeds/entries
 
 dailyjs:
   title: DailyJS

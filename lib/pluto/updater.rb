@@ -14,7 +14,7 @@ class Updater
 
   def debug=(value)
     @debug = value
-    logger.debug "[Updater] setting debug flag - debug? #{debug?}"
+    ### logger.debug "[Updater] setting debug flag - debug? #{debug?}"
   end
 
   def debug?
@@ -105,7 +105,7 @@ class Updater
       feed_xml = fetch_feed( feed_url )
 
       logger.debug "feed_xml:"
-      logger.debug feed_xml[ 0..400 ] # get first 400 chars
+      logger.debug feed_xml[ 0..300 ] # get first 300 chars
 
       #  if opts.verbose?  # also write a copy to disk
       if debug?

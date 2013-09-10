@@ -13,6 +13,15 @@ class Connecter
   end
 
 
+  def debug=(value)
+    @debug = value
+  end
+
+  def debug?
+    @debug || false
+  end
+
+
   def connect!( config = nil )
 
     if config.nil?   # use DATABASE_URL
@@ -43,7 +52,9 @@ class Connecter
     pp config
 
     # for debugging - disable for production use
-    ActiveRecord::Base.logger = Logger.new( STDOUT )
+    if debug?
+      ActiveRecord::Base.logger = Logger.new( STDOUT ) 
+    end
 
     ActiveRecord::Base.establish_connection( config )
     
