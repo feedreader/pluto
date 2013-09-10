@@ -5,6 +5,8 @@ class Feed < ActiveRecord::Base
   self.table_name = 'feeds'
   
   has_many :items
+  has_many :subscriptions
+  has_many :sites, :through => :subscriptions
 end
 
 class Item < ActiveRecord::Base
@@ -13,9 +15,24 @@ class Item < ActiveRecord::Base
   belongs_to :feed
   
   def self.latest
-    self.order( 'published_at desc' )
+    order( 'published_at desc' )
   end
 end
+
+class Site < ActiveRecord::Base
+  self.table_name = 'sites'
+  
+  has_many :subscriptions
+  has_many :feeds, :through => :subscriptions
+end
+
+class Subscription < ActiveRecord::Base
+  self.table_name = 'subscriptions'
+  
+  belongs_to :site
+  belongs_to :feed
+end
+
 
   end # module Models
 end # module Pluto

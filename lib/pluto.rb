@@ -28,6 +28,7 @@ require 'pakman'    # template pack manager
 require 'pluto/version'   # let version always get first
 require 'pluto/schema'
 require 'pluto/models'
+require 'pluto/updater'
 require 'pluto/fetcher'
 require 'pluto/formatter'
 

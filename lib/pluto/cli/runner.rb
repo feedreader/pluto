@@ -37,6 +37,7 @@ class Runner
 
       cmd.on( "--verbose", "Show debug trace" )  do
         LogUtils::Logger.root.level = :debug
+        opts.verbose = true
       end
 
       ## todo: add/allow -?  too
