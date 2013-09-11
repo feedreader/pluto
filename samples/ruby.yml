@@ -11,6 +11,11 @@ feeds:
   - rubynews
   - railstips
   - rubymine
+  - viennarb
+  - viennarbmeetup
+  - beerdb
+  - sportdb
+  - slideshow
 
 rubyflow:
   title: Ruby Flow
@@ -61,4 +66,34 @@ rubymine:
   title: JetBrains RubyMine Blog
   url: http://blog.jetbrains.com/ruby
   feed_url: http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+
+viennarb:
+  title: vienna.rb Blog
+  url: http://vienna-rb.at
+  feed_url: http://vienna-rb.at/atom.xml
+
+viennarbmeetup:
+  title: vienna.rb Meetups
+  url: http://www.meetup.com/vienna-rb
+  feed_url: http://www.meetup.com/vienna-rb/events/rss/vienna.rb/
+  
+viennarbmeetuprsvps:
+  title: vienna.rb Meetups RSVPs
+  url: http://www.meetup.com/vienna-rb
+  feed_url: http://www.meetup.com/vienna-rb/rsvps/rss/vienna.rb/ 
+  
+beerdb:
+  title: Open Beer & Brewery Database (beer.db)
+  url: http://groups.google.com/group/beerdb
+  feed_url: https://groups.google.com/forum/feed/beerdb/topics/atom.xml?num=15
+
+sportdb:
+  title: Open Sports Database and Friends (sport.db, football.db, etc.)
+  url: http://groups.google.com/group/opensport
+  feed_url: https://groups.google.com/forum/feed/opensport/topics/atom.xml?num=15
+  
+slideshow:
+  title: Web Slideshow Alternatives (S9 and Friends)
+  url: http://groups.google.com/group/webslideshow
+  feed_url: https://groups.google.com/forum/feed/webslideshow/topics/atom.xml?num=15
 
