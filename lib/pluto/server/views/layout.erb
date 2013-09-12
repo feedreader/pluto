@@ -11,7 +11,8 @@
   Pluto |
     <%= link_to 'Sites', sites_path %> <span class='count'>(<%= Site.count %>)</span> &bull;
     <%= link_to 'Feeds', feeds_path %> <span class='count'>(<%= Feed.count %>)</span> &bull;
-    <%= link_to 'Items', items_path %> <span class='count'>(<%= Item.count %>)</span>
+    <%= link_to 'Items', items_path %> <span class='count'>(<%= Item.count %>)</span>  &bull;
+    <%= link_to 'Timeline', timeline_path %> <span class='count'>(<%= Action.count %>)</span>
 </p>
 
 <%= yield %>

@@ -2,7 +2,6 @@ title: Planet Ruby
 
 feeds:
   - rubyflow
-  - rubysource
   - afreshcup
   - edgerails
   - rubyonrails
@@ -16,16 +15,12 @@ feeds:
   - beerdb
   - sportdb
   - slideshow
+  - sitepointruby
 
 rubyflow:
   title: Ruby Flow
   feed_url: http://feeds.feedburner.com/Rubyflow?format=xml
   url: http://rubyflow.com
-
-rubysource:
-  title: Ruby Source
-  feed_url: http://rubysource.com/feed
-  url: http://rubysource.com
 
 afreshcup:
   title: A Fresh Cup by Mike Gunderloy
@@ -97,3 +92,7 @@ slideshow:
   url: http://groups.google.com/group/webslideshow
   feed_url: https://groups.google.com/forum/feed/webslideshow/topics/atom.xml?num=15
 
+sitepointruby:
+  title: SitePoint Ruby
+  feed_url: http://www.sitepoint.com/ruby/feed
+  url: http://www.sitepoint.com/ruby

@@ -33,6 +33,11 @@ class Subscription < ActiveRecord::Base
   belongs_to :feed
 end
 
+class Action < ActiveRecord::Base
+  self.table_name = 'actions'
+
+end
+
 
   end # module Models
 end # module Pluto

@@ -40,7 +40,7 @@ class Server < Sinatra::Base
   # Helpers
 
   def path_prefix
-    request.env['SCRIPT_NAME']
+    request.script_name   # request.env['SCRIPT_NAME']
   end
 
   def sites_path
@@ -55,6 +55,10 @@ class Server < Sinatra::Base
     "#{path_prefix}/items"
   end
   
+  def timeline_path
+    "#{path_prefix}/time"
+  end
+
   def root_path
     "#{path_prefix}/"
   end
@@ -90,6 +94,10 @@ class Server < Sinatra::Base
 
   get '/items' do
     erb :items   # needed or default fallthrough possible ???
+  end
+
+  get '/time' do
+    erb :timeline
   end
 
   # todo/fix: make a generic route for erb w /regex

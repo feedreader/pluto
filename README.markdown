@@ -20,7 +20,7 @@ This will
 
 1) fetch all feeds listed in `ruby.yml` and 
 
-2) store all entries in a local database, that is, `ruby.sqlite` in your working folder and
+2) store all entries in a local database, that is, `ruby.db` in your working folder and
 
 3) generate a planet web page, that is, `ruby.html` using the builtin [`blank` template](https://github.com/geraldb/pluto/blob/master/templates/blank.html.erb) in your working folder using all feed entries from the local database.
 
@@ -51,7 +51,6 @@ title: Planet Ruby
 
 feeds:
   - rubyflow
-  - rubysource
   - edgerails
   - rubyonrails
   - railstutorial
@@ -60,11 +59,6 @@ rubyflow:
   title: Ruby Flow
   feed_url: http://feeds.feedburner.com/Rubyflow?format=xml
   url: http://rubyflow.com
-
-rubysource:
-  title: Ruby Source
-  feed_url: http://rubysource.com/feed
-  url: http://rubysource.com
 
 edgerails:
   title: What's new in Edge Rails?
@@ -94,11 +88,17 @@ Just install the gem:
     $ gem install pluto
 
 
+## Real World Usage
+
+[`pluto.live`](https://github.com/geraldb/pluto.live) - sample planet site; a Sinatra web app/starter template in Ruby using the pluto gem
+
+
+
 ## Alternatives
 
-planet.rb by Akira Yamada [(Site)](http://planet.rubyforge.org)
+`planet.rb` by Akira Yamada [(Site)](http://planet.rubyforge.org)
 
-Planet.rb by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Generator
+`Planet.rb` by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Generator
 
 
 ## License

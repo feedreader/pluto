@@ -59,43 +59,64 @@ class Updater
 
     ## for now - use single site w/ key planet  -- fix!! allow multiple sites (planets)
     
+    site_attribs = {
+      title: config[ 'title' ]
+    }
+    
     site_key = 'planet'
     site_rec = Site.find_by_key( site_key )
     if site_rec.nil?
-      site_rec      = Site.new
-      site_rec.key  = site_key
+      site_rec             = Site.new
+      site_attribs[ :key ] = site_key
+
+      ## use object_id: site.id and object_type: Site
+      ## change - model/table/schema!!!
+      Action.create!( title: 'new site', object: site_attribs[ :title ] )
     end
-    site_rec.title  = config[ 'title' ]
-    site_rec.save!
+    site_rec.update_attributes!( site_attribs )
+
+    # -- log update action
+    Action.create!( title: 'update subscriptions' )
 
 
     config[ 'feeds' ].each do |feed_key|
       
       feed_hash  = config[ feed_key ]
-      feed_url   = feed_hash[ 'feed_url' ]
-      
-      puts "Updating feed subscription >#{feed_key}< - >#{feed_url}<..."
+
+      feed_attribs = {
+        feed_url: feed_hash[ 'feed_url' ],
+        url:      feed_hash[ 'url'      ],
+        title:    feed_hash[ 'title'    ]   # todo: use title from feed?
+      }
+
+      puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
 
       feed_rec = Feed.find_by_key( feed_key )
       if feed_rec.nil?
-        feed_rec      = Feed.new
-        feed_rec.key  = feed_key
+        feed_rec             = Feed.new
+        feed_attribs[ :key ] = feed_key
+
+        ## use object_id: feed.id and object_type: Feed
+        ## change - model/table/schema!!!
+        ## todo: add parent_action_id - why? why not?
+        Action.create!( title: 'new feed', object: feed_attribs[ :title ] )
       end
-      feed_rec.feed_url = feed_url
-      feed_rec.url      = feed_hash[ 'url' ]
-      feed_rec.title    = feed_hash[ 'title' ]    # todo: use title from feed?
-      feed_rec.save!
+      
+      feed_rec.update_attributes!( feed_attribs )
       
       ## todo:
       #  add subscription records  (feed,site)  - how? 
     end
 
   end # method update_subscriptions
-  
-  
+
+
   def update_feeds( opts={} )
 
     logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
+
+    # -- log update action
+    Action.create!( title: 'update feeds' )
 
     Feed.all.each do |feed_rec|
 

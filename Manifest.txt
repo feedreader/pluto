@@ -18,10 +18,10 @@ lib/pluto/server/views/_debug.erb
 lib/pluto/server/views/_version.erb
 lib/pluto/server/views/debug.erb
 lib/pluto/server/views/feeds.erb
-lib/pluto/server/views/index.erb
 lib/pluto/server/views/items.erb
 lib/pluto/server/views/layout.erb
 lib/pluto/server/views/sites.erb
+lib/pluto/server/views/timeline.erb
 lib/pluto/updater.rb
 lib/pluto/version.rb
 templates/blank.html.erb
