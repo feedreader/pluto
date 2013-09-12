@@ -1,0 +1,13 @@
+
+<h2><%= Feed.count %> Feeds</h2>
+
+<table>
+<% Feed.all.each do |feed| %>
+ <tr>
+   <td class='key'><%= feed.key %></td>
+   <td><%= feed.title %>
+       <span class='count'>(<%= feed.items.count %>)</span>
+   </td>
+ </tr>
+<% end %>
+</table>

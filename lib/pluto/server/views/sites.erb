@@ -1,0 +1,21 @@
+
+
+<h2><%= Site.count %> Sites</h2>
+
+<table>
+<% Site.all.each do |site| %>
+ <tr>
+   <td class='key'><%= site.key %></td>
+   <td><%= site.title %>
+        <span class='count'>(<%= site.feeds.count %>)</span>
+   </td>
+   <td>
+     <ul>
+       <% site.feeds.each do |feed| %>
+         <li><%= feed.title %></li>
+       <% end %>
+     </ul>
+   </td>
+  </tr>
+<% end %>
+</table>

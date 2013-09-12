@@ -37,23 +37,59 @@ class Server < Sinatra::Base
   include Models   # e.g. Feed, Item, Site, etc.
 
   #################
-  # Utilities 
+  # Helpers
 
-  def site_config_hash
-    h = {}
-    site = Site.first      # FIX: for now assume one planet per DB (fix later; allow planet key or similar)
-    if site.present?
-      h['title']  = site.title
-    else
-      h['title']  = 'Planet Untitled'
-    end
+  def path_prefix
+    request.env['SCRIPT_NAME']
   end
+
+  def sites_path
+    "#{path_prefix}/sites"
+  end
+
+  def feeds_path
+    "#{path_prefix}/feeds"
+  end
+
+  def items_path
+    "#{path_prefix}/items"
+  end
+  
+  def root_path
+    "#{path_prefix}/"
+  end
+
+  def root_url
+    url( '/' )
+  end
+
+
+  def link_to( text, url, opts={} )
+    attributes = ""
+    opts.each do |key,value|
+      attributes << "#{key}='#{value}' "
+    end
+    "<a href='#{url}' #{attributes}>#{text}</a>"
+  end
+
 
   ##############################################
   # Controllers / Routing / Request Handlers
 
   get '/' do
-    erb :index, locals: { site: site_config_hash }
+    redirect( sites_path )
+  end
+
+  get '/sites' do
+    erb :sites   # needed or default fallthrough possible ???
+  end
+
+  get '/feeds' do
+    erb :feeds   # needed or default fallthrough possible ???
+  end
+
+  get '/items' do
+    erb :items   # needed or default fallthrough possible ???
   end
 
   # todo/fix: make a generic route for erb w /regex
