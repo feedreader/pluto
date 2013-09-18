@@ -3,8 +3,8 @@
 Another Planet Generator in Ruby - Lets You Build Web Pages
 from Published Web Feeds
 
-* home  :: [github.com/geraldb/pluto](https://github.com/geraldb/pluto)
-* bugs  :: [github.com/geraldb/pluto/issues](https://github.com/geraldb/pluto/issues)
+* home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
+* bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
 * gem   :: [rubygems.org/gems/pluto](https://rubygems.org/gems/pluto)
 * rdoc  :: [rubydoc.info/gems/pluto](http://rubydoc.info/gems/pluto)
 
@@ -22,7 +22,7 @@ This will
 
 2) store all entries in a local database, that is, `ruby.db` in your working folder and
 
-3) generate a planet web page, that is, `ruby.html` using the builtin [`blank` template](https://github.com/geraldb/pluto/blob/master/templates/blank.html.erb) in your working folder using all feed entries from the local database.
+3) generate a planet web page, that is, `ruby.html` using the builtin [`blank` template](https://github.com/feedreader/pluto/blob/master/templates/blank.html.erb) in your working folder using all feed entries from the local database.
 
 Open up `ruby.html` to see your planet web page. Voila!
 
@@ -76,9 +76,9 @@ railstutorial:
   url: http://news.railstutorial.org
 ```
 
-For more samples, see [`nytimes.yml`](https://github.com/geraldb/pluto/blob/master/samples/nytimes.yml),
-[`js.yml`](https://github.com/geraldb/pluto/blob/master/samples/js.yml),
-[`dart.yml`](https://github.com/geraldb/pluto/blob/master/samples/dart.yml).
+For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto/blob/master/samples/nytimes.yml),
+[`js.yml`](https://github.com/feedreader/pluto/blob/master/samples/js.yml),
+[`dart.yml`](https://github.com/feedreader/pluto/blob/master/samples/dart.yml).
 
 
 ## Install
@@ -90,7 +90,7 @@ Just install the gem:
 
 ## Real World Usage
 
-[`pluto.live`](https://github.com/geraldb/pluto.live) - sample planet site; a Sinatra web app/starter template in Ruby using the pluto gem
+[`pluto.live`](https://github.com/feedreader/pluto.live) - sample planet site; a Sinatra web app/starter template in Ruby using the pluto gem
 
 
 
