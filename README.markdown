@@ -96,9 +96,17 @@ Just install the gem:
 
 ## Alternatives
 
+### Ruby
+
 `planet.rb` by Akira Yamada [(Site)](http://planet.rubyforge.org)
 
 `Planet.rb` by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Generator
+
+### Python
+
+Planet Planet [(Site)](http://www.planetplanet.org)  - Uses Python 2.2; Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine
+
+Planet Venus [(Site)](https://github.com/rubys/venus) - Uses Python; by Sam Ruby (cleaned up Planet Planet code)
 
 
 ## License
