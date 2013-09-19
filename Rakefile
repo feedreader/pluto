@@ -14,8 +14,8 @@ Hoe.spec 'pluto' do
   self.email   = 'webslideshow@googlegroups.com'
 
   # switch extension to .markdown for gihub formatting
-  self.readme_file  = 'README.markdown'
-  self.history_file = 'History.markdown'
+  self.readme_file  = 'README.md'
+  self.history_file = 'History.md'
 
   self.extra_deps = [
     ['pakman', '>= 0.5'], 

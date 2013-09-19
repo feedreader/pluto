@@ -76,9 +76,9 @@ railstutorial:
   url: http://news.railstutorial.org
 ```
 
-For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto/blob/master/samples/nytimes.yml),
-[`js.yml`](https://github.com/feedreader/pluto/blob/master/samples/js.yml),
-[`dart.yml`](https://github.com/feedreader/pluto/blob/master/samples/dart.yml).
+For more samples, see [`nytimes.yml`](https://github.com/feedreader/samples/blob/master/nytimes.yml),
+[`js.yml`](https://github.com/feedreader/samples/blob/master/js.yml),
+[`dart.yml`](https://github.com/feedreader/samples/blob/master/dart.yml).
 
 
 ## Install
@@ -90,7 +90,7 @@ Just install the gem:
 
 ## Real World Usage
 
-[`pluto.live`](https://github.com/feedreader/pluto.live) - sample planet site; a Sinatra web app/starter template in Ruby using the pluto gem
+[`pluto.live`](https://github.com/feedreader/pluto.live) - sample planet site; sinatra web app/starter template in ruby using the pluto gem
 
 
 
@@ -100,13 +100,13 @@ Just install the gem:
 
 `planet.rb` by Akira Yamada [(Site)](http://planet.rubyforge.org)
 
-`Planet.rb` by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - Used with Jekyll/Octopress Site Generator
+`Planet.rb` by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - used with jekyll/octopress site generator
 
 ### Python
 
-Planet Planet [(Site)](http://www.planetplanet.org)  - Uses Python 2.2; Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine
+Planet Planet by Scott James Remnant n Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses python 2.2; Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine
 
-Planet Venus [(Site)](https://github.com/rubys/venus) - Uses Python; by Sam Ruby (cleaned up Planet Planet code)
+Planet Venus by Sam Ruby [(Site)](https://github.com/rubys/venus) - uses python; cleaned up Planet Planet code
 
 
 ## License
