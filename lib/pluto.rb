@@ -33,6 +33,9 @@ require 'pluto/version'   # let version always get first
 require 'pluto/schema'
 require 'pluto/models'
 require 'pluto/connecter'
+
+require 'pluto/utils'
+
 require 'pluto/updater'
 require 'pluto/fetcher'
 require 'pluto/formatter'
