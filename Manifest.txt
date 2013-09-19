@@ -23,7 +23,6 @@ lib/pluto/server/views/layout.erb
 lib/pluto/server/views/sites.erb
 lib/pluto/server/views/timeline.erb
 lib/pluto/updater.rb
-lib/pluto/utils.rb
 lib/pluto/version.rb
 templates/blank.html.erb
 templates/blank.top.html.erb

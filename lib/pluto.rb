@@ -3,7 +3,7 @@
 #
 # 1.9.x: ruby -Ilib lib/pakman.rb
 
-# core and stlibs
+# core and stdlibs
 
 require 'yaml'
 require 'json'
@@ -14,17 +14,15 @@ require 'optparse'
 require 'fileutils'
 
 
-
-require 'rss'
-
-# rubygems
+# 3rd party ruby gems/libs
 
 require 'active_record'   ## todo: add sqlite3? etc.
 
 
 require 'logutils'
 require 'fetcher'   # fetch (download) files
-require 'pakman'    # template pack manager 
+require 'pakman'    # template pack manager
+require 'feedutils'
 
 
 # our own code

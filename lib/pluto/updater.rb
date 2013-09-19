@@ -100,7 +100,8 @@ class Updater
 
   def update_feeds( opts={} )
 
-    logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
+    ### move to feedutils
+    ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
 
     # -- log update action
     Action.create!( title: 'update feeds' )

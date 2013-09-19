@@ -76,9 +76,9 @@ railstutorial:
   url: http://news.railstutorial.org
 ```
 
-For more samples, see [`nytimes.yml`](https://github.com/feedreader/samples/blob/master/nytimes.yml),
-[`js.yml`](https://github.com/feedreader/samples/blob/master/js.yml),
-[`dart.yml`](https://github.com/feedreader/samples/blob/master/dart.yml).
+For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.yml),
+[`js.yml`](https://github.com/feedreader/pluto.samples/blob/master/js.yml),
+[`dart.yml`](https://github.com/feedreader/pluto.samples/blob/master/dart.yml).
 
 
 ## Install
