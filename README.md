@@ -22,7 +22,7 @@ This will
 
 2) store all entries in a local database, that is, `ruby.db` in your working folder and
 
-3) generate a planet web page, that is, `ruby.html` using the builtin [`blank` template](https://github.com/feedreader/pluto/blob/master/templates/blank.html.erb) in your working folder using all feed entries from the local database.
+3) generate a planet web page, that is, `ruby.html` using the [`blank` template pack](https://github.com/feedreader/pluto.blank) in your working folder using all feed entries from the local database.
 
 Open up `ruby.html` to see your planet web page. Voila!
 
@@ -104,9 +104,9 @@ Just install the gem:
 
 ### Python
 
-Planet Planet by Scott James Remnant n Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses python 2.2; Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine
+Planet Planet by Scott James Remnant n Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine
 
-Planet Venus by Sam Ruby [(Site)](https://github.com/rubys/venus) - uses python; cleaned up Planet Planet code
+Planet Venus by Sam Ruby [(Site)](https://github.com/rubys/venus) - cleaned up Planet Planet code
 
 
 ## License
