@@ -17,11 +17,12 @@ require 'fileutils'
 
 require 'active_record'   ## todo: add sqlite3? etc.
 
-
 require 'logutils'
+require 'props'     # manage settings/env
 require 'fetcher'   # fetch (download) files
 require 'pakman'    # template pack manager
 require 'feedutils'
+require 'textutils'
 
 
 # our own code
@@ -29,13 +30,15 @@ require 'feedutils'
 require 'pluto/version'   # let version always get first
 require 'pluto/schema'
 require 'pluto/models'
+require 'pluto/manifest_helpers'
 require 'pluto/connecter'
 
 require 'pluto/updater'
 require 'pluto/fetcher'
+require 'pluto/lister'
 require 'pluto/formatter'
 
-require 'pluto/cli/opts'
+require 'pluto/cli/opts'     ## fix: make sure fetcher/updater etc. do not depend on cli/opts
 
 module Pluto
 

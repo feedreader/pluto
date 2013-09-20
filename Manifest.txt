@@ -9,6 +9,8 @@ lib/pluto/cli/opts.rb
 lib/pluto/connecter.rb
 lib/pluto/fetcher.rb
 lib/pluto/formatter.rb
+lib/pluto/lister.rb
+lib/pluto/manifest_helpers.rb
 lib/pluto/models.rb
 lib/pluto/schema.rb
 lib/pluto/updater.rb

@@ -5,7 +5,7 @@ require 'gli'
 
 include GLI::App
 
-program_desc 'pluto - another planet generator (lets you build web pages from published web feeds)'
+program_desc 'another planet generator (lets you build web pages from published web feeds)'
 version Pluto::VERSION
 
 
@@ -15,7 +15,54 @@ LogUtils::Logger.root.level = :info   # set logging level to info
 
 logger = LogUtils::Logger.root
 
+
 opts    = Pluto::Opts.new
+
+
+
+class SysInfo
+  
+  ## todo/fix:
+  ##   pass in/use config (props)
+  
+  def initialize( opts )
+    @opts = opts
+  end
+  
+  attr_reader :opts
+
+
+  def dump
+  puts <<EOS
+
+#{Pluto.banner}
+
+Gems versions:
+  - pakman #{Pakman::VERSION}
+  - fetcher #{Fetcher::VERSION}
+  - feedutils #{FeedUtils::VERSION}
+  - textutils #{TextUtils::VERSION}
+  - props #{Props::VERSION}
+
+    Env home: #{Env.home}
+Pluto config: #{opts.config_path}
+  Pluto root: #{Pluto.root}
+
+EOS
+
+  # dump Pluto settings
+  # config.dump
+  # puts
+      
+
+  ## todo: add more gem version info
+  # todo: add  logutils version
+  #       add  gli2     version
+  end
+
+end # class SysInfo
+
+
 
 
 ## "global" options (switches/flags)
@@ -85,9 +132,8 @@ command [:list,:ls,:l] do |c|
 
   c.action do |g,o,args|
     logger.debug 'hello from list command'
-    
-    ## todo be done
-    ## Slideshow::List.new( opts, config ).run   ### todo: remove opts (merge access into config)
+
+    Pluto::Lister.new( opts ).list
   end
 end
 
@@ -100,6 +146,8 @@ command [:install,:i] do |c|
     logger.debug 'hello from install command'
         
     args.each do |arg|
+      
+      ## -- to be done
       ##  Slideshow::Fetch.new( opts, config ).fetch( arg )  ## todo: remove opts merge into config
     end
   end
@@ -112,7 +160,7 @@ command [:about,:a] do |c|
   c.action do
     logger.debug 'hello from about command'
 
-    ## SysInfo.new( config ).dump
+    SysInfo.new( opts ).dump
   end
 end
 

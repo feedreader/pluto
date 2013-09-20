@@ -30,17 +30,73 @@ Open up `ruby.html` to see your planet web page. Voila!
 
 ### Command Line Tool
 
-~~~
-pluto - Lets you build web pages from published web feeds.
+~~~~
+NAME
+    pluto - another planet generator - lets you build web pages from published web feeds
 
-Usage: pluto [options] FILE
-    -t, --template MANIFEST          Template Manifest (default is blank)
-    -c, --config PATH                Configuration Path (default is ~/.pluto)
-    -o, --output PATH                Output Path (default is .)
-    -v, --version                    Show version
-        --verbose                    Show debug trace
-    -h, --help                       Show this message
+SYNOPSIS
+    pluto [global options] command [command options] [arguments...]
+
+GLOBAL OPTIONS
+    -c, --config=PATH - Configuration Path (default: ~/.pluto)
+    -q, --quiet       - Only show warnings, errors and fatal messages
+    --verbose         - (Debug) Show debug messages
+    --version         - Display the program version
+    --help            - Show this message
+
+COMMANDS
+    build, b    - Build planet
+    install, i  - Install template pack
+    list, ls, l - List installed template packs
+    about, a    - (Debug) Show more version info
+    help        - Shows a list of commands or help for one command
+~~~~
+
+#### `build` Command
+
 ~~~
+NAME
+    build - Build planet
+
+SYNOPSIS
+    pluto [global options] build [command options] FILE
+
+COMMAND OPTIONS
+    -o, --output=PATH       - Output Path (default: .)
+    -t, --template=MANIFEST - Template Manifest (default: blank)
+    
+EXAMPLE
+    pluto build ruby.yml
+    pluto b ruby
+~~~
+
+#### `list` Command
+
+~~~
+NAME
+    list - List installed template packs
+
+SYNOPSIS
+    pluto [global options] list
+
+EXAMPLE
+   pluto list
+   pluto ls
+~~~
+
+#### `install` Command
+
+~~~
+NAME
+    install - Install template pack
+
+SYNOPSIS
+    pluto [global options] install MANIFEST
+
+EXAMPLE
+   pluto install news      # install "river of news" template pack
+~~~
+
 
 
 ### Planet Configuration Sample 
