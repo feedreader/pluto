@@ -52,7 +52,7 @@ Examples:
     pluto ruby
 
 Further information:
-  https://github.com/geraldb/pluto
+  https://github.com/feedreader/pluto
   
 EOS
         exit

@@ -7,9 +7,9 @@ class CreateDb < ActiveRecord::Migration
     create_table :sites do |t|
       t.string   :title,     :null => false    # e.g Planet Ruby, Planet JavaScript, etc.
       t.string   :key,       :null => false    # e.g. ruby, js, etc.
-      t.datetime :last_updated_at   # todo: make not null ??
+      t.datetime :fetched_at   #  last fetched/checked date -- make not null ??
 
-      t.timestamps
+      t.timestamps  # created_at, updated_at
     end
 
     create_table :subscriptions do |t|   # has_many join table (sites/feeds)
@@ -23,22 +23,30 @@ class CreateDb < ActiveRecord::Migration
       t.string  :url,      :null => false
       t.string  :feed_url, :null => false
       t.string  :key,      :null => false
-      t.string  :format    # e.g. atom 1.0, rss 2.0, rss 0.7 etc.
+      t.string  :format      # e.g. atom (1.0), rss 2.0, rss 0.7 etc.
+      t.string  :generator   # feed generator (e.g. wordpress, etc.)  from feed
+      t.datetime :published_at  # from feed published(atom)+ pubDate(rss)
+      t.datetime :built_at      # from feed lastBuiltDate(rss)
+
       t.string  :etag      # last etag
-      t.timestamps
+      t.datetime :fetched_at    # last fetched/checked date
+      t.timestamps   # created_at, updated_at
     end
 
     create_table :items do |t|
       t.string   :title   # todo: add some :null => false ??
       t.string   :guid
       t.string   :url
-      t.string   :author
       t.text     :summary
       t.text     :content
-      t.datetime :published_at
+      t.datetime :published_at   # from feed (published)
+      t.datetime :touched_at     # from feed (updated)
       ## todo: add :last_updated_at ??  (NOTE: updated_at already take by auto-timestamps)
       t.references :feed, :null => false
-      t.timestamps
+      t.timestamps   # created_at, updated_at
+      
+      t.string   :author
+      ## todo: add author/authors, category/categories
     end
 
     create_table :actions do |t|

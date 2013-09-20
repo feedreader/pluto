@@ -22,6 +22,9 @@ class Updater
   end
 
   def fetch_feed( url )
+    
+    ### fix: use worker.get( url )  # check http response code etc.
+    
     xml = worker.read( url )
 
     ###

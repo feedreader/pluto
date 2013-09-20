@@ -9,7 +9,6 @@ require 'yaml'
 require 'json'
 require 'uri'
 require 'pp'
-require 'logger'
 require 'optparse'
 require 'fileutils'
 
@@ -31,8 +30,6 @@ require 'pluto/version'   # let version always get first
 require 'pluto/schema'
 require 'pluto/models'
 require 'pluto/connecter'
-
-require 'pluto/utils'
 
 require 'pluto/updater'
 require 'pluto/fetcher'
