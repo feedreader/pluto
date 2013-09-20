@@ -36,7 +36,6 @@ require 'pluto/fetcher'
 require 'pluto/formatter'
 
 require 'pluto/cli/opts'
-require 'pluto/cli/runner'
 
 module Pluto
 
@@ -60,10 +59,11 @@ module Pluto
     Updater.new.update_feeds
   end
 
-
   def self.main
-    Runner.new.run(ARGV)
+    require 'pluto/cli/main'
+    ## Runner.new.run(ARGV) - old code
   end
+  
 
 end  # module Pluto
 

@@ -1,7 +1,7 @@
 # pluto
 
-Another Planet Generator in Ruby - Lets You Build Web Pages
-from Published Web Feeds
+Another planet generator in ruby - lets you build web pages
+from published web feeds.
 
 * home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
 * bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
@@ -14,7 +14,8 @@ from Published Web Feeds
 Use the `pluto` command line tool and pass in one or more planet configuration files.
 Example:
 
-    pluto ruby.yml
+    pluto build ruby.yml        or
+    pluto b ruby
 
 This will
 

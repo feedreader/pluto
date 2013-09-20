@@ -2,12 +2,22 @@ module Pluto
 
 class Opts
 
+  def merge_gli_options!( options={} )
+    @verbose = true     if options[:verbose] == true
+    
+    @config_path = options[:config]    if options[:config].present?
+    @output_path = options[:output]    if options[:output].present?
+    
+    @manifest       =   options[:template]  if options[:template].present?
+  end
+
+
   def manifest=(value)
     @manifest = value
   end
   
   def manifest
-    @manifest || 'blank.txt'   ## todo - just return blank  (no .txt extension - possible?)
+    @manifest || 'blank'
   end
 
   def verbose=(value)
@@ -23,7 +33,8 @@ class Opts
   end
   
   def config_path
-    @config_path || '~/.pluto'
+    ## @config_path || '~/.pluto'   --- old code
+    @config_path || File.join( Env.home, '.pluto' )
   end
 
 
