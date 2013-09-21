@@ -12,7 +12,9 @@ class Feed < ActiveRecord::Base
   def self.latest
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
-    order( 'coalesce(published_at,touched_at,built_at,fetched_at) desc' )
+
+    # note: if not published_at,touched_at or built_at use hardcoded 1999-01-01 for now
+    order( "coalesce(published_at,touched_at,built_at,'1999-01-01') desc" )
   end
 
 
@@ -27,11 +29,10 @@ class Feed < ActiveRecord::Base
     if read_attribute(:published_at).present?
       read_attribute(:published_at)
     elsif read_attribute(:touched_at).present?
+      ## try touched_at (aka updated (ATOM))
       read_attribute(:touched_at)
-    elsif read_attribute(:built_at).present?
+    else  ## try build_at (aka lastBuildDate (RSS))
       read_attribute(:built_at)
-    else
-      read_attribute(:fetched_at)
     end
   end
 
@@ -45,7 +46,9 @@ class Item < ActiveRecord::Base
   def self.latest
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
-    order( 'coalesce(published_at,touched_at,fetched_at) desc' )
+
+    # note: if not published_at,touched_at or built_at use hardcoded 1999-01-01 for now
+    order( "coalesce(published_at,touched_at,'1999-01-01') desc" )
   end
 
   def published_at?
@@ -58,10 +61,8 @@ class Item < ActiveRecord::Base
 
     if read_attribute(:published_at).present?
       read_attribute(:published_at)
-    elsif read_attribute(:touched_at).present?
+    else  ## try touched_at (aka updated)
       read_attribute(:touched_at)
-    else
-      read_attribute(:fetched_at)
     end
   end
 
