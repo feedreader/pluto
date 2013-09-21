@@ -13,22 +13,27 @@ module ManifestHelper
     # 2) search <config_dir>
     # 3) search <gem>/templates
 
+### 
+# Note
+# -- for now - no longer ship w/ builtin template packs
+# - download on demand if needed
+
     builtin_patterns = [
-      "#{Pluto.root}/templates/*.txt"
+##      "#{Pluto.root}/templates/*.txt"
     ]
     config_patterns  = [
-      "#{File.expand_path(opts.config_path)}/*.txt",
+##      "#{File.expand_path(opts.config_path)}/*.txt",
       "#{File.expand_path(opts.config_path)}/*/*.txt"
     ]
     current_patterns = [
-      "*.txt",
+##      "*.txt",
       "*/*.txt"
     ]
     
     patterns = []
     patterns += current_patterns
     patterns += config_patterns
-###    patterns += builtin_patterns    - for now - no longer ship w/ builtin template packs - download on demand if needed
+    patterns += builtin_patterns
   end
 
   def installed_template_manifests
