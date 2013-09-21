@@ -129,15 +129,42 @@ class Updater
       
       puts "Before parsing feed >#{feed_key}<..."
 
-      feed = FeedUtils::Parser.new( feed_xml ).parse
+      ## fix/todo: check for feed.nil?   -> error parsing!!!
+      #    or throw exception
+      feed = FeedUtils::Parser.parse( feed_xml )
+
+      feed_fetched_at = Time.now
+
+      ## todo/check: move feed_rec update to the end (after item updates??)
+
+      # update feed attribs e.g.
+      #    generator
+      #    published_at,built_at,touched_at,fetched_at
+      #    summary,title2
+      feed_attribs = {
+        fetched_at:   feed_fetched_at,
+        format:       feed.format,
+        published_at: feed.published? ? feed.published : nil,
+        touched_at:   feed.updated?   ? feed.updated   : nil,
+        built_at:     feed.built?     ? feed.built     : nil,
+        summary:      feed.summary?   ? feed.summary   : nil,
+        title2:       feed.title2?    ? feed.title2    : nil,
+        generator:    feed.generator
+      }
+
+      feed_rec.update_attributes!( feed_attribs )
+
 
       feed.items.each do |item|
 
         item_attribs = {
+          fetched_at:   feed_fetched_at,
           title:        item.title,
           url:          item.url,
-          content:      item.content,
-          published_at: item.published,
+          summary:      item.summary?   ? item.summary   : nil,
+          content:      item.content?   ? item.content   : nil,
+          published_at: item.published? ? item.published : nil,
+          touched_at:   item.updated?   ? item.updated   : nil,
           feed_id:      feed_rec.id    # add feed_id fk_ref
         }
 
@@ -145,12 +172,12 @@ class Updater
         if rec.nil?
           rec      = Item.new
           item_attribs[ :guid ] = item.guid
-          puts "** NEW"
+          puts "** NEW | #{item.title}"
         else
           ## todo: check if any attribs changed
-          puts "UPDATE"
+          puts "UPDATE | #{item.title}"
         end
-                
+
         rec.update_attributes!( item_attribs )
       end  # each item
 

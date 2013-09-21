@@ -21,7 +21,7 @@ Hoe.spec 'pluto' do
     ['pakman',    '>= 0.5'], 
     ['fetcher',   '>= 0.3'],
     ['logutils',  '>= 0.6'],
-    ['feedutils', '>= 0.1'],
+    ['feedutils', '>= 0.2'],
     ['props',     '>= 1.0.0'],
     ['textutils', '>= 0.6.8'],    # future: add some filters (for include/exclude)
     ['gli',       '>= 2.5.6']
