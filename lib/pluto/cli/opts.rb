@@ -2,6 +2,11 @@ module Pluto
 
 class Opts
 
+  def initialize
+    load_shortcuts
+  end
+
+
   def merge_gli_options!( options={} )
     @verbose = true     if options[:verbose] == true
     
@@ -44,6 +49,26 @@ class Opts
   
   def output_path
     @output_path || '.'
+  end
+
+  def load_shortcuts
+    @shortcuts = YAML.load_file( "#{Pluto.root}/config/pluto.index.yml" )
+  end
+
+  def map_fetch_shortcut( key )
+    # NB: always returns an array!!!  0,1 or more entries
+    # - no value - return empty ary
+    
+    ## todo: normalize key???
+    value = @shortcuts.fetch( key, nil )
+    
+    if value.nil?
+      []
+    elsif value.kind_of?( String )
+      [value]
+    else  # assume it's an array already;  ## todo: check if it's an array
+      value
+    end
   end
 
 

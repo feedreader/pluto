@@ -33,6 +33,7 @@ require 'pluto/models'
 require 'pluto/manifest_helpers'
 require 'pluto/connecter'
 
+require 'pluto/installer'
 require 'pluto/updater'
 require 'pluto/fetcher'
 require 'pluto/lister'

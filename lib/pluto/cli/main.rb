@@ -146,9 +146,7 @@ command [:install,:i] do |c|
     logger.debug 'hello from install command'
         
     args.each do |arg|
-      
-      ## -- to be done
-      ##  Slideshow::Fetch.new( opts, config ).fetch( arg )  ## todo: remove opts merge into config
+      Pluto::Installer.new( opts ).install( arg )  ## todo: remove opts merge into config
     end
   end
 end

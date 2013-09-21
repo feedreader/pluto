@@ -1,0 +1,19 @@
+#########################################
+# Pluto Update Index for Template Packs
+
+
+#############
+# shortcuts for fetching template packs
+#   maps shortcut to URI
+
+blank: https://raw.github.com/feedreader/pluto.blank/master/blank.txt
+
+top: https://raw.github.com/feedreader/pluto.top/master/top.txt
+
+news: https://raw.github.com/feedreader/pluto.news/master/news.txt
+
+
+####
+# all:
+#   - add why? why not??
+#

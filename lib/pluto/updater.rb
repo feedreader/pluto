@@ -109,6 +109,14 @@ class Updater
     # -- log update action
     Action.create!( title: 'update feeds' )
 
+    #####
+    # -- update fetched_at  timestamps for all sites
+    feeds_fetched_at = Time.now
+    Site.all.each do |site|
+      site.fetched_at = feeds_fetched_at
+      site.save!
+    end
+
     Feed.all.each do |feed_rec|
 
       feed_key = feed_rec.key
