@@ -106,11 +106,6 @@ EXAMPLE
 ```
 title: Planet Ruby
 
-feeds:
-  - rubyflow
-  - edgerails
-  - rubyonrails
-  - railstutorial
 
 rubyflow:
   title: Ruby Flow
