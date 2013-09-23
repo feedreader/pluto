@@ -6,6 +6,8 @@ class Formatter
 
   include Models
   include ManifestHelper
+  
+  include TemplateHelper  # e.g. lets us use time_ago_in_words, strip_tags, etc.
 
   def initialize( opts, config )
     @opts    = opts
@@ -15,6 +17,8 @@ class Formatter
   attr_reader :opts
 
   def site
+    ### fix !!!!!!!!!!
+    ## fix/todo: change to db record for site
     @config
   end
 

@@ -14,7 +14,6 @@ class Fetcher
 
 
   def run
-
     updater = Updater.new
 
     # pass along debug/verbose setting/switch
@@ -22,7 +21,6 @@ class Fetcher
 
     updater.update_subscriptions( config )
     updater.update_feeds
-
   end # method run
 
 

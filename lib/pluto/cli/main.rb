@@ -80,6 +80,114 @@ default_value opts.config_path
 flag [:c, :config] 
 
 
+## note: same as build (but without step 1) fetch)
+desc 'Merge planet template pack'
+arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
+command [:merge, :m] do |c|
+
+  c.desc 'Output Path'
+  c.arg_name 'PATH'
+  c.default_value opts.output_path
+  c.flag [:o,:output]
+
+  c.desc 'Template Manifest'
+  c.arg_name 'MANIFEST'
+  c.default_value opts.manifest
+  c.flag [:t, :template]
+
+
+  c.action do |g,o,args|
+    logger.debug 'hello from merge command'
+
+    if args.length == 0
+      if File.exists?( 'pluto.yml' ) # check if pluto.yml exists, if yes add/use it
+        args = ['pluto.yml']  # create a new args w/ one item
+      elsif File.exists?( 'planet.yml' ) # check if planet.yml exists, if yes add/use it
+        args = ['planet.yml'] # create a new args w/ one item
+      else
+        puts '*** note: no arg passed in; no pluto.yml or planet.yml found in working folder'
+      end
+    end
+
+    args.each do |arg|
+      name = File.basename( arg, '.*' )
+
+      #####
+      # todo: add into method for reuse for build/merge/fetch
+      #   all use the same code
+ 
+      db_config = {
+        adapter:  'sqlite3',
+        database: "#{opts.output_path}/#{name}.db"
+      }
+ 
+      Pluto::Connecter.new.connect!( db_config )
+
+      config_path = arg.dup   # add .yml file extension if missing (for convenience)
+      config_path << '.yml'  unless config_path.ends_with?( '.yml' )
+
+      config = YAML.load_file( config_path )
+      
+      puts "dump >#{config_path}<:"
+      pp config
+    
+      Pluto::Formatter.new( opts, config ).run( name )
+    end
+    
+    puts 'Done.'
+  end
+end # command merge
+
+
+## note: same as build (but without step 2) merge)
+desc 'Fetch planet feeds'
+arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
+command [:fetch, :f] do |c|
+
+  c.action do |g,o,args|
+    logger.debug 'hello from fetch command'
+
+    if args.length == 0
+      if File.exists?( 'pluto.yml' ) # check if pluto.yml exists, if yes add/use it
+        args = ['pluto.yml']  # create a new args w/ one item
+      elsif File.exists?( 'planet.yml' ) # check if planet.yml exists, if yes add/use it
+        args = ['planet.yml'] # create a new args w/ one item
+      else
+        puts '*** note: no arg passed in; no pluto.yml or planet.yml found in working folder'
+      end
+    end
+
+    args.each do |arg|
+      name = File.basename( arg, '.*' )
+
+      #####
+      # todo: add into method for reuse for build/merge/fetch
+      #   all use the same code
+ 
+      db_config = {
+        adapter:  'sqlite3',
+        database: "#{opts.output_path}/#{name}.db"
+      }
+ 
+      Pluto::Connecter.new.connect!( db_config )
+
+      config_path = arg.dup   # add .yml file extension if missing (for convenience)
+      config_path << '.yml'  unless config_path.ends_with?( '.yml' )
+
+      config = YAML.load_file( config_path )
+      
+      puts "dump >#{config_path}<:"
+      pp config
+    
+      Pluto::Fetcher.new( opts, config ).run
+    end
+    
+    puts 'Done.'
+  end
+end # command fetch
+
+
+
 desc 'Build planet'
 arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
 command [:build, :b] do |c|
@@ -97,7 +205,17 @@ command [:build, :b] do |c|
 
   c.action do |g,o,args|
     logger.debug 'hello from build command'
-    
+
+    if args.length == 0
+      if File.exists?( 'pluto.yml' ) # check if pluto.yml exists, if yes add/use it
+        args = ['pluto.yml']  # create a new args w/ one item
+      elsif File.exists?( 'planet.yml' ) # check if planet.yml exists, if yes add/use it
+        args = ['planet.yml'] # create a new args w/ one item
+      else
+        puts '*** note: no arg passed in; no pluto.yml or planet.yml found in working folder'
+      end
+    end
+
     args.each do |arg|
 
       name = File.basename( arg, '.*' )

@@ -12,6 +12,7 @@ require 'pp'
 require 'optparse'
 require 'fileutils'
 require 'logger'
+require 'date'
 
 
 # 3rd party ruby gems/libs
@@ -38,6 +39,7 @@ require 'pluto/installer'
 require 'pluto/updater'
 require 'pluto/fetcher'
 require 'pluto/lister'
+require 'pluto/template_helpers'
 require 'pluto/formatter'
 
 require 'pluto/cli/opts'     ## fix: make sure fetcher/updater etc. do not depend on cli/opts
