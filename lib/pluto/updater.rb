@@ -69,9 +69,17 @@ class Updater
     Action.create!( title: 'update subscriptions' )
 
 
-    config[ 'feeds' ].each do |feed_key|
+    config.each do |key, value|
       
-      feed_hash  = config[ feed_key ]
+      next if ['title'].include?( key )   # skip "top-level" feed keys e.g. title, etc.
+
+      ### todo/check:
+      ##   check value - must be hash
+      #     check if url or feed_url present
+      #      that is, check for required props/key-value pairs
+
+      feed_key   = key.to_s.dup
+      feed_hash  = value
 
       feed_attribs = {
         feed_url: feed_hash[ 'feed_url' ],
