@@ -71,7 +71,7 @@ class Updater
 
     config.each do |key, value|
       
-      next if ['title'].include?( key )   # skip "top-level" feed keys e.g. title, etc.
+      next if ['title','feeds'].include?( key )   # skip "top-level" feed keys e.g. title, etc.
 
       ### todo/check:
       ##   check value - must be hash
