@@ -11,6 +11,7 @@ require 'uri'
 require 'pp'
 require 'optparse'
 require 'fileutils'
+require 'logger'
 
 
 # 3rd party ruby gems/libs

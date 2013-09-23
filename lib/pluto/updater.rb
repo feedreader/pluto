@@ -111,6 +111,11 @@ class Updater
 
   def update_feeds( opts={} )
 
+    if debug?
+      ## turn on logging for sql too
+      ActiveRecord::Base.logger = Logger.new( STDOUT )
+    end
+
     ### move to feedutils
     ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
 
@@ -157,16 +162,33 @@ class Updater
       #    generator
       #    published_at,built_at,touched_at,fetched_at
       #    summary,title2
+      
+      ## fix:
+      ## weird rss exception error on windows w/ dates
+      #  e.g. /lib/ruby/1.9.1/rss/rss.rb:37:in `w3cdtf': wrong number of arguments (1 for 0) (ArgumentError)
+      #
+      #  move to_datetime to feedutils!! if it works
+      
+      
       feed_attribs = {
         fetched_at:   feed_fetched_at,
         format:       feed.format,
-        published_at: feed.published? ? feed.published : nil,
-        touched_at:   feed.updated?   ? feed.updated   : nil,
-        built_at:     feed.built?     ? feed.built     : nil,
+        published_at: feed.published? ? feed.published.to_datetime : nil,
+        touched_at:   feed.updated?   ? feed.updated.to_datetime   : nil,
+        built_at:     feed.built?     ? feed.built.to_datetime     : nil,
         summary:      feed.summary?   ? feed.summary   : nil,
         title2:       feed.title2?    ? feed.title2    : nil,
         generator:    feed.generator
       }
+
+      if debug?
+        ## puts "*** dump feed_attribs:"
+        ## pp feed_attribs
+        puts "*** dump feed_attribs w/ class types:"
+        feed_attribs.each do |key,value|
+          puts "  #{key}: >#{value}< : #{value.class.name}"
+        end
+      end
 
       feed_rec.update_attributes!( feed_attribs )
 
@@ -179,10 +201,19 @@ class Updater
           url:          item.url,
           summary:      item.summary?   ? item.summary   : nil,
           content:      item.content?   ? item.content   : nil,
-          published_at: item.published? ? item.published : nil,
-          touched_at:   item.updated?   ? item.updated   : nil,
+          published_at: item.published? ? item.published.to_datetime : nil,
+          touched_at:   item.updated?   ? item.updated.to_datetime   : nil,
           feed_id:      feed_rec.id    # add feed_id fk_ref
         }
+
+        if debug?
+          puts "*** dump item_attribs w/ class types:"
+          item_attribs.each do |key,value|
+            next if [:summary,:content].include?( key )   # skip summary n content
+            puts "  #{key}: >#{value}< : #{value.class.name}"
+          end
+        end
+
 
         rec = Item.find_by_guid( item.guid )
         if rec.nil?
