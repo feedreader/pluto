@@ -228,10 +228,20 @@ class Updater
         rec.update_attributes!( item_attribs )
       end  # each item
 
+      #  update  cached value latest published_at for item
+      item_recs = feed_rec.items.latest.limit(1).all
+      unless item_recs.empty?
+        if item_recs[0].published_at?
+          feed_rec.latest_published_at = item_recs[0].published_at
+        else # try touched_at
+          feed_rec.latest_published_at = item_recs[0].touched_at
+        end
+        feed_rec.save!
+      end
+
     end # each feed
 
   end # method run
-
 
  
 end # class Fetcher

@@ -7,8 +7,8 @@ module TemplateHelper
 
   def strip_tags( hypertext )
     ### tobe done
-    ## strip markup tags; return plain text (to be done)
-    hypertext
+    ## strip markup tags; return plain text
+    hypertext.gsub( /<[^>]+>/, '' )
   end
 
 

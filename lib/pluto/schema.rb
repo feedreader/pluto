@@ -31,6 +31,8 @@ class CreateDb < ActiveRecord::Migration
       t.datetime :touched_at    # from feed updated(atom)
 
       # -- our own (meta) fields
+      t.datetime :latest_published_at # cache latest item published_at
+
       t.string  :key,      :null => false
       t.string  :format      # e.g. atom (1.0), rss 2.0, rss 0.7 etc.
       t.string  :etag      # last etag

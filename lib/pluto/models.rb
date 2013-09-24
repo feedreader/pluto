@@ -14,7 +14,8 @@ class Feed < ActiveRecord::Base
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
     # note: if not published_at,touched_at or built_at use hardcoded 1999-01-01 for now
-    order( "coalesce(published_at,touched_at,built_at,'1999-01-01') desc" )
+    ## order( "coalesce(published_at,touched_at,built_at,'1999-01-01') desc" )
+    order( "coalesce(latest_published_at,'1999-01-01') desc" )
   end
 
 
