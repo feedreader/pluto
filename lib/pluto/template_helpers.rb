@@ -15,20 +15,20 @@ module TemplateHelper
   def whitelist( hy, tags, opts={} )
 
     # note: assumes properly escaped <> in hy/hypertext
-    
+
     ###############################################
     # step one - save whitelisted tags use ‹tag›
     tags.each do |tag|
-      # make sure we won't swall <br> for <b> for example, thus use \s+ before [^>]
       # note: we strip all attribues
-      hy = hy.gsub( /<(\/#{tag}|#{tag}\s*\/)>/, "‹\1›" )  # closing tag e.g. </p> or compact tag e.g. <p/> or <p />
-      ## todo: check if <p /> or <p /> is allowed or exists in the wild w/ xhtml
-      #  todo: we should normalize it to <tag/> w/o any spaces
+
+      # convert xml-style empty tags to simple html emtpty tags
+      #  e.g. <br/> or <br /> becomses <br>
+      hy = hy.gsub( /<(#{tag})\s*\/>/, "‹\1›" )   # eg. <br /> or <br/> becomes ‹br›
+      
+      # make sure we won't swall <br> for <b> for example, thus use \s+ before [^>]
       hy = hy.gsub( /<(#{tag})(\s+[^>]*)?>/, "‹\1›" )  # opening tag <p>
+      hy = hy.gsub( /<\/(#{tag})\s*>/, "‹\1›" )  # closing tag e.g. </p>
     end
-    
-    # hack: normalize <tag /> or <tag  />  to => <tag/>, that is, remove all spaces
-    hy = hy.gsub( /\s+\/›/, '/›' )    # is this a real case, needed?
 
     ############################
     # step two - clean tags
@@ -43,19 +43,27 @@ module TemplateHelper
     ############################################
     # step three - restore whitelisted tags
 
+    hy if opts[:skip_restore].present?   # skip step 3 for debugging
+
+    tags.each do |tag|
+      hy = hy.gsub( /‹(#{tag})›/, "<\1>" )  # opening tag e.g. <p>
+      hy = hy.gsub( /‹\/(#{tag})›/, "<\1>" )  # closing tag e.g. </p>
+    end
+
     hy
   end  # method whitelist
+
 
   ##  change to simple_hypertext or
   #     hypertext_simple or
   #     sanitize ???
   
-  def textify( hy )   # hy -> hypertext
+  def textify( hy, opts={} )   # hy -> hypertext
     ## turn into text
     # todo: add options for
     #   keep links, images, lists (?too), code, codeblocks
 
-    hy = whitelist( hy, [:br, :p, :ul, :ol, :li, :pre, :code] )
+    hy = whitelist( hy, [:br, :p, :ul, :ol, :li, :pre, :code], opts )
 
    # strip bold
 #    hy = hy.gsub( /<b[^>]*>/, '**' )  # fix: will also swallow bxxx tags - add b space
@@ -111,12 +119,15 @@ module TemplateHelper
       # 42 hours up to 30 days
       when 2520...43200     then "%d days ago" % (distance_in_minutes.to_f / 1440.0).round
       # 30 days up to 60 days
-      #  fix: use pluralize for months
+      #  fix: use pluralize for months  - fix: change when - use just for a month ago
       when 43200...86400    then "%d months ago" % (distance_in_minutes.to_f / 43200.0).round
       # 60 days up to 365 days
       when 86400...525600   then "%d months ago" % (distance_in_minutes.to_f / 43200.0).round
       ## fix - add number of years ago
       else                       "over a year ago"  #todo: use over a year ago???
+                                                    # fix: split into two - use
+                                                    #  1) a year ago
+                                                    #  2) (x) years ago
     end
   end
 
