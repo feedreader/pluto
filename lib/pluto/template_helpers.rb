@@ -43,7 +43,7 @@ module TemplateHelper
     ############################################
     # step three - restore whitelisted tags
 
-    hy if opts[:skip_restore].present?   # skip step 3 for debugging
+    return hy if opts[:skip_restore].present?   # skip step 3 for debugging
 
     tags.each do |tag|
       hy = hy.gsub( /‹(#{tag})›/, "<\1>" )  # opening tag e.g. <p>
