@@ -11,7 +11,7 @@ Hoe.spec 'pluto' do
   self.urls    = ['https://github.com/feedreader/pluto']
 
   self.author  = 'Gerald Bauer'
-  self.email   = 'webslideshow@googlegroups.com'
+  self.email   = 'feedreader@googlegroups.com'
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
