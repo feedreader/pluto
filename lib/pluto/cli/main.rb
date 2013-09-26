@@ -70,13 +70,13 @@ end # class SysInfo
 
 def load_config( name )
   extname = File.extname( name )   # return '' or '.ini' or '.yml' etc.
-  
-  config = extname == '.ini' ? INI.load_file( arg ) :
-                               YAML.load_file( arg )
+
+  config = extname == '.ini' ? INI.load_file( name ) :
+                               YAML.load_file( name )
 
   puts "dump >#{name}<:"
   pp config
-  
+
   config
 end
 
