@@ -64,6 +64,86 @@ end # class SysInfo
 
 
 
+######
+# begin
+#  move to pluto for reuse (e.g. in rakefile)
+
+def load_config( name )
+  extname = File.extname( name )   # return '' or '.ini' or '.yml' etc.
+  
+  config = extname == '.ini' ? INI.load_file( arg ) :
+                               YAML.load_file( arg )
+
+  puts "dump >#{name}<:"
+  pp config
+  
+  config
+end
+
+
+def find_default_config_path
+  candidates =  [ 'pluto.ini',
+                  'pluto.yml',
+                  'planet.ini',
+                  'planet.yml' ]
+
+  candidates.each do |candidate|
+    return candidate  if File.exists?( candidate )   ## todo: use ./candidate -- why? why not??
+  end
+
+  puts "*** note: no default planet configuration found, that is, no #{candidates.join('|')} found in working folder"
+  nil  # return nil; no conifg existing candidate found/present; sorry
+end
+
+
+def find_config_path( name )
+  extname    = File.extname( name )   # return '' or '.ini' or '.yml' etc.
+
+  return name  if extname.present?    # nothing to do; extension already present
+
+  candidates = [ '.ini', '.yml' ]
+
+  candidates.each do |candidate|
+    return "#{name}#{candidate}"  if File.exists?( "#{name}#{candidate}" )
+  end
+
+  # no extensions matching; sorry
+  puts "*** note: no configuration found w/ extensions #{candidates.join('|')} for '#{name}'"
+  # todo/check/fix - ?? -skip; remove from arg  - or just pass through ???
+  nil  # return nil; no config found/present; sorry
+end
+
+# end
+#  move to pluto for reuse (e.g. in rakefile)
+###########################
+
+
+def expand_config_args( args )
+
+  # 1) no args - try to find default config e.g. pluto.ini etc.
+  if args.length == 0      
+    new_arg = find_default_config_path
+    
+    return [] if new_arg.nil?
+    return [new_arg] # create a new args w/ one item e.g. ['pluto.yml']
+  end
+
+  # 2) expand extname if no extname and config present
+
+  new_args = []
+  args.each do |arg|
+    new_arg = find_config_path( arg )
+    if new_arg.nil?
+      # skip for now
+    else
+      new_args << new_arg
+    end
+  end
+  new_args
+  
+end # method expand_config_args
+
+
 
 ## "global" options (switches/flags)
 
@@ -99,18 +179,10 @@ command [:merge, :m] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from merge command'
 
-    if args.length == 0
-      if File.exists?( 'pluto.yml' ) # check if pluto.yml exists, if yes add/use it
-        args = ['pluto.yml']  # create a new args w/ one item
-      elsif File.exists?( 'planet.yml' ) # check if planet.yml exists, if yes add/use it
-        args = ['planet.yml'] # create a new args w/ one item
-      else
-        puts '*** note: no arg passed in; no pluto.yml or planet.yml found in working folder'
-      end
-    end
+    args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
     args.each do |arg|
-      name = File.basename( arg, '.*' )
+      name    = File.basename( arg, '.*' )
 
       #####
       # todo: add into method for reuse for build/merge/fetch
@@ -120,16 +192,10 @@ command [:merge, :m] do |c|
         adapter:  'sqlite3',
         database: "#{opts.output_path}/#{name}.db"
       }
- 
+
       Pluto::Connecter.new.connect!( db_config )
 
-      config_path = arg.dup   # add .yml file extension if missing (for convenience)
-      config_path << '.yml'  unless config_path.ends_with?( '.yml' )
-
-      config = YAML.load_file( config_path )
-      
-      puts "dump >#{config_path}<:"
-      pp config
+      config = load_config( arg )
     
       Pluto::Formatter.new( opts, config ).run( name )
     end
@@ -147,18 +213,10 @@ command [:fetch, :f] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from fetch command'
 
-    if args.length == 0
-      if File.exists?( 'pluto.yml' ) # check if pluto.yml exists, if yes add/use it
-        args = ['pluto.yml']  # create a new args w/ one item
-      elsif File.exists?( 'planet.yml' ) # check if planet.yml exists, if yes add/use it
-        args = ['planet.yml'] # create a new args w/ one item
-      else
-        puts '*** note: no arg passed in; no pluto.yml or planet.yml found in working folder'
-      end
-    end
+    args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
     args.each do |arg|
-      name = File.basename( arg, '.*' )
+      name    = File.basename( arg, '.*' )
 
       #####
       # todo: add into method for reuse for build/merge/fetch
@@ -168,16 +226,10 @@ command [:fetch, :f] do |c|
         adapter:  'sqlite3',
         database: "#{opts.output_path}/#{name}.db"
       }
- 
+
       Pluto::Connecter.new.connect!( db_config )
 
-      config_path = arg.dup   # add .yml file extension if missing (for convenience)
-      config_path << '.yml'  unless config_path.ends_with?( '.yml' )
-
-      config = YAML.load_file( config_path )
-      
-      puts "dump >#{config_path}<:"
-      pp config
+      config = load_config( arg )
     
       Pluto::Fetcher.new( opts, config ).run
     end
@@ -206,38 +258,22 @@ command [:build, :b] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from build command'
 
-    if args.length == 0
-      if File.exists?( 'pluto.yml' ) # check if pluto.yml exists, if yes add/use it
-        args = ['pluto.yml']  # create a new args w/ one item
-      elsif File.exists?( 'planet.yml' ) # check if planet.yml exists, if yes add/use it
-        args = ['planet.yml'] # create a new args w/ one item
-      else
-        puts '*** note: no arg passed in; no pluto.yml or planet.yml found in working folder'
-      end
-    end
+    args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
     args.each do |arg|
+      name    = File.basename( arg, '.*' )
 
-      name = File.basename( arg, '.*' )
- 
       db_config = {
         adapter:  'sqlite3',
         database: "#{opts.output_path}/#{name}.db"
       }
- 
+
       Pluto::Connecter.new.connect!( db_config )
 
-      config_path = arg.dup   # add .yml file extension if missing (for convenience)
-      config_path << '.yml'  unless config_path.ends_with?( '.yml' )
-
-      config = YAML.load_file( config_path )
-      
-      puts "dump >#{config_path}<:"
-      pp config
+      config = load_config( arg )
     
       Pluto::Fetcher.new( opts, config ).run
       Pluto::Formatter.new( opts, config ).run( name )
-      
     end
     
     puts 'Done.'

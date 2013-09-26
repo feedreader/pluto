@@ -22,7 +22,7 @@ Hoe.spec 'pluto' do
     ['fetcher',   '>= 0.3'],
     ['logutils',  '>= 0.6'],
     ['feedutils', '>= 0.3'],
-    ['props',     '>= 1.0.0'],
+    ['props',     '>= 1.0.1'],    #  use 1.0.1 - for ini support
     ['textutils', '>= 0.6.8'],    # future: add some filters (for include/exclude)
     ['gli',       '>= 2.5.6']
     ## ['activerecord', '~> 3.2'],  #  NB:  soft dependency, will include activesupport,etc.
