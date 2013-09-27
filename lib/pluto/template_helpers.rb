@@ -20,25 +20,29 @@ module TemplateHelper
     # step one - save whitelisted tags use ‹tag›
     tags.each do |tag|
       # note: we strip all attribues
+      # note: match all tags case insensitive e.g. allow a,A or br,BR,bR etc.
+      #   downcase all tags
 
       # convert xml-style empty tags to simple html emtpty tags
       #  e.g. <br/> or <br /> becomses <br>
-      hy = hy.gsub( /<(#{tag})\s*\/>/, "‹\1›" )   # eg. <br /> or <br/> becomes ‹br›
-      
+      hy = hy.gsub( /<(#{tag})\s*\/>/i )       { |_| "‹#{$1.downcase}›" }   # eg. <br /> or <br/> becomes ‹br›
+
       # make sure we won't swall <br> for <b> for example, thus use \s+ before [^>]
-      hy = hy.gsub( /<(#{tag})(\s+[^>]*)?>/, "‹\1›" )  # opening tag <p>
-      hy = hy.gsub( /<\/(#{tag})\s*>/, "‹\1›" )  # closing tag e.g. </p>
+      hy = hy.gsub( /<(#{tag})(\s+[^>]*)?>/i ) { |_| "‹#{$1.downcase}›" }   # opening tag <p>
+      hy = hy.gsub( /<\/(#{tag})\s*>/i )       { |_| "‹/#{$1.downcase}›" }  # closing tag e.g. </p>
     end
 
     ############################
     # step two - clean tags
 
     #   strip images - special treatment for debugging
-    hy = hy.gsub( /<img[^>]*>/, '♦' )   # for debugging use black diamond e.g. ♦
-    hy = hy.gsub( /<\/img>/, '' )   # should not exists
+    hy = hy.gsub( /<img[^>]*>/i, '♦' )   # for debugging use black diamond e.g. ♦
+    hy = hy.gsub( /<\/img>/i, '' )   # should not exists
 
     # strip all remaining tags
     hy = hy.gsub( /<[^>]+>/, '' )
+    
+    pp hy  # fix: debugging indo - remove
     
     ############################################
     # step three - restore whitelisted tags
@@ -46,8 +50,10 @@ module TemplateHelper
     return hy if opts[:skip_restore].present?   # skip step 3 for debugging
 
     tags.each do |tag|
-      hy = hy.gsub( /‹(#{tag})›/, "<\1>" )  # opening tag e.g. <p>
-      hy = hy.gsub( /‹\/(#{tag})›/, "<\1>" )  # closing tag e.g. </p>
+#      hy = hy.gsub( /‹(#{tag})›/, "<\1>" )  # opening tag e.g. <p>
+#      hy = hy.gsub( /‹\/(#{tag})›/, "<\/\1>" )  # closing tag e.g. </p>
+      hy = hy.gsub( /‹(#{tag})›/ )   { |_| "<#{$1}>" }
+      hy = hy.gsub( /‹\/(#{tag})›/ ) { |_| "<\/#{$1}>" }  # closing tag e.g. </p>
     end
 
     hy

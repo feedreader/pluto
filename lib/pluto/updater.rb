@@ -50,7 +50,7 @@ class Updater
     ## for now - use single site w/ key planet  -- fix!! allow multiple sites (planets)
     
     site_attribs = {
-      title: config[ 'title' ]
+      title: config[ 'title' ] || config[ 'name' ]   # support either title or name
     }
     
     site_key = 'planet'
@@ -71,7 +71,7 @@ class Updater
 
     config.each do |key, value|
       
-      next if ['title','feeds'].include?( key )   # skip "top-level" feed keys e.g. title, etc.
+      next if ['title','name','feeds'].include?( key )   # skip "top-level" feed keys e.g. title, etc.
 
       ### todo/check:
       ##   check value - must be hash
@@ -82,9 +82,9 @@ class Updater
       feed_hash  = value
 
       feed_attribs = {
-        feed_url: feed_hash[ 'feed_url' ],
-        url:      feed_hash[ 'url'      ],
-        title:    feed_hash[ 'title'    ]   # todo: use title from feed?
+        feed_url: feed_hash[ 'feed' ]  || feed_hash[ 'feed_url' ],
+        url:      feed_hash[ 'link' ]  || feed_hash[ 'site' ] || feed_hash[ 'url' ],
+        title:    feed_hash[ 'title' ] || feed_hash[ 'name' ]  # todo: use title from feed?
       }
 
       puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
@@ -168,14 +168,15 @@ class Updater
       #  e.g. /lib/ruby/1.9.1/rss/rss.rb:37:in `w3cdtf': wrong number of arguments (1 for 0) (ArgumentError)
       #
       #  move to_datetime to feedutils!! if it works
+      ##   todo: move this comments to feedutils??
       
       
       feed_attribs = {
         fetched_at:   feed_fetched_at,
         format:       feed.format,
-        published_at: feed.published? ? feed.published.to_datetime : nil,
-        touched_at:   feed.updated?   ? feed.updated.to_datetime   : nil,
-        built_at:     feed.built?     ? feed.built.to_datetime     : nil,
+        published_at: feed.published? ? feed.published : nil,
+        touched_at:   feed.updated?   ? feed.updated   : nil,
+        built_at:     feed.built?     ? feed.built     : nil,
         summary:      feed.summary?   ? feed.summary   : nil,
         title2:       feed.title2?    ? feed.title2    : nil,
         generator:    feed.generator
@@ -201,8 +202,8 @@ class Updater
           url:          item.url,
           summary:      item.summary?   ? item.summary   : nil,
           content:      item.content?   ? item.content   : nil,
-          published_at: item.published? ? item.published.to_datetime : nil,
-          touched_at:   item.updated?   ? item.updated.to_datetime   : nil,
+          published_at: item.published? ? item.published : nil,
+          touched_at:   item.updated?   ? item.updated   : nil,
           feed_id:      feed_rec.id    # add feed_id fk_ref
         }
 
