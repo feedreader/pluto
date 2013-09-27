@@ -21,8 +21,8 @@ Hoe.spec 'pluto' do
     ['pakman',    '>= 0.5'], 
     ['fetcher',   '>= 0.3'],
     ['logutils',  '>= 0.6'],
-    ['feedutils', '>= 0.3'],
-    ['props',     '>= 1.0.1'],    #  use 1.0.1 - for ini support
+    ['feedutils', '>= 0.3.1'],    #  use min. 0.3.1 - added fix for rss.item.guid missing; no more auto-summary in atom
+    ['props',     '>= 1.0.1'],    #  use min. 1.0.1 - added ini support
     ['textutils', '>= 0.6.8'],    # future: add some filters (for include/exclude)
     ['gli',       '>= 2.5.6']
     ## ['activerecord', '~> 3.2'],  #  NB:  soft dependency, will include activesupport,etc.
