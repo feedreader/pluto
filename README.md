@@ -216,7 +216,7 @@ Just install the gem:
 
 `planet.rb` by Pablo Astigarraga [(Site)](https://github.com/pote/planet.rb)  - used with jekyll/octopress site generator
 
-Planet Mars by Sam Ruby [(Site](https://github.com/rubys/mars)] -  first draft of cleaned up Planet Planet code; last change in 2008
+Planet Mars by Sam Ruby [(Site)](https://github.com/rubys/mars)] -  first draft of cleaned up Planet Planet code; last change in 2008
 
 ### Python
 
