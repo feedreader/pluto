@@ -14,7 +14,9 @@ lib/pluto/installer.rb
 lib/pluto/lister.rb
 lib/pluto/manifest_helpers.rb
 lib/pluto/models.rb
+lib/pluto/refresher.rb
 lib/pluto/schema.rb
+lib/pluto/subscriber.rb
 lib/pluto/template_helpers.rb
 lib/pluto/updater.rb
 lib/pluto/version.rb

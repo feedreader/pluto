@@ -14,15 +14,12 @@ class Formatter
     @config  = config
   end
 
-  attr_reader :opts
-
-  def site
-    ### fix !!!!!!!!!!
-    ## fix/todo: change to db record for site
-    @config
-  end
+  attr_reader :opts, :config, :site
 
   def run( arg )
+    ## fix: change arg to planet_key or just key or similar
+    #  todo: rename run to some less generic  - merge/build/etc. ??
+    
     manifest_name = opts.manifest
     manifest_name = manifest_name.downcase.gsub('.txt', '' )  # remove .txt if present
     
@@ -51,9 +48,20 @@ class Formatter
 
     manifestsrc = manifests[0][1]
     pakpath     = opts.output_path
-    
-        
+
     name = arg
+
+    ## for now - use single site w/ key planet
+    ##-- fix!! allow multiple sites (planets)
+
+    site_key = 'planet'
+    @site = Site.find_by_key( site_key )
+    if @site.nil?
+      puts "*** warn: no site with key '#{site_key}' found; using untitled site record"
+      @site = Site.new
+      @site.title = 'Planet Untitled'
+    end
+
     Pakman::Templater.new.merge_pak( manifestsrc, pakpath, binding, name )
   end
 

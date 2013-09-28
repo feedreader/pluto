@@ -230,8 +230,8 @@ command [:fetch, :f] do |c|
       Pluto::Connecter.new.connect!( db_config )
 
       config = load_config( arg )
-    
-      Pluto::Fetcher.new( opts, config ).run
+
+      Pluto::Updater.new( opts, config ).run
     end
     
     puts 'Done.'
@@ -271,8 +271,8 @@ command [:build, :b] do |c|
       Pluto::Connecter.new.connect!( db_config )
 
       config = load_config( arg )
-    
-      Pluto::Fetcher.new( opts, config ).run
+
+      Pluto::Updater.new( opts, config ).run
       Pluto::Formatter.new( opts, config ).run( name )
     end
     

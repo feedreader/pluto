@@ -36,8 +36,10 @@ require 'pluto/manifest_helpers'
 require 'pluto/connecter'
 
 require 'pluto/installer'
-require 'pluto/updater'
 require 'pluto/fetcher'
+require 'pluto/refresher'
+require 'pluto/subscriber'
+require 'pluto/updater'
 require 'pluto/lister'
 require 'pluto/template_helpers'
 require 'pluto/formatter'
@@ -59,11 +61,11 @@ module Pluto
   end
 
   def self.update_subscriptions( config )
-    Updater.new.update_subscriptions( config )
+    Subscriber.new.update_subscriptions( config )
   end
 
   def self.update_feeds
-    Updater.new.update_feeds
+    Refresher.new.update_feeds
   end
 
   def self.main
