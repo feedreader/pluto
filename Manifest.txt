@@ -18,3 +18,5 @@ lib/pluto/schema.rb
 lib/pluto/template_helpers.rb
 lib/pluto/updater.rb
 lib/pluto/version.rb
+test/helper.rb
+test/test_helpers.rb
