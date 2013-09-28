@@ -7,7 +7,7 @@ from published web feeds.
 * bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
 * gem   :: [rubygems.org/gems/pluto](https://rubygems.org/gems/pluto)
 * rdoc  :: [rubydoc.info/gems/pluto](http://rubydoc.info/gems/pluto)
-
+* forum :: [groups.google.com/group/feedreader](http://groups.google.com/group/feedreader)
 
 ## Usage
 
@@ -232,6 +232,5 @@ Use it as you please with no restrictions whatsoever.
 
 ## Questions? Comments?
 
-Questions? Comments?
 Send them along to the [Planet Pluto and Friends Forum/Mailing List](http://groups.google.com/group/feedreader).
 Thanks!
