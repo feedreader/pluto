@@ -192,8 +192,11 @@ viennarb:
 
 For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.yml),
 [`js.yml`](https://github.com/feedreader/pluto.samples/blob/master/js.yml),
-[`dart.yml`](https://github.com/feedreader/pluto.samples/blob/master/dart.yml).
-
+[`dart.yml`](https://github.com/feedreader/pluto.samples/blob/master/dart.yml),
+[`haskell.yml`](https://github.com/feedreader/pluto.samples/blob/master/haskell.yml),
+[`viennarb.yml`](https://github.com/feedreader/pluto.samples/blob/master/viennarb.yml),
+[`beer.yml`](https://github.com/feedreader/pluto.samples/blob/master/beer.yml),
+[`football.yml`](https://github.com/feedreader/pluto.samples/blob/master/football.yml).
 
 ## Install
 
