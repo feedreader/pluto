@@ -31,7 +31,15 @@ require 'textutils'
 
 require 'pluto/version'   # let version always get first
 require 'pluto/schema'
-require 'pluto/models'
+require 'pluto/activerecord'
+
+require 'pluto/models/action'
+require 'pluto/models/feed'
+require 'pluto/models/item'
+require 'pluto/models/site'
+require 'pluto/models/subscription'
+require 'pluto/models/utils'
+
 require 'pluto/manifest_helpers'
 require 'pluto/connecter'
 
@@ -50,6 +58,10 @@ module Pluto
 
   def self.banner
     "pluto #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+  end
+
+  def self.generator   # convenience alias for banner (matches HTML generator meta tag)
+    banner
   end
 
   def self.root
@@ -77,8 +89,9 @@ module Pluto
 end  # module Pluto
 
 
+
 ######
-# todo - move to utils or similar
+# todo - move to ext/array.rb or similar
 
 class Array
 

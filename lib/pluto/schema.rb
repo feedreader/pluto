@@ -19,11 +19,18 @@ class CreateDb < ActiveRecord::Migration
     end
 
     create_table :feeds do |t|
-      t.string  :title,    :null => false
+      t.string  :title        # user supplied titled
+      t.string  :auto_title   # "fallback" - auto(fill) title from feed
+
+      t.string  :url          # user supplied site url
+      t.string  :auto_url     # "fallback" - auto(fill) url from feed
+
+      t.string  :feed_url       # user supplied feed url
+      t.string  :auto_feed_url  # "fallback" - auto discovery feed url from (site) url
+
       t.string  :title2     # e.g. subtitle (atom)
       t.text    :summary    # e.g. description (rss)
-      t.string  :url,      :null => false
-      t.string  :feed_url, :null => false
+
       t.string  :generator   # feed generator (e.g. wordpress, etc.)  from feed
       
       t.datetime :published_at  # from feed published(atom)+ pubDate(rss)

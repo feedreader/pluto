@@ -5,6 +5,7 @@ Rakefile
 bin/pluto
 config/pluto.index.yml
 lib/pluto.rb
+lib/pluto/activerecord.rb
 lib/pluto/cli/main.rb
 lib/pluto/cli/opts.rb
 lib/pluto/connecter.rb
@@ -13,7 +14,12 @@ lib/pluto/formatter.rb
 lib/pluto/installer.rb
 lib/pluto/lister.rb
 lib/pluto/manifest_helpers.rb
-lib/pluto/models.rb
+lib/pluto/models/action.rb
+lib/pluto/models/feed.rb
+lib/pluto/models/item.rb
+lib/pluto/models/site.rb
+lib/pluto/models/subscription.rb
+lib/pluto/models/utils.rb
 lib/pluto/refresher.rb
 lib/pluto/schema.rb
 lib/pluto/subscriber.rb

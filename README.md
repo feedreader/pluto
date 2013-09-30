@@ -50,13 +50,13 @@ GLOBAL OPTIONS
     --help            - Show this message
 
 COMMANDS
-    build, b    - Build planet
-    install, i  - Install template pack
-    list, ls, l - List installed template packs
-    fetch, f    - Fetch planet feeds
-    merge, m    - Merge planet template pack
-    about, a    - (Debug) Show more version info
-    help        - Shows a list of commands or help for one command
+    build, b      - Build planet
+    install, i    - Install template pack
+    list, ls, l   - List installed template packs
+    update, up, u - Update planet feeds
+    merge, m      - Merge planet template pack
+    about, a      - (Debug) Show more version info
+    help          - Shows a list of commands or help for one command
 ~~~~
 
 
@@ -109,18 +109,18 @@ EXAMPLE
 ~~~
 
 
-#### `fetch` Command
+#### `update` Command
 
 ~~~
 NAME
-    fetch - Fetch planet feeds
+    update - Update planet feeds
 
 SYNOPSIS
-    pluto [global options] fetch FILE
+    pluto [global options] update FILE
 
 EXAMPLE
-    pluto fetch ruby.yml
-    pluto f ruby
+    pluto update ruby.yml
+    pluto u ruby
 ~~~
 
 
@@ -144,7 +144,6 @@ EXAMPLE
 
 
 
-
 ### Planet Configuration Sample 
 
 `ruby.ini`:
@@ -153,19 +152,19 @@ EXAMPLE
 title = Planet Ruby
 
 [rubyflow]
-  title    = Ruby Flow
-  feed_url = http://feeds.feedburner.com/Rubyflow?format=xml
-  url      = http://rubyflow.com
+  title  = Ruby Flow
+  link   = http://rubyflow.com
+  feed   = http://feeds.feedburner.com/Rubyflow?format=xml
 
 [rubyonrails]
-  title    = Ruby on Rails Blog
-  feed_url = http://weblog.rubyonrails.org/feed/atom.xml
-  url      = http://weblog.rubyonrails.org
+  title = Ruby on Rails Blog
+  link  = http://weblog.rubyonrails.org
+  feed  = http://weblog.rubyonrails.org/feed/atom.xml
 
 [viennarb]
-  title    = vienna.rb Blog
-  url      = http://vienna-rb.at
-  feed_url = http://vienna-rb.at/atom.xml
+  title = vienna.rb Blog
+  link  = http://vienna-rb.at
+  feed  = http://vienna-rb.at/atom.xml
 ```
 
 or `ruby.yml`:
@@ -175,19 +174,19 @@ title: Planet Ruby
 
 
 rubyflow:
-  title:    Ruby Flow
-  feed_url: http://feeds.feedburner.com/Rubyflow?format=xml
-  url:      http://rubyflow.com
+  title: Ruby Flow
+  link:  http://rubyflow.com
+  feed:  http://feeds.feedburner.com/Rubyflow?format=xml
 
 rubyonrails:
-  title:    Ruby on Rails Blog
-  feed_url: http://weblog.rubyonrails.org/feed/atom.xml
-  url:      http://weblog.rubyonrails.org
+  title: Ruby on Rails Blog
+  link:  http://weblog.rubyonrails.org
+  feed:  http://weblog.rubyonrails.org/feed/atom.xml
 
 viennarb:
-  title:    vienna.rb Blog
-  url:      http://vienna-rb.at
-  feed_url: http://vienna-rb.at/atom.xml
+  title: vienna.rb Blog
+  link:  http://vienna-rb.at
+  feed:  http://vienna-rb.at/atom.xml
 ```
 
 For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.yml),
