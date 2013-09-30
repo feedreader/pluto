@@ -160,6 +160,40 @@ default_value opts.config_path
 flag [:c, :config] 
 
 
+### note: mostly for debugging lets you fetch individual feeds
+desc 'Fetch feeds'
+arg_name 'FEED', multiple: true   ## todo/fix: check multiple will not print typeo???
+command [:fetch, :f] do |c|
+
+  c.action do |g,o,args|
+    logger.debug 'hello from fetch command'
+
+      # add dbname as opts property
+
+      #####
+      # todo: add into method for reuse for build/merge/fetch
+      #   all use the same code
+ 
+      db_config = {
+        adapter:  'sqlite3',
+        database: "#{opts.output_path}/#{name}.db"
+      }
+
+      Pluto::Connecter.new.connect!( db_config )
+
+
+    args.each do |arg|
+
+     ## fetch feeds - to be done
+
+    end
+
+    puts 'Done.'
+  end
+end # command fetch
+
+
+
 ## note: same as build (but without step 1) fetch)
 desc 'Merge planet template pack'
 arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
@@ -206,12 +240,12 @@ end # command merge
 
 
 ## note: same as build (but without step 2) merge)
-desc 'Fetch planet feeds'
+desc 'Update planet feeds'
 arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
-command [:fetch, :f] do |c|
+command [:update, :up, :u] do |c|
 
   c.action do |g,o,args|
-    logger.debug 'hello from fetch command'
+    logger.debug 'hello from update command'
 
     args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
