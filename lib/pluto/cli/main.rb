@@ -165,27 +165,47 @@ desc 'Fetch feeds'
 arg_name 'FEED', multiple: true   ## todo/fix: check multiple will not print typeo???
 command [:fetch, :f] do |c|
 
+  c.desc 'Database path'
+  c.arg_name 'PATH'
+  c.default_value opts.db_path
+  c.flag [:d, :dbpath]
+
+  c.desc 'Database name'
+  c.arg_name 'NAME'
+  c.default_value opts.db_name
+  c.flag [:n, :dbname]
+
   c.action do |g,o,args|
     logger.debug 'hello from fetch command'
 
-      # add dbname as opts property
+    ##  turn on debug flag by default; no need to passing --verbose
+    LogUtils::Logger.root.level = :debug
+    opts.verbose = true
 
-      #####
-      # todo: add into method for reuse for build/merge/fetch
-      #   all use the same code
+    # add dbname as opts property
+
+    #####
+    # todo: add into method for reuse for build/merge/fetch
+    #   all use the same code
  
-      db_config = {
-        adapter:  'sqlite3',
-        database: "#{opts.output_path}/#{name}.db"
-      }
+    db_config = {
+      adapter:  'sqlite3',
+      database: "#{opts.db_path}/#{opts.db_name}"
+    }
 
-      Pluto::Connecter.new.connect!( db_config )
-
+    Pluto::Connecter.new.connect!( db_config )
 
     args.each do |arg|
+      feed_rec = Pluto::Models::Feed.find_by_key!( arg )
 
-     ## fetch feeds - to be done
+      puts "feed_rec:"
+      pp feed_rec
 
+      fetcher = Pluto::Fetcher.new
+      fetcher.debug = true  # by default debug is true (only used for debuggin! - save feed to file, etc.)
+
+      feed = fetcher.feed_by_rec( feed_rec )
+      ## pp feed
     end
 
     puts 'Done.'

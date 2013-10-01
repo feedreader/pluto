@@ -60,16 +60,47 @@ module TemplateHelper
   end  # method whitelist
 
 
+
+
+  ## move into own helper module???
+  ##  - any helper already for easy reuse
+  ##
+  #   rails style asset tag helpers and friends
+
+  def stylesheet_link_tag( href )
+    href = "#{href}.css"  unless href.ends_with( '.css' )   # auto-add .css if not present
+    "<link rel='stylesheet' type='text/css' href='#{href}'>"
+  end
+
+  def image_tag( src, opts={} )
+    attributes = ""
+    opts.each do |key,value|
+      attributes << "#{key}='#{value}' "
+    end
+    "<img src='#{src}' #{attributes}>"
+  end
+
+  def link_to( text, href, opts={} )
+    attributes = ""
+    opts.each do |key,value|
+      attributes << "#{key}='#{value}' "
+    end
+    "<a href='#{href}' #{attributes}>#{text}</a>"
+  end
+
+
   ##  change to simple_hypertext or
   #     hypertext_simple or
   #     sanitize ???
+
   
+
   def textify( hy, opts={} )   # hy -> hypertext
     ## turn into text
     # todo: add options for
     #   keep links, images, lists (?too), code, codeblocks
 
-    hy = whitelist( hy, [:br, :p, :ul, :ol, :li, :pre, :code], opts )
+    hy = whitelist( hy, [:br, :p, :ul, :ol, :li, :pre, :code, :blockquote, :q, :cite], opts )
 
    # strip bold
 #    hy = hy.gsub( /<b[^>]*>/, '**' )  # fix: will also swallow bxxx tags - add b space

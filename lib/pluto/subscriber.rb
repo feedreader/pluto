@@ -6,14 +6,9 @@ class Subscriber
 
   include Models
 
-  def debug=(value)
-    @debug = value
-    ### logger.debug "[Updater] setting debug flag - debug? #{debug?}"
-  end
+  def debug=(value)  @debug = value;   end
+  def debug?()       @debug || false;  end
 
-  def debug?
-    @debug || false
-  end
 
   def update_subscriptions( config, opts={} )
 

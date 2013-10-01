@@ -9,11 +9,22 @@ class Opts
 
   def merge_gli_options!( options={} )
     @verbose = true     if options[:verbose] == true
-    
+
+    @db_path   = options[:dbpath]  if options[:dbpath].present?
+    @db_name   = options[:dbname]  if options[:dbname].present?
+
     @config_path = options[:config]    if options[:config].present?
     @output_path = options[:output]    if options[:output].present?
-    
+
     @manifest       =   options[:template]  if options[:template].present?
+  end
+
+  def db_path
+    @db_path || '.'
+  end
+
+  def db_name
+    @db_name || 'pluto.db'
   end
 
 
