@@ -68,7 +68,7 @@ module TemplateHelper
   #   rails style asset tag helpers and friends
 
   def stylesheet_link_tag( href )
-    href = "#{href}.css"  unless href.ends_with( '.css' )   # auto-add .css if not present
+    href = "#{href}.css"  unless href.ends_with?( '.css' )   # auto-add .css if not present
     "<link rel='stylesheet' type='text/css' href='#{href}'>"
   end
 
