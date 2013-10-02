@@ -197,6 +197,15 @@ For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto.sample
 [`beer.yml`](https://github.com/feedreader/pluto.samples/blob/master/beer.yml),
 [`football.yml`](https://github.com/feedreader/pluto.samples/blob/master/football.yml).
 
+
+## Template Packs
+
+- Blank - default templates; [more »](https://github.com/feedreader/pluto.blank)
+- News - 'river of news' style templates; [more »](https://github.com/feedreader/pluto.news)
+- Top -  Popurl-style templates; [more »](https://github.com/feedreader/pluto.top)
+- Classic -  Planet Planet-Style templates; [more »](https://github.com/feedreader/pluto.classic)
+
+
 ## Install
 
 Just install the gem:
@@ -222,7 +231,7 @@ Planet Mars by Sam Ruby [(Site)](https://github.com/rubys/mars) -  first draft o
 
 ### Python
 
-Planet Planet by Scott James Remnant n Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine; last release version 2.0 in 2006
+Planet Planet by Scott James Remnant ann Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine; last release version 2.0 in 2006
 
 Planet Venus by Sam Ruby [(Site)](https://github.com/rubys/venus) - cleaned up Planet Planet code; last change in 2010
 
