@@ -7,7 +7,14 @@ class Item < ActiveRecord::Base
   include Pluto::ActiveRecordMethods  # e.g. read_attribute_w_fallbacks
 
   belongs_to :feed
-  
+
+  ##################################
+  # attribute reader aliases
+  def name()        title;    end  # alias for title
+  def description() summary;  end  # alias for summary  -- also add descr shortcut??
+  def link()        url;      end  # alias for url
+
+
   def self.latest
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)

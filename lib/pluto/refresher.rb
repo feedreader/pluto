@@ -60,7 +60,11 @@ class Refresher
         touched_at:   feed.updated?   ? feed.updated   : nil,
         built_at:     feed.built?     ? feed.built     : nil,
         summary:      feed.summary?   ? feed.summary   : nil,
-        title2:       feed.title2?    ? feed.title2    : nil,
+        ### todo/fix: add/use
+        # auto_title:     ???,
+        # auto_url:       ???,
+        # auto_feed_url:  ???,
+        auto_title2:  feed.title2?    ? feed.title2    : nil,
         generator:    feed.generator
       }
 

@@ -20,13 +20,22 @@ class Feed < ActiveRecord::Base
     order( "coalesce(latest_published_at,'1911-01-01') desc" )
   end
 
+  ##################################
+  # attribute reader aliases
+  def name()        title;    end  # alias for title
+  def description() summary;  end  # alias for summary  -- also add descr shortcut??
+  def link()        url;      end  # alias for url
+  def feed()        feed_url; end  # alias for feed_url
+
 
   def url?()           read_attribute(:url).present?;       end
   def title?()         read_attribute(:title).present?;     end
+  def title2?()        read_attribute(:title2).present?;    end
   def feed_url?()      read_attribute(:feed_url).present?;  end
 
   def url()      read_attribute_w_fallbacks( :url,      :auto_url );      end
   def title()    read_attribute_w_fallbacks( :title,    :auto_title );    end
+  def title2()   read_attribute_w_fallbacks( :title2,   :auto_title2 );   end
   def feed_url() read_attribute_w_fallbacks( :feed_url, :auto_feed_url ); end
 
 

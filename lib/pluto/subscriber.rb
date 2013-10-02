@@ -34,10 +34,17 @@ class Subscriber
     # -- log update action
     Action.create!( title: 'update subscriptions' )
 
+    # clean out subscriptions and add again
+    logger.debug "before site.subscriptions.delete_all - count: #{site_rec.subscriptions.count}"
+    site_rec.subscriptions.destroy_all  # note: use destroy_all NOT delete_all (delete_all tries by default only nullify)
+    logger.debug "after site.subscriptions.delete_all - count: #{site_rec.subscriptions.count}"
 
     config.each do |key, value|
-      
-      next if ['title','name','feeds'].include?( key )   # skip "top-level" feed keys e.g. title, etc.
+
+      ## todo: downcase key - why ??? why not???
+
+      # skip "top-level" feed keys e.g. title, etc. or planet planet sections (e.g. planet,defaults)
+      next if ['title','title2','name','feeds','planet','defaults'].include?( key )   
 
       ### todo/check:
       ##   check value - must be hash
@@ -50,8 +57,9 @@ class Subscriber
       # todo: use title from feed?
       feed_attribs = {
         feed_url: feed_hash[ 'feed' ]  || feed_hash[ 'feed_url' ],
-        url:      feed_hash[ 'link' ]  || feed_hash[ 'site' ] || feed_hash[ 'url' ],
-        title:    feed_hash[ 'title' ] || feed_hash[ 'name' ] || feed_hash[ 'author' ]
+        url:      feed_hash[ 'link' ]  || feed_hash[ 'url' ],
+        title:    feed_hash[ 'title' ] || feed_hash[ 'name' ],
+        title2:   feed_hash[ 'title2' ]
       }
 
       puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
@@ -68,9 +76,10 @@ class Subscriber
       end
       
       feed_rec.update_attributes!( feed_attribs )
-      
-      ## todo:
-      #  add subscription records  (feed,site)  - how? 
+
+      #  add subscription record
+      #   note: subscriptions get cleaned out on update first (see above)
+      site_rec.subscriptions.create!( feed_id: feed_rec.id )   
     end
 
   end # method update_subscriptions
