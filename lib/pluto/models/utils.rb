@@ -8,16 +8,16 @@ class ItemCursor
   end
 
   def each
-    last_published_at = Time.local( 1911, 1, 1 )
+    last_published = Time.local( 1971, 1, 1 )
     last_feed_id      = -1     ## todo: use feed_key instead of id?? why? why not??
     
     @items.each do |item|
 
-      item_published_at = item.published_at  # cache published_at value ref
+      item_published = item.published  # cache published value ref
 
-      if last_published_at.year   == item_published_at.year  &&
-         last_published_at.month  == item_published_at.month &&
-         last_published_at.day    == item_published_at.day 
+      if last_published.year   == item_published.year  &&
+         last_published.month  == item_published.month &&
+         last_published.day    == item_published.day 
         new_date = false
       else
         new_date = true
@@ -31,8 +31,8 @@ class ItemCursor
 
       yield( item, new_date, new_feed )
       
-      last_published_at = item.published_at
-      last_feed_id      = item.feed.id
+      last_published = item.published
+      last_feed_id   = item.feed.id
     end
   end # method each
     

@@ -25,10 +25,10 @@ class Refresher
     Action.create!( title: 'update feeds' )
 
     #####
-    # -- update fetched_at  timestamps for all sites
-    feeds_fetched_at = Time.now
+    # -- update fetched  timestamps for all sites
+    feeds_fetched = Time.now
     Site.all.each do |site|
-      site.fetched_at = feeds_fetched_at
+      site.fetched = feeds_fetched
       site.save!
     end
 
@@ -36,7 +36,7 @@ class Refresher
 
       feed = @worker.feed_by_rec( feed_rec )
 
-      feed_fetched_at = Time.now
+      feed_fetched = Time.now
 
       ## todo/check: move feed_rec update to the end (after item updates??)
 
@@ -54,11 +54,11 @@ class Refresher
       
       
       feed_attribs = {
-        fetched_at:   feed_fetched_at,
+        fetched:      feed_fetched,
         format:       feed.format,
-        published_at: feed.published? ? feed.published : nil,
-        touched_at:   feed.updated?   ? feed.updated   : nil,
-        built_at:     feed.built?     ? feed.built     : nil,
+        published:    feed.published? ? feed.published : nil,
+        touched:      feed.updated?   ? feed.updated   : nil,
+        built:        feed.built?     ? feed.built     : nil,
         summary:      feed.summary?   ? feed.summary   : nil,
         ### todo/fix: add/use
         # auto_title:     ???,
@@ -83,13 +83,13 @@ class Refresher
       feed.items.each do |item|
 
         item_attribs = {
-          fetched_at:   feed_fetched_at,
+          fetched:      feed_fetched,
           title:        item.title,
           url:          item.url,
           summary:      item.summary?   ? item.summary   : nil,
           content:      item.content?   ? item.content   : nil,
-          published_at: item.published? ? item.published : nil,
-          touched_at:   item.updated?   ? item.updated   : nil,
+          published:    item.published? ? item.published : nil,
+          touched:      item.updated?   ? item.updated   : nil,
           feed_id:      feed_rec.id    # add feed_id fk_ref
         }
 
@@ -116,12 +116,12 @@ class Refresher
       end  # each item
 
       #  update  cached value latest published_at for item
-      item_recs = feed_rec.items.latest.limit(1).all
-      unless item_recs.empty?
-        if item_recs[0].published_at?
-          feed_rec.latest_published_at = item_recs[0].published_at
-        else # try touched_at
-          feed_rec.latest_published_at = item_recs[0].touched_at
+      item_rec = feed_rec.items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
+      if item_rec.present?
+        if item_rec.published?
+          feed_rec.last_published = item_rec.published
+        else # try touched
+          feed_rec.last_published = item_rec.touched
         end
         feed_rec.save!
       end

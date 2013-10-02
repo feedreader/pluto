@@ -5,16 +5,16 @@ module Pluto
 
 module TemplateHelper
 
-  def strip_tags( hy )
+  def strip_tags( ht )
     ### tobe done
     ## strip markup tags; return plain text
-    hy.gsub( /<[^>]+>/, '' )
+    ht.gsub( /<[^>]+>/, '' )
   end
 
 
-  def whitelist( hy, tags, opts={} )
+  def whitelist( ht, tags, opts={} )
 
-    # note: assumes properly escaped <> in hy/hypertext
+    # note: assumes properly escaped <> in ht/hypertext
 
     ###############################################
     # step one - save whitelisted tags use ‹tag›
@@ -25,38 +25,38 @@ module TemplateHelper
 
       # convert xml-style empty tags to simple html emtpty tags
       #  e.g. <br/> or <br /> becomses <br>
-      hy = hy.gsub( /<(#{tag})\s*\/>/i )       { |_| "‹#{$1.downcase}›" }   # eg. <br /> or <br/> becomes ‹br›
+      ht = ht.gsub( /<(#{tag})\s*\/>/i )       { |_| "‹#{$1.downcase}›" }   # eg. <br /> or <br/> becomes ‹br›
 
       # make sure we won't swall <br> for <b> for example, thus use \s+ before [^>]
-      hy = hy.gsub( /<(#{tag})(\s+[^>]*)?>/i ) { |_| "‹#{$1.downcase}›" }   # opening tag <p>
-      hy = hy.gsub( /<\/(#{tag})\s*>/i )       { |_| "‹/#{$1.downcase}›" }  # closing tag e.g. </p>
+      ht = ht.gsub( /<(#{tag})(\s+[^>]*)?>/i ) { |_| "‹#{$1.downcase}›" }   # opening tag <p>
+      ht = ht.gsub( /<\/(#{tag})\s*>/i )       { |_| "‹/#{$1.downcase}›" }  # closing tag e.g. </p>
     end
 
     ############################
     # step two - clean tags
 
     #   strip images - special treatment for debugging
-    hy = hy.gsub( /<img[^>]*>/i, '♦' )   # for debugging use black diamond e.g. ♦
-    hy = hy.gsub( /<\/img>/i, '' )   # should not exists
+    ht = ht.gsub( /<img[^>]*>/i, '♦' )   # for debugging use black diamond e.g. ♦
+    ht = ht.gsub( /<\/img>/i, '' )   # should not exists
 
     # strip all remaining tags
-    hy = hy.gsub( /<[^>]+>/, '' )
+    ht = ht.gsub( /<[^>]+>/, '' )
     
-    pp hy  # fix: debugging indo - remove
+    pp ht  # fix: debugging indo - remove
     
     ############################################
     # step three - restore whitelisted tags
 
-    return hy if opts[:skip_restore].present?   # skip step 3 for debugging
+    return ht if opts[:skip_restore].present?   # skip step 3 for debugging
 
     tags.each do |tag|
-#      hy = hy.gsub( /‹(#{tag})›/, "<\1>" )  # opening tag e.g. <p>
-#      hy = hy.gsub( /‹\/(#{tag})›/, "<\/\1>" )  # closing tag e.g. </p>
-      hy = hy.gsub( /‹(#{tag})›/ )   { |_| "<#{$1}>" }
-      hy = hy.gsub( /‹\/(#{tag})›/ ) { |_| "<\/#{$1}>" }  # closing tag e.g. </p>
+#      ht = ht.gsub( /‹(#{tag})›/, "<\1>" )  # opening tag e.g. <p>
+#      ht = ht.gsub( /‹\/(#{tag})›/, "<\/\1>" )  # closing tag e.g. </p>
+      ht = ht.gsub( /‹(#{tag})›/ )   { |_| "<#{$1}>" }
+      ht = ht.gsub( /‹\/(#{tag})›/ ) { |_| "<\/#{$1}>" }  # closing tag e.g. </p>
     end
 
-    hy
+    ht
   end  # method whitelist
 
 
@@ -95,37 +95,37 @@ module TemplateHelper
 
   
 
-  def textify( hy, opts={} )   # hy -> hypertext
+  def textify( ht, opts={} )   # ht -> hypertext
     ## turn into text
     # todo: add options for
     #   keep links, images, lists (?too), code, codeblocks
 
-    hy = whitelist( hy, [:br, :p, :ul, :ol, :li, :pre, :code, :blockquote, :q, :cite], opts )
+    ht = whitelist( ht, [:br, :p, :ul, :ol, :li, :pre, :code, :blockquote, :q, :cite], opts )
 
    # strip bold
-#    hy = hy.gsub( /<b[^>]*>/, '**' )  # fix: will also swallow bxxx tags - add b space
-#    hy = hy.gsub( /<\/b>/, '**' )
+#    ht = ht.gsub( /<b[^>]*>/, '**' )  # fix: will also swallow bxxx tags - add b space
+#    ht = ht.gsub( /<\/b>/, '**' )
 
     # strip em
-#   hy = hy.gsub( /<em[^>]*>/, '__' )
-#   hy = hy.gsub( /<\/em>/, '__' )
+#   ht = ht.gsub( /<em[^>]*>/, '__' )
+#   ht = ht.gsub( /<\/em>/, '__' )
 
     # clean (prettify) literal urls (strip protocoll) 
-    hy = hy.gsub( /(http|https):\/\//, '' )
+    ht = ht.gsub( /(http|https):\/\//, '' )
 
-#    hy = hy.gsub( /&nbsp;/, ' ' )
+#    ht = ht.gsub( /&nbsp;/, ' ' )
 
 #    # try to cleanup whitespaces
 #    # -- keep no more than two spaces
-#    hy = hy.gsub( /[ \t]{3,}/, '  ' )
+#    ht = ht.gsub( /[ \t]{3,}/, '  ' )
 #    # -- keep no more than two new lines
-#    hy = hy.gsub( /\n{2,}/m, "\n\n" ) 
+#    ht = ht.gsub( /\n{2,}/m, "\n\n" ) 
 #    # -- remove all trailing spaces
-#    hy = hy.gsub( /[ \t\n]+$/m, '' )
+#    ht = ht.gsub( /[ \t\n]+$/m, '' )
 #    # -- remove all leading spaces
-#    hy = hy.gsub( /^[ \t\n]+/m, '' ) 
+#    ht = ht.gsub( /^[ \t\n]+/m, '' ) 
 
-    hy
+    ht
   end
 
 

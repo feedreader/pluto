@@ -11,6 +11,7 @@ class Site < ActiveRecord::Base
   ##################################
   # attribute reader aliases
   def name()        title;    end  # alias for title
+  def fetched_at()  fetched;  end  # - legacy attrib reader -- remove!!!
 
 end
 

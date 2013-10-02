@@ -14,24 +14,28 @@ class Item < ActiveRecord::Base
   def description() summary;  end  # alias for summary  -- also add descr shortcut??
   def link()        url;      end  # alias for url
 
+  def fetched_at()        fetched;        end # legay attrib reader - depreciated - remove!!
+  def published_at()      published;      end # legay attrib reader - depreciated - remove!!
+  def touched_at()        touched;        end # legay attrib reader - depreciated - remove!!
+
 
   def self.latest
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
-    # note: if not published_at,touched_at or built_at use hardcoded 1911-01-01 for now
-    order( "coalesce(published_at,touched_at,'1911-01-01') desc" )
+    # note: if not published,touched or built_at use hardcoded 1971-01-01 for now
+    order( "coalesce(published,touched,'1971-01-01') desc" )
   end
 
-  def published_at?()  read_attribute(:published_at).present?;  end
+  def published?()  read_attribute(:published).present?;  end
 
-  def published_at
+  def published
     ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
     #    db backed attribute
 
     read_attribute_w_fallbacks(
-      :published_at,
-      :touched_at      # try touched_at (aka updated)
+      :published,
+      :touched       # try touched (aka updated RSS/ATOM)
     )
   end
 

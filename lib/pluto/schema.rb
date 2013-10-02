@@ -7,7 +7,7 @@ class CreateDb < ActiveRecord::Migration
     create_table :sites do |t|
       t.string   :title,     :null => false    # e.g Planet Ruby, Planet JavaScript, etc.
       t.string   :key,       :null => false    # e.g. ruby, js, etc.
-      t.datetime :fetched_at   #  last fetched/checked date -- make not null ??
+      t.datetime :fetched   #  last fetched/checked date -- make not null ??
 
       t.timestamps  # created_at, updated_at
     end
@@ -35,17 +35,30 @@ class CreateDb < ActiveRecord::Migration
 
       t.string  :generator   # feed generator (e.g. wordpress, etc.)  from feed
       
-      t.datetime :published_at  # from feed published(atom)+ pubDate(rss)
-      t.datetime :built_at      # from feed lastBuiltDate(rss)
-      t.datetime :touched_at    # from feed updated(atom)
+      t.datetime :published  # from feed published(atom)+ pubDate(rss)
+      t.datetime :built      # from feed lastBuiltDate(rss)
+      t.datetime :touched    # from feed updated(atom)
+
+      ############
+      # filters
+      t.string   :includes  # regex
+      t.string   :excludes  # regex
+      # todo: add generic filter list e.g. t.string :filters  (comma,pipe or space separated method names?)
 
       # -- our own (meta) fields
-      t.datetime :latest_published_at # cache latest item published_at
+      t.datetime :last_published # cache last (latest) published for items
 
       t.string  :key,      :null => false
       t.string  :format      # e.g. atom (1.0), rss 2.0, rss 0.7 etc.
-      t.string  :etag      # last etag
-      t.datetime :fetched_at    # last fetched/checked date
+
+      t.integer  :http_code   # last http status code e.g. 200,404,etc.
+      t.string   :http_etag    # last http header etag
+      t.datetime :http_last_modified   # last http header last-modified
+
+      t.text    :body    # last http response body (complete feed!)
+
+      t.datetime :fetched    # last fetched/checked date
+
       t.timestamps   # created_at, updated_at
     end
 
@@ -56,15 +69,15 @@ class CreateDb < ActiveRecord::Migration
       t.text     :summary  # e.g. description (rss), summary (atom)
       t.text     :content
       
-      t.datetime :published_at   # from feed (published)  + pubDate(rss)
-      t.datetime :touched_at     # from feed updated (atom)
+      t.datetime :published   # from feed (published)  + pubDate(rss)
+      t.datetime :touched     # from feed updated (atom)
 
       ## todo: add :last_updated_at ??  (NOTE: updated_at already take by auto-timestamps)
       t.references :feed, :null => false
 
-      t.datetime :fetched_at   # last fetched/check date
+      t.datetime :fetched   # last fetched/check date
       t.timestamps   # created_at, updated_at
-      
+
       ## t.string   :author
       ## todo: add author/authors, category/categories
     end

@@ -15,9 +15,9 @@ class Feed < ActiveRecord::Base
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
-    # note: if not published_at,touched_at or built_at use hardcoded 1911-01-01 for now
-    ## order( "coalesce(published_at,touched_at,built_at,'1911-01-01') desc" )
-    order( "coalesce(latest_published_at,'1911-01-01') desc" )
+    # note: if not published, touched or built use hardcoded 1971-01-01 for now
+    ## order( "coalesce(published,touched,built,'1971-01-01') desc" )
+    order( "coalesce(last_published,'1971-01-01') desc" )
   end
 
   ##################################
@@ -26,6 +26,12 @@ class Feed < ActiveRecord::Base
   def description() summary;  end  # alias for summary  -- also add descr shortcut??
   def link()        url;      end  # alias for url
   def feed()        feed_url; end  # alias for feed_url
+
+  def last_published_at() last_published; end # legay attrib reader - depreciated - remove!!
+  def fetched_at()        fetched;        end # legay attrib reader - depreciated - remove!!
+  def published_at()      published;      end # legay attrib reader - depreciated - remove!!
+  def touched_at()        touched;        end # legay attrib reader - depreciated - remove!!
+  def built_at()          built;          end # legay attrib reader - depreciated - remove!!
 
 
   def url?()           read_attribute(:url).present?;       end
@@ -39,17 +45,18 @@ class Feed < ActiveRecord::Base
   def feed_url() read_attribute_w_fallbacks( :feed_url, :auto_feed_url ); end
 
 
-  def published_at?()  read_attribute(:published_at).present?;  end
-  def touched_at?()    read_attribute(:touched_at).present?;    end
+  def published?()  read_attribute(:published).present?;  end
+  def touched?()    read_attribute(:touched).present?;    end
 
-  def published_at
+
+  def published
     ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
     #    db backed attribute
 
     read_attribute_w_fallbacks(
-       :published_at,  # try touched_at (aka updated (ATOM))
-       :touched_at,    # try build_at (aka lastBuildDate (RSS))
-       :built_at
+       :published,  
+       :touched,     # try touched (aka updated (ATOM))
+       :built        # try build (aka lastBuildDate (RSS))
     )
   end
 
