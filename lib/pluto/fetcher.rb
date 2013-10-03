@@ -14,9 +14,16 @@ class Fetcher
 
 
   def fetch_feed( url )
-    ### fix: use worker.get( url )  # check http response code etc.
-    
-    xml = @worker.read( url )
+    response = @worker.get( url )
+
+    if debug?
+      puts "http status #{response.code} #{response.message}"
+      
+      puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
+      puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
+    end
+
+    xml = response.body
 
     ###
     # NB: Net::HTTP will NOT set encoding UTF-8 etc.
@@ -122,7 +129,12 @@ class Fetcher
       body:               feed_xml,
       fetched:            feed_fetched
     }
-      
+    
+    if debug?
+      puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
+      puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
+    end
+
     feed_rec.update_attributes!( feed_attribs )
 
     logger.debug "feed_xml:"

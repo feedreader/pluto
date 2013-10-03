@@ -67,9 +67,9 @@ class Refresher
       last_item_rec = feed_rec.items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
       if last_item_rec.present?
         if last_item_rec.published?
-          feed_rec.update_attributes!( last_published: item_rec.published )
+          feed_rec.update_attributes!( last_published: last_item_rec.published )
         else # try touched
-          feed_rec.update_attributes!( last_published: item_rec.touched )
+          feed_rec.update_attributes!( last_published: last_item_rec.touched )
         end
       end
 

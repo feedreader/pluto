@@ -45,7 +45,11 @@ class Item < ActiveRecord::Base
   def debug?()       @debug || false;  end
 
   def update_from_struct!( feed_rec, data )
+    ## check: new item/record?  not saved?  add guid
+    #   otherwise do not add guid  - why? why not?
+
     item_attribs = {
+      guid:         data.guid,   # todo: only add for new records???
       title:        data.title,
       url:          data.url,
       summary:      data.summary?   ? data.summary   : nil,
