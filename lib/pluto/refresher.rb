@@ -34,9 +34,14 @@ class Refresher
 
     Feed.all.each do |feed_rec|
 
-      feed = @worker.feed_by_rec( feed_rec )
+      feed = @worker.feed_by_rec_if_modified( feed_rec )
+      
+      # on error or if http-not modified etc. skip update/processing
+      next  if feed.nil?
 
-      feed_fetched = Time.now
+      ## fix/todo: reload feed_red   - fetched date updated etc.
+      ##  check if needed for access to fetched date
+      
 
       ## todo/check: move feed_rec update to the end (after item updates??)
 
@@ -51,79 +56,21 @@ class Refresher
       #
       #  move to_datetime to feedutils!! if it works
       ##   todo: move this comments to feedutils??
-      
-      
-      feed_attribs = {
-        fetched:      feed_fetched,
-        format:       feed.format,
-        published:    feed.published? ? feed.published : nil,
-        touched:      feed.updated?   ? feed.updated   : nil,
-        built:        feed.built?     ? feed.built     : nil,
-        summary:      feed.summary?   ? feed.summary   : nil,
-        ### todo/fix: add/use
-        # auto_title:     ???,
-        # auto_url:       ???,
-        # auto_feed_url:  ???,
-        auto_title2:  feed.title2?    ? feed.title2    : nil,
-        generator:    feed.generator
-      }
-
-      if debug?
-        ## puts "*** dump feed_attribs:"
-        ## pp feed_attribs
-        puts "*** dump feed_attribs w/ class types:"
-        feed_attribs.each do |key,value|
-          puts "  #{key}: >#{value}< : #{value.class.name}"
-        end
-      end
-
-      feed_rec.update_attributes!( feed_attribs )
 
 
-      feed.items.each do |item|
-
-        item_attribs = {
-          fetched:      feed_fetched,
-          title:        item.title,
-          url:          item.url,
-          summary:      item.summary?   ? item.summary   : nil,
-          content:      item.content?   ? item.content   : nil,
-          published:    item.published? ? item.published : nil,
-          touched:      item.updated?   ? item.updated   : nil,
-          feed_id:      feed_rec.id    # add feed_id fk_ref
-        }
-
-        if debug?
-          puts "*** dump item_attribs w/ class types:"
-          item_attribs.each do |key,value|
-            next if [:summary,:content].include?( key )   # skip summary n content
-            puts "  #{key}: >#{value}< : #{value.class.name}"
-          end
-        end
+      feed_rec.debug = debug? ? true : false    # pass along debug flag
+      ## fix/todo: pass debug flag as opts - debug: true|false !!!!!!
+      feed_rec.save_from_struct!( feed )  # todo: find a better name - why? why not??
 
 
-        rec = Item.find_by_guid( item.guid )
-        if rec.nil?
-          rec      = Item.new
-          item_attribs[ :guid ] = item.guid
-          puts "** NEW | #{item.title}"
-        else
-          ## todo: check if any attribs changed
-          puts "UPDATE | #{item.title}"
-        end
-
-        rec.update_attributes!( item_attribs )
-      end  # each item
-
-      #  update  cached value latest published_at for item
-      item_rec = feed_rec.items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
-      if item_rec.present?
-        if item_rec.published?
-          feed_rec.last_published = item_rec.published
+      #  update  cached value last published for item
+      last_item_rec = feed_rec.items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
+      if last_item_rec.present?
+        if last_item_rec.published?
+          feed_rec.update_attributes!( last_published: item_rec.published )
         else # try touched
-          feed_rec.last_published = item_rec.touched
+          feed_rec.update_attributes!( last_published: item_rec.touched )
         end
-        feed_rec.save!
       end
 
     end # each feed

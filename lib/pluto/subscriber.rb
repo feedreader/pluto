@@ -54,12 +54,16 @@ class Subscriber
       feed_key   = key.to_s.dup
       feed_hash  = value
 
-      # todo: use title from feed?
+      # todo/fix: use title from feed?
+      #  e.g. fill up auto_title, auto_url, etc.
+
       feed_attribs = {
         feed_url: feed_hash[ 'feed' ]  || feed_hash[ 'feed_url' ],
         url:      feed_hash[ 'link' ]  || feed_hash[ 'url' ],
         title:    feed_hash[ 'title' ] || feed_hash[ 'name' ],
-        title2:   feed_hash[ 'title2' ]
+        title2:   feed_hash[ 'title2' ],
+        includes: feed_hash[ 'includes' ] || feed_hash[ 'include' ],
+        excludes: feed_hash[ 'excludes' ] || feed_hash[ 'exclude' ]
       }
 
       puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."

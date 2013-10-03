@@ -13,34 +13,6 @@ class Fetcher
   def debug?()       @debug || false;  end
 
 
-  def feed_by_rec( feed_rec )
-    feed_url = feed_rec.feed_url
-    feed_key = feed_rec.key
-    
-    feed_xml = fetch_feed( feed_url )
-
-    logger.debug "feed_xml:"
-    logger.debug feed_xml[ 0..300 ] # get first 300 chars
-
-    #  if opts.verbose?  # also write a copy to disk
-    if debug?
-      logger.debug "saving feed to >./#{feed_key}.xml<..."
-      File.open( "./#{feed_key}.xml", 'w' ) do |f|
-        f.write( feed_xml )
-      end
-    end
-      
-    puts "Before parsing feed >#{feed_key}<..."
-
-    ### move to feedutils
-    ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
-
-    ## fix/todo: check for feed.nil?   -> error parsing!!!
-    #    or throw exception
-    feed = FeedUtils::Parser.parse( feed_xml )
-  end
-
-
   def fetch_feed( url )
     ### fix: use worker.get( url )  # check http response code etc.
     
@@ -62,6 +34,108 @@ class Fetcher
     logger.debug "xml.encoding.name (after): #{xml.encoding.name}"      
 
     xml
+  end
+
+
+  def feed_by_rec( feed_rec )
+    # simple feed fetcher; use for debugging (only/mostly)
+    #  -- will NOT change db records in any way
+
+    feed_url = feed_rec.feed_url
+    feed_key = feed_rec.key
+
+    feed_xml = fetch_feed( feed_url )
+
+    logger.debug "feed_xml:"
+    logger.debug feed_xml[ 0..500 ] # get first 500 chars
+
+    #  if opts.verbose?  # also write a copy to disk
+    if debug?
+      logger.debug "saving feed to >./#{feed_key}.xml<..."
+      File.open( "./#{feed_key}.xml", 'w' ) do |f|
+        f.write( feed_xml )
+      end
+    end
+      
+    puts "Before parsing feed >#{feed_key}<..."
+
+    ### move to feedutils
+    ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
+
+    ## fix/todo: check for feed.nil?   -> error parsing!!!
+    #    or throw exception
+    feed = FeedUtils::Parser.parse( feed_xml )
+  end
+
+
+  def feed_by_rec_if_modified( feed_rec )   # try smart http update; will update db records
+    feed_url = feed_rec.feed_url
+    feed_key = feed_rec.key
+
+    ### todo/fix:
+    ##  add if available http_etag  machinery for smarter updates
+    ##    and http_last_modified headers
+    ##    and brute force body_old == body_new   etc.
+
+    response = @worker.get( feed_url )
+
+    feed_fetched = Time.now
+
+    if response.code != '200'   # note Net::HTTP response.code is a string in ruby
+
+      puts "*** error: fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
+      
+      feed_attribs = {
+        http_code:          response.code.to_i,
+        http_etag:          nil,
+        http_last_modified: nil,
+        body:               nil,
+        fetched:            feed_fetched 
+      }
+      feed_rec.update_attributes!( feed_attribs )
+      return nil  #  sorry; no feed for parsing available
+    end
+    
+    
+    puts "OK - fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
+
+    feed_xml = response.body
+    ###
+    # NB: Net::HTTP will NOT set encoding UTF-8 etc.
+    # will mostly be ASCII
+    # - try to change encoding to UTF-8 ourselves
+    logger.debug "feed_xml.encoding.name (before): #{feed_xml.encoding.name}"
+
+    #####
+    # NB: ASCII-8BIT == BINARY == Encoding Unknown; Raw Bytes Here
+
+    ## NB:
+    # for now "hardcoded" to utf8 - what else can we do?
+    # - note: force_encoding will NOT change the chars only change the assumed encoding w/o translation
+    feed_xml = feed_xml.force_encoding( Encoding::UTF_8 )
+    logger.debug "feed_xml.encoding.name (after): #{feed_xml.encoding.name}"
+      
+    feed_attribs = {
+      http_code:          response.code.to_i,
+      http_etag:          response.header[ 'etag' ],
+      http_last_modified: response.header[ 'last-modified' ],
+      body:               feed_xml,
+      fetched:            feed_fetched
+    }
+      
+    feed_rec.update_attributes!( feed_attribs )
+
+    logger.debug "feed_xml:"
+    logger.debug feed_xml[ 0..300 ] # get first 300 chars
+      
+    puts "Before parsing feed >#{feed_key}<..."
+
+    ### move to feedutils
+    ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
+
+    ## fix/todo: check for feed.nil?   -> error parsing!!!
+    #    or throw exception
+    feed = FeedUtils::Parser.parse( feed_xml )
   end
   
 end # class Fetcher

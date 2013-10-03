@@ -60,6 +60,59 @@ class Feed < ActiveRecord::Base
     )
   end
 
+
+  def debug=(value)  @debug = value;   end
+  def debug?()       @debug || false;  end
+
+  def save_from_struct!( data )
+
+    update_from_struct!( data )
+    
+    data.items.each do |item|
+
+      item_rec = Item.find_by_guid( item.guid )
+      if item_rec.nil?
+        item_rec  = Item.new
+        puts "** NEW | #{item.title}"
+      else
+        ## todo: check if any attribs changed
+        puts "UPDATE | #{item.title}"
+      end
+      
+      item_rec.debug = debug? ? true : false  # pass along debug flag
+      item_rec.update_from_struct!( self, item )
+
+    end  # each item
+  end
+
+
+  def update_from_struct!( data )
+    feed_attribs = {
+        format:       data.format,
+        published:    data.published? ? data.published : nil,
+        touched:      data.updated?   ? data.updated   : nil,
+        built:        data.built?     ? data.built     : nil,
+        summary:      data.summary?   ? data.summary   : nil,
+        ### todo/fix: add/use
+        # auto_title:     ???,
+        # auto_url:       ???,
+        # auto_feed_url:  ???,
+        auto_title2:  data.title2?    ? data.title2    : nil,
+        generator:    data.generator
+      }
+
+    if debug?
+        ## puts "*** dump feed_attribs:"
+        ## pp feed_attribs
+        puts "*** dump feed_attribs w/ class types:"
+        feed_attribs.each do |key,value|
+          puts "  #{key}: >#{value}< : #{value.class.name}"
+        end
+    end
+
+    update_attributes!( feed_attribs )
+  end
+
 end  # class Feed
 
 

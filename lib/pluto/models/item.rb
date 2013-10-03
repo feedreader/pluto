@@ -39,6 +39,34 @@ class Item < ActiveRecord::Base
     )
   end
 
+
+
+  def debug=(value)  @debug = value;   end
+  def debug?()       @debug || false;  end
+
+  def update_from_struct!( feed_rec, data )
+    item_attribs = {
+      title:        data.title,
+      url:          data.url,
+      summary:      data.summary?   ? data.summary   : nil,
+      content:      data.content?   ? data.content   : nil,
+      published:    data.published? ? data.published : nil,
+      touched:      data.updated?   ? data.updated   : nil,
+      feed_id:      feed_rec.id,    # add feed_id fk_ref
+      fetched:      feed_rec.fetched
+    }
+
+    if debug?
+      puts "*** dump item_attribs w/ class types:"
+      item_attribs.each do |key,value|
+        next if [:summary,:content].include?( key )   # skip summary n content
+        puts "  #{key}: >#{value}< : #{value.class.name}"
+      end
+    end
+
+    update_attributes!( item_attribs )
+  end
+
 end  # class Item
 
 
