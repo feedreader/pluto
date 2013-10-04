@@ -16,12 +16,12 @@ class Fetcher
   def fetch_feed( url )
     response = @worker.get( url )
 
-    if debug?
+    ## if debug?
       puts "http status #{response.code} #{response.message}"
       
       puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
       puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
-    end
+    ## end
 
     xml = response.body
 
@@ -130,10 +130,10 @@ class Fetcher
       fetched:            feed_fetched
     }
     
-    if debug?
+    ## if debug?
       puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
       puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
-    end
+    ## end
 
     feed_rec.update_attributes!( feed_attribs )
 
