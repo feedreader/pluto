@@ -285,9 +285,9 @@ command [:update, :up, :u] do |c|
 
       config = load_config( arg )
 
-      Pluto::Updater.new( opts, config ).run
+      Pluto::Updater.new( opts, config ).run( name )
     end
-    
+
     puts 'Done.'
   end
 end # command fetch
@@ -326,7 +326,7 @@ command [:build, :b] do |c|
 
       config = load_config( arg )
 
-      Pluto::Updater.new( opts, config ).run
+      Pluto::Updater.new( opts, config ).run( name )
       Pluto::Formatter.new( opts, config ).run( name )
     end
     

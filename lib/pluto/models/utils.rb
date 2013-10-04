@@ -23,14 +23,18 @@ class ItemCursor
         new_date = true
       end
 
-      if last_feed_id == item.feed.id
-        new_feed = false
-      else
+## note:
+#   new date also **always** starts new feed
+#  - e.g. used for grouping within day (follows planet planet convention)
+
+      if new_date || last_feed_id != item.feed.id 
         new_feed = true
+      else
+        new_feed = false
       end
 
       yield( item, new_date, new_feed )
-      
+
       last_published = item.published
       last_feed_id   = item.feed.id
     end

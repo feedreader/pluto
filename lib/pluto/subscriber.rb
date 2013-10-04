@@ -11,15 +11,17 @@ class Subscriber
 
 
   def update_subscriptions( config, opts={} )
+    # !!!! -- depreciated API - remove - do NOT use anymore
+    puts "warn - [Pluto::Subscriber] depreciated API -- use update_subscriptions_for( site_key)"
+    update_subscriptions_for( 'planet', config, opts )  # default to planet site_key
+  end
 
+
+  def update_subscriptions_for( site_key, config, opts={} )
     site_attribs = {
-      title: config[ 'title' ] || config[ 'name' ]   # support either title or name
+      title: config['title'] || config['name']   # support either title or name
     }
-
-    ## for now - use single site w/ key planet
-    ##  -- fix!! allow multiple sites (planets)
-    
-    site_key = 'planet'
+ 
     site_rec = Site.find_by_key( site_key )
     if site_rec.nil?
       site_rec             = Site.new
@@ -27,12 +29,12 @@ class Subscriber
 
       ## use object_id: site.id and object_type: Site
       ## change - model/table/schema!!!
-      Action.create!( title: 'new site', object: site_attribs[ :title ] )
+      Action.create!( title: "new site >#{site_key}<", object: site_attribs[ :title ] )
     end
     site_rec.update_attributes!( site_attribs )
 
     # -- log update action
-    Action.create!( title: 'update subscriptions' )
+    Action.create!( title: "update subscriptions >#{site_key}<" )
 
     # clean out subscriptions and add again
     logger.debug "before site.subscriptions.delete_all - count: #{site_rec.subscriptions.count}"
@@ -44,7 +46,10 @@ class Subscriber
       ## todo: downcase key - why ??? why not???
 
       # skip "top-level" feed keys e.g. title, etc. or planet planet sections (e.g. planet,defaults)
-      next if ['title','title2','name','feeds','planet','defaults'].include?( key )   
+      next if ['title','title2','name',
+               'include','includes','exclude','excludes',
+               'feeds',
+               'planet','defaults'].include?( key )
 
       ### todo/check:
       ##   check value - must be hash
@@ -76,9 +81,9 @@ class Subscriber
         ## use object_id: feed.id and object_type: Feed
         ## change - model/table/schema!!!
         ## todo: add parent_action_id - why? why not?
-        Action.create!( title: 'new feed', object: feed_attribs[ :title ] )
+        Action.create!( title: "new feed >#{feed_key}<", object: feed_attribs[ :title ] )
       end
-      
+
       feed_rec.update_attributes!( feed_attribs )
 
       #  add subscription record

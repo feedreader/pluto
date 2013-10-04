@@ -17,7 +17,7 @@ class Feed < ActiveRecord::Base
 
     # note: if not published, touched or built use hardcoded 1971-01-01 for now
     ## order( "coalesce(published,touched,built,'1971-01-01') desc" )
-    order( "coalesce(last_published,'1971-01-01') desc" )
+    order( "coalesce(feeds.last_published,'1971-01-01') desc" )
   end
 
   ##################################

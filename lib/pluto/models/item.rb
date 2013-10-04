@@ -24,7 +24,7 @@ class Item < ActiveRecord::Base
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
     # note: if not published,touched or built_at use hardcoded 1971-01-01 for now
-    order( "coalesce(published,touched,'1971-01-01') desc" )
+    order( "coalesce(items.published,items.touched,'1971-01-01') desc" )
   end
 
   def published?()  read_attribute(:published).present?;  end

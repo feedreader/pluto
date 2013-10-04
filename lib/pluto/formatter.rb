@@ -16,13 +16,29 @@ class Formatter
 
   attr_reader :opts, :config, :site
 
+
   def run( arg )
+    ### remove - always use make( site_key )
     ## fix: change arg to planet_key or just key or similar
     #  todo: rename run to some less generic  - merge/build/etc. ??
     
+    site_key = arg
+    site_key = site_key.downcase.gsub('.ini','').gsub('.yml','')  # remove .ini|.yml extension if present
+
     manifest_name = opts.manifest
+    output_path   = opts.output_path
+
+    make_for(site_key, manifest_name, output_path )
+  end
+
+
+  def make_for( site_key, manifest_name, output_path )
+
+    ## fix: remove reference to opts
+    ##  - e.g. now still used for auto-installer
+
     manifest_name = manifest_name.downcase.gsub('.txt', '' )  # remove .txt if present
-    
+
     logger.debug "manifest=#{manifest_name}"
 
     # check for matching manifests
@@ -47,14 +63,8 @@ class Formatter
     end
 
     manifestsrc = manifests[0][1]
-    pakpath     = opts.output_path
+    pakpath     = output_path
 
-    name = arg
-
-    ## for now - use single site w/ key planet
-    ##-- fix!! allow multiple sites (planets)
-
-    site_key = 'planet'
     @site = Site.find_by_key( site_key )
     if @site.nil?
       puts "*** warn: no site with key '#{site_key}' found; using untitled site record"
@@ -62,7 +72,7 @@ class Formatter
       @site.title = 'Planet Untitled'
     end
 
-    Pakman::Templater.new.merge_pak( manifestsrc, pakpath, binding, name )
+    Pakman::Templater.new.merge_pak( manifestsrc, pakpath, binding, site_key )
   end
 
 end # class Formatter

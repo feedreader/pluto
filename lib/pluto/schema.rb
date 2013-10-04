@@ -9,6 +9,12 @@ class CreateDb < ActiveRecord::Migration
       t.string   :key,       :null => false    # e.g. ruby, js, etc.
       t.datetime :fetched   #  last fetched/checked date -- make not null ??
 
+      ############
+      # filters (site-wide)
+      t.string   :includes  # regex
+      t.string   :excludes  # regex
+
+
       t.timestamps  # created_at, updated_at
     end
 
