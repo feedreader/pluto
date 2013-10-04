@@ -72,10 +72,14 @@ SYNOPSIS
 COMMAND OPTIONS
     -o, --output=PATH       - Output Path (default: .)
     -t, --template=MANIFEST - Template Manifest (default: blank)
-    
+    -d, --dbpath=PATH       - Database path (default: .)
+    -n, --dbname=NAME       - Database name (default: <PLANET>.db e.g. ruby.db)
+
 EXAMPLE
     pluto build ruby.yml
+    pluto build ruby.yml --template news
     pluto b ruby
+    pluto b ruby -t news
     pluto b            # will use pluto.ini|pluto.yml|planet.ini|planet.yml if present
 ~~~
 
@@ -115,6 +119,10 @@ EXAMPLE
 NAME
     update - Update planet feeds
 
+COMMAND OPTIONS
+    -d, --dbpath=PATH       - Database path (default: .)
+    -n, --dbname=NAME       - Database name (default: <PLANET>.db e.g. ruby.db)
+
 SYNOPSIS
     pluto [global options] update FILE
 
@@ -136,10 +144,14 @@ SYNOPSIS
 COMMAND OPTIONS
     -o, --output=PATH       - Output Path (default: .)
     -t, --template=MANIFEST - Template Manifest (default: blank)
+    -d, --dbpath=PATH       - Database path (default: .)
+    -n, --dbname=NAME       - Database name (default: <PLANET>.db e.g. ruby.db)
 
 EXAMPLE
     pluto merge ruby.yml
+    pluto merge ruby.yml --template news
     pluto m ruby
+    pluto m ruby -t news
 ~~~
 
 
@@ -231,7 +243,7 @@ Planet Mars by Sam Ruby [(Site)](https://github.com/rubys/mars) -  first draft o
 
 ### Python
 
-Planet Planet by Scott James Remnant ann Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine; last release version 2.0 in 2006
+Planet Planet by Scott James Remnant and Jeff Waugh [(Site)](http://www.planetplanet.org)  - uses Mark Pilgrim's universal feed parser (RDF, RSS and Atom) and Tomas Styblo's templating engine; last release version 2.0 in 2006
 
 Planet Venus by Sam Ruby [(Site)](https://github.com/rubys/venus) - cleaned up Planet Planet code; last change in 2010
 

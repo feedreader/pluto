@@ -19,22 +19,16 @@ class Opts
     @manifest       =   options[:template]  if options[:template].present?
   end
 
-  def db_path
-    @db_path || '.'
-  end
 
-  def db_name
-    @db_name || 'pluto.db'
-  end
+  # lets us check if user passed in db settings
+  def db_name?()   @db_name.present? ;  end
+
+  def db_path()    @db_path || '.' ;         end
+  def db_name()    @db_name || 'pluto.db' ;  end
 
 
-  def manifest=(value)
-    @manifest = value
-  end
-  
-  def manifest
-    @manifest || 'blank'
-  end
+  def manifest=(value)   @manifest = value;  end
+  def manifest()         @manifest || 'blank' ;  end
 
   def verbose=(value)
     @verbose = true  # note: always assumes true for now; default is false

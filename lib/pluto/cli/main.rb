@@ -187,7 +187,7 @@ command [:fetch, :f] do |c|
     #####
     # todo: add into method for reuse for build/merge/fetch
     #   all use the same code
- 
+
     db_config = {
       adapter:  'sqlite3',
       database: "#{opts.db_path}/#{opts.db_name}"
@@ -229,6 +229,16 @@ command [:merge, :m] do |c|
   c.default_value opts.manifest
   c.flag [:t, :template]
 
+  c.desc 'Database path'
+  c.arg_name 'PATH'
+  c.default_value opts.db_path
+  c.flag [:d, :dbpath]
+
+  c.desc 'Database name'
+  c.arg_name 'NAME'
+  c.default_value '<PLANET>.db e.g. ruby.db'
+  c.flag [:n, :dbname]
+
 
   c.action do |g,o,args|
     logger.debug 'hello from merge command'
@@ -241,10 +251,12 @@ command [:merge, :m] do |c|
       #####
       # todo: add into method for reuse for build/merge/fetch
       #   all use the same code
+
+      db_name = opts.db_name? ? opts.db_name : "#{name}.db"
  
       db_config = {
         adapter:  'sqlite3',
-        database: "#{opts.output_path}/#{name}.db"
+        database: "#{opts.db_path}/#{db_name}"
       }
 
       Pluto::Connecter.new.connect!( db_config )
@@ -264,6 +276,17 @@ desc 'Update planet feeds'
 arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
 command [:update, :up, :u] do |c|
 
+  c.desc 'Database path'
+  c.arg_name 'PATH'
+  c.default_value opts.db_path
+  c.flag [:d, :dbpath]
+
+  c.desc 'Database name'
+  c.arg_name 'NAME'
+  c.default_value '<PLANET>.db e.g. ruby.db'
+  c.flag [:n, :dbname]
+
+
   c.action do |g,o,args|
     logger.debug 'hello from update command'
 
@@ -275,10 +298,12 @@ command [:update, :up, :u] do |c|
       #####
       # todo: add into method for reuse for build/merge/fetch
       #   all use the same code
+
+      db_name = opts.db_name? ? opts.db_name : "#{name}.db"
  
       db_config = {
         adapter:  'sqlite3',
-        database: "#{opts.output_path}/#{name}.db"
+        database: "#{opts.db_path}/#{db_name}"
       }
 
       Pluto::Connecter.new.connect!( db_config )
@@ -308,6 +333,16 @@ command [:build, :b] do |c|
   c.default_value opts.manifest
   c.flag [:t, :template]
 
+  c.desc 'Database path'
+  c.arg_name 'PATH'
+  c.default_value opts.db_path
+  c.flag [:d, :dbpath]
+
+  c.desc 'Database name'
+  c.arg_name 'NAME'
+  c.default_value '<PLANET>.db e.g. ruby.db'
+  c.flag [:n, :dbname]
+
 
   c.action do |g,o,args|
     logger.debug 'hello from build command'
@@ -317,9 +352,11 @@ command [:build, :b] do |c|
     args.each do |arg|
       name    = File.basename( arg, '.*' )
 
+      db_name = opts.db_name? ? opts.db_name : "#{name}.db"
+
       db_config = {
         adapter:  'sqlite3',
-        database: "#{opts.output_path}/#{name}.db"
+        database: "#{opts.db_path}/#{db_name}"
       }
 
       Pluto::Connecter.new.connect!( db_config )
