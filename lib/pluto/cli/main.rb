@@ -236,7 +236,6 @@ command [:merge, :m] do |c|
 
   c.desc 'Database name'
   c.arg_name 'NAME'
-  c.default_value '<PLANET>.db e.g. ruby.db'
   c.flag [:n, :dbname]
 
 
@@ -283,7 +282,6 @@ command [:update, :up, :u] do |c|
 
   c.desc 'Database name'
   c.arg_name 'NAME'
-  c.default_value '<PLANET>.db e.g. ruby.db'
   c.flag [:n, :dbname]
 
 
@@ -340,7 +338,6 @@ command [:build, :b] do |c|
 
   c.desc 'Database name'
   c.arg_name 'NAME'
-  c.default_value '<PLANET>.db e.g. ruby.db'
   c.flag [:n, :dbname]
 
 

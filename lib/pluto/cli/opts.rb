@@ -11,7 +11,16 @@ class Opts
     @verbose = true     if options[:verbose] == true
 
     @db_path   = options[:dbpath]  if options[:dbpath].present?
-    @db_name   = options[:dbname]  if options[:dbname].present?
+    
+    if options[:dbname].present?
+      ##########
+      # note: c.default_value '<PLANET>.db e.g. ruby.db'
+      #  gli2 will set default if present - thus, do NOT set a default value
+      #    otherwise it will get set
+
+      @db_name   = options[:dbname]
+      puts "setting opts.db_name to '#{options[:dbname]}'"
+    end
 
     @config_path = options[:config]    if options[:config].present?
     @output_path = options[:output]    if options[:output].present?
