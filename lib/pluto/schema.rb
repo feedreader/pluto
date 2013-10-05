@@ -62,7 +62,8 @@ class CreateDb < ActiveRecord::Migration
       ## note: save last-modified header as text (not datetime) - pass through as is
       t.string   :http_last_modified   # last http header last-modified - note: save header as plain text!!! pass along in next request as-is
 
-      t.text    :body    # last http response body (complete feed!)
+      t.string   :md5       # md5 hash of body
+      t.text     :body      # last http response body (complete feed!)
 
       t.datetime :fetched    # last fetched/checked date
 

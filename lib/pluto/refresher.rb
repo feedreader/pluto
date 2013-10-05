@@ -25,11 +25,14 @@ class Refresher
     Action.create!( title: 'update feeds' )
     
     feeds_fetched = Time.now
-    Site.all.each do |site|
+    
+    #### - hack - use order(:id) instead of .all - avoids rails/activerecord 4 warnings
+    
+    Site.order(:id).each do |site|
       site.update_attributes!( fetched: feeds_fetched )
     end
 
-    Feed.all.each do |feed|
+    Feed.order(:id).each do |feed|
       update_feed_worker( feed )
     end
   end

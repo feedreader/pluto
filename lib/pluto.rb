@@ -13,6 +13,7 @@ require 'optparse'
 require 'fileutils'
 require 'logger'
 require 'date'
+require 'digest/md5'
 
 
 # 3rd party ruby gems/libs
