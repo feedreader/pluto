@@ -59,7 +59,8 @@ class CreateDb < ActiveRecord::Migration
 
       t.integer  :http_code   # last http status code e.g. 200,404,etc.
       t.string   :http_etag    # last http header etag
-      t.datetime :http_last_modified   # last http header last-modified
+      ## note: save last-modified header as text (not datetime) - pass through as is
+      t.string   :http_last_modified   # last http header last-modified - note: save header as plain text!!! pass along in next request as-is
 
       t.text    :body    # last http response body (complete feed!)
 

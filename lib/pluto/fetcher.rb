@@ -84,7 +84,23 @@ class Fetcher
     ##    and http_last_modified headers
     ##    and brute force body_old == body_new   etc.
 
+    ### todo/fix: normalize/unifiy feed_url
+    ##  - same in fetcher - use shared utitlity method or similar
+
+    @worker.use_cache = true
+    @worker.cache[ feed_url ] = {
+      'etag'          => feed_rec.http_etag,
+      'last-modified' => feed_rec.http_last_modified
+    }
+
     response = @worker.get( feed_url )
+    @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false
+
+    if response.code == '304'  # not modified (conditional GET - e.g. using etag/last-modified)
+      puts "OK - fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
+      return nil   # no updates available; nothing to do
+    end
+
 
     feed_fetched = Time.now
 
@@ -125,11 +141,11 @@ class Fetcher
     feed_attribs = {
       http_code:          response.code.to_i,
       http_etag:          response.header[ 'etag' ],
-      http_last_modified: response.header[ 'last-modified' ],
+      http_last_modified: response.header[ 'last-modified' ], ## note: last_modified header gets stored as plain text (not datetime)
       body:               feed_xml,
       fetched:            feed_fetched
     }
-    
+
     ## if debug?
       puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
       puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"

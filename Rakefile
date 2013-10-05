@@ -19,7 +19,7 @@ Hoe.spec 'pluto' do
 
   self.extra_deps = [
     ['pakman',    '>= 0.5'], 
-    ['fetcher',   '>= 0.3'],
+    ['fetcher',   '>= 0.4.1'],    # use min. 0.4.1 - added cache/conditional GET support
     ['logutils',  '>= 0.6'],
     ['feedutils', '>= 0.3.2'],    #  use min. 0.3.2 - added fix for rss.item.guid missing; no more auto-summary in atom
     ['props',     '>= 1.0.2'],    #  use min. 1.0.2 - added ini support
