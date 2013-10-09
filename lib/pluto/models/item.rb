@@ -14,11 +14,6 @@ class Item < ActiveRecord::Base
   def description() summary;  end  # alias for summary  -- also add descr shortcut??
   def link()        url;      end  # alias for url
 
-  def fetched_at()        fetched;        end # legay attrib reader - depreciated - remove!!
-  def published_at()      published;      end # legay attrib reader - depreciated - remove!!
-  def touched_at()        touched;        end # legay attrib reader - depreciated - remove!!
-
-
   def self.latest
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
@@ -52,10 +47,10 @@ class Item < ActiveRecord::Base
       guid:         data.guid,   # todo: only add for new records???
       title:        data.title,
       url:          data.url,
-      summary:      data.summary?   ? data.summary   : nil,
-      content:      data.content?   ? data.content   : nil,
-      published:    data.published? ? data.published : nil,
-      touched:      data.updated?   ? data.updated   : nil,
+      summary:      data.summary,
+      content:      data.content,
+      published:    data.published,
+      touched:      data.updated,
       feed_id:      feed_rec.id,    # add feed_id fk_ref
       fetched:      feed_rec.fetched
     }

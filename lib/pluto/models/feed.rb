@@ -27,13 +27,6 @@ class Feed < ActiveRecord::Base
   def link()        url;      end  # alias for url
   def feed()        feed_url; end  # alias for feed_url
 
-  def last_published_at() last_published; end # legay attrib reader - depreciated - remove!!
-  def fetched_at()        fetched;        end # legay attrib reader - depreciated - remove!!
-  def published_at()      published;      end # legay attrib reader - depreciated - remove!!
-  def touched_at()        touched;        end # legay attrib reader - depreciated - remove!!
-  def built_at()          built;          end # legay attrib reader - depreciated - remove!!
-
-
   def url?()           read_attribute(:url).present?;       end
   def title?()         read_attribute(:title).present?;     end
   def title2?()        read_attribute(:title2).present?;    end
@@ -87,18 +80,29 @@ class Feed < ActiveRecord::Base
 
 
   def update_from_struct!( data )
+
+    ## todo: move to FeedUtils::Feed ??? why? why not??
+    if data.generator
+      generator_full = ''
+      generator_full << data.generator
+      generator_full << " @version=#{data.generator_version}"   if data.generator_version
+      generator_full << " @uri=#{data.generator_uri}"           if data.generator_uri
+    else
+      generator_full = nil
+    end
+
     feed_attribs = {
         format:       data.format,
-        published:    data.published? ? data.published : nil,
-        touched:      data.updated?   ? data.updated   : nil,
-        built:        data.built?     ? data.built     : nil,
-        summary:      data.summary?   ? data.summary   : nil,
+        published:    data.published,
+        touched:      data.updated,
+        built:        data.built,
+        summary:      data.summary,
         ### todo/fix: add/use
         # auto_title:     ???,
         # auto_url:       ???,
         # auto_feed_url:  ???,
-        auto_title2:  data.title2?    ? data.title2    : nil,
-        generator:    data.generator
+        auto_title2:  data.title2,
+        generator:    generator_full
       }
 
     if debug?

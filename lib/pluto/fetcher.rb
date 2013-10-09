@@ -18,7 +18,8 @@ class Fetcher
 
     ## if debug?
       puts "http status #{response.code} #{response.message}"
-      
+
+      puts "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
       puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
       puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
     ## end
@@ -66,9 +67,6 @@ class Fetcher
       
     puts "Before parsing feed >#{feed_key}<..."
 
-    ### move to feedutils
-    ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"
-
     ## fix/todo: check for feed.nil?   -> error parsing!!!
     #    or throw exception
     feed = FeedUtils::Parser.parse( feed_xml )
@@ -93,6 +91,15 @@ class Fetcher
       'last-modified' => feed_rec.http_last_modified
     }
 
+    ### fix bug in fetcher - do NOT use request_uri use uri.to
+    ## - add request_uri entry to (e.g. w/o host etc.)
+    ## - remove code here once fixed in fetcher
+    @worker.cache[ URI.parse( feed_url ).request_uri ] = {
+      'etag'          => feed_rec.http_etag,
+      'last-modified' => feed_rec.http_last_modified
+    }
+
+
     response = @worker.get( feed_url )
     @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false
 
@@ -110,6 +117,7 @@ class Fetcher
       
       feed_attribs = {
         http_code:          response.code.to_i,
+        http_server:        response.header[ 'server' ],
         http_etag:          nil,
         http_last_modified: nil,
         body:               nil,
@@ -155,6 +163,7 @@ class Fetcher
 
     feed_attribs = {
       http_code:          response.code.to_i,
+      http_server:        response.header[ 'server' ],
       http_etag:          response.header[ 'etag' ],
       http_last_modified: response.header[ 'last-modified' ], ## note: last_modified header gets stored as plain text (not datetime)
       body:               feed_xml,
@@ -163,6 +172,7 @@ class Fetcher
     }
 
     ## if debug?
+      puts "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
       puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
       puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
     ## end
