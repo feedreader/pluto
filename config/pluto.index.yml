@@ -12,6 +12,10 @@ top: https://raw.github.com/feedreader/pluto.top/master/top.txt
 
 news: https://raw.github.com/feedreader/pluto.news/master/news.txt
 
+feeds: https://raw.github.com/feedreader/pluto.feeds/master/feeds.txt
+
+classic: https://raw.github.com/feedreader/pluto.classic/master/classic.txt
+
 
 ####
 # all:
