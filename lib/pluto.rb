@@ -50,7 +50,6 @@ require 'pluto/refresher'
 require 'pluto/subscriber'
 require 'pluto/updater'
 require 'pluto/lister'
-require 'pluto/template_helpers'
 require 'pluto/formatter'
 
 require 'pluto/cli/opts'     ## fix: make sure fetcher/updater etc. do not depend on cli/opts

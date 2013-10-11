@@ -7,7 +7,8 @@ class Formatter
   include Models
   include ManifestHelper
   
-  include TemplateHelper  # e.g. lets us use time_ago_in_words, strip_tags, etc.
+  include TextUtils::DateHelper  # e.g. lets us use time_ago_in_words
+  include TextUtils::HypertextHelper # e.g. lets us use link_to, strip_tags, sanitize, textify, etc.
 
   def initialize( opts, config )
     @opts    = opts

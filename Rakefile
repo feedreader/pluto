@@ -23,7 +23,7 @@ Hoe.spec 'pluto' do
     ['logutils',  '>= 0.6'],
     ['feedutils', '>= 0.4.0'],    #  use min. 0.4.0 - added rss 2.0 - content:encoded; added fix for rss.item.guid missing; no more auto-summary in atom
     ['props',     '>= 1.0.2'],    #  use min. 1.0.2 - added ini support
-    ['textutils', '>= 0.6.8'],    # future: add some filters (for include/exclude)
+    ['textutils', '>= 0.7'],      #  use min. 0.7; moved hy/date helpers to gem; future: add some filters (for include/exclude)
     ['gli',       '>= 2.5.6']
     ## ['activerecord', '~> 3.2'],  #  NB:  soft dependency, will include activesupport,etc.
   ]
