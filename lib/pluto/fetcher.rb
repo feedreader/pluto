@@ -77,11 +77,6 @@ class Fetcher
     feed_url = feed_rec.feed_url
     feed_key = feed_rec.key
 
-    ### todo/fix:
-    ##  add if available http_etag  machinery for smarter updates
-    ##    and http_last_modified headers
-    ##    and brute force body_old == body_new   etc.
-
     ### todo/fix: normalize/unifiy feed_url
     ##  - same in fetcher - use shared utitlity method or similar
 
@@ -192,11 +187,6 @@ class Fetcher
     site_url = site_rec.url
     site_key = site_rec.key
 
-    ### todo/fix:
-    ##  add if available http_etag  machinery for smarter updates
-    ##    and http_last_modified headers
-    ##    and brute force body_old == body_new   etc.
-
     ### todo/fix: normalize/unifiy feed_url
     ##  - same in fetcher - use shared utitlity method or similar
 
@@ -257,28 +247,11 @@ class Fetcher
     site_text = site_text.force_encoding( Encoding::UTF_8 )
     logger.debug "site_text.encoding.name (after): #{site_text.encoding.name}"
 
-    ## check for md5 hash for response.body
-
-    last_site_md5 = site_rec.md5
-    site_md5 = Digest::MD5.hexdigest( site_text )
-
-    if last_site_md5 && last_site_md5 == site_md5
-      # not all servers handle conditional gets, so while not much can be
-      # done about the bandwidth, but if the response body is identical
-      # the downstream processing (parsing, caching, ...) can be avoided.
-      #  - thanks to planet mars -fido.rb for the idea, cheers.
-      
-      puts "no change; md5 digests match; skipping parsing site"
-      return nil   # no updates available; nothing to do
-    end
-
     site_attribs = {
       http_code:          response.code.to_i,
       http_server:        response.header[ 'server' ],
       http_etag:          response.header[ 'etag' ],
       http_last_modified: response.header[ 'last-modified' ], ## note: last_modified header gets stored as plain text (not datetime)
-      body:               site_text,
-      md5:                site_md5,
       fetched:            site_fetched
     }
 
@@ -290,12 +263,13 @@ class Fetcher
 
     site_rec.update_attributes!( site_attribs )
 
-    logger.debug "site_text:"
-    logger.debug site_text[ 0..300 ] # get first 300 chars
+    ## logger.debug "site_text:"
+    ## logger.debug site_text[ 0..300 ] # get first 300 chars
 
 
-    puts "Before parsing site config >#{site_key}<..."   # assume ini format for now
-
+    puts "Before parsing site config >#{site_key}<..."
+    
+    # assume ini format for now
     site_config = INI.load( site_text )
   end
 

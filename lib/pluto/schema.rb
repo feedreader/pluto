@@ -27,8 +27,8 @@ class CreateDb < ActiveRecord::Migration
       t.string   :http_last_modified   # last http header last-modified - note: save header as plain text!!! pass along in next request as-is
       t.string   :http_server    # last http server header if present
 
-      t.string   :md5       # md5 hash of body   # -- change to digest??
-      t.text     :body      # last http response body (complete feed!)
+      # note: do NOT store body content (that is, text) and md5 digest
+      #   use git! and github! commit will be http_etag!!
 
       t.datetime :fetched    # last fetched/checked date
 

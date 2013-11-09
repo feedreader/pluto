@@ -20,7 +20,7 @@ class Subscriber
   def update_subscriptions_for( site_key, config, opts={} )
     site_attribs = {
       title:  config['title'] || config['name'],   # support either title or name
-      source: config['source'] || config['url']    # support source or url   for source url for auto-update (optional)
+      url:    config['source'] || config['url']    # support source or url   for source url for auto-update (optional)
     }
 
     logger.debug "site_attribs: #{site_attribs.inspect}"
