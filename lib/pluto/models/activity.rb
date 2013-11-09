@@ -1,12 +1,8 @@
 module Pluto
   module Models
 
-
-class Action < ActiveRecord::Base
-  self.table_name = 'actions'
-
-end
-
+# add shortcut/alias
+Activity = ActivityDb::Models::Activity
 
   end # module Models
 end # module Pluto

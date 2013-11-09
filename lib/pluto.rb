@@ -27,6 +27,7 @@ require 'pakman'    # template pack manager
 require 'feedutils'
 require 'textutils'
 
+require 'activityutils'
 
 # our own code
 
@@ -34,7 +35,7 @@ require 'pluto/version'   # let version always get first
 require 'pluto/schema'
 require 'pluto/activerecord'
 
-require 'pluto/models/action'
+require 'pluto/models/activity'
 require 'pluto/models/feed'
 require 'pluto/models/item'
 require 'pluto/models/site'
@@ -54,10 +55,12 @@ require 'pluto/formatter'
 
 require 'pluto/cli/opts'     ## fix: make sure fetcher/updater etc. do not depend on cli/opts
 
+
 module Pluto
 
   def self.banner
-    "pluto #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+    ### todo: add RUBY_PATCHLEVEL or RUBY_PATCH_LEVEL  e.g. -p124
+    "pluto/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
   end
 
   def self.generator   # convenience alias for banner (matches HTML generator meta tag)
@@ -133,5 +136,5 @@ end
 if __FILE__ == $0
   Pluto.main
 else
-  puts Pluto.banner    # say hello
+  puts Pluto.banner       # say hello
 end

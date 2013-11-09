@@ -14,12 +14,12 @@ from published web feeds.
 Use the `pluto` command line tool and pass in one or more planet configuration files.
 Example:
 
-    pluto build ruby.yml        or
+    pluto build ruby.ini        or
     pluto b ruby
 
 This will
 
-1) fetch all feeds listed in `ruby.yml` and 
+1) fetch all feeds listed in `ruby.ini` and 
 
 2) store all entries in a local database, that is, `ruby.db` in your working folder and
 
@@ -201,13 +201,13 @@ viennarb:
   feed:  http://vienna-rb.at/atom.xml
 ```
 
-For more samples, see [`nytimes.yml`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.yml),
-[`js.yml`](https://github.com/feedreader/pluto.samples/blob/master/js.yml),
-[`dart.yml`](https://github.com/feedreader/pluto.samples/blob/master/dart.yml),
-[`haskell.yml`](https://github.com/feedreader/pluto.samples/blob/master/haskell.yml),
-[`viennarb.yml`](https://github.com/feedreader/pluto.samples/blob/master/viennarb.yml),
-[`beer.yml`](https://github.com/feedreader/pluto.samples/blob/master/beer.yml),
-[`football.yml`](https://github.com/feedreader/pluto.samples/blob/master/football.yml).
+For more samples, see [`nytimes.ini`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.ini),
+[`js.ini`](https://github.com/feedreader/pluto.samples/blob/master/js.ini),
+[`dart.ini`](https://github.com/feedreader/pluto.samples/blob/master/dart.ini),
+[`haskell.ini`](https://github.com/feedreader/pluto.samples/blob/master/haskell.ini),
+[`viennarb.ini`](https://github.com/feedreader/pluto.samples/blob/master/viennarb.ini),
+[`beer.ini`](https://github.com/feedreader/pluto.samples/blob/master/beer.ini),
+[`football.ini`](https://github.com/feedreader/pluto.samples/blob/master/football.ini).
 
 
 ## Template Packs

@@ -21,8 +21,8 @@ class Refresher
       @worker.debug = true   # also pass along worker debug flag if set
     end
 
-    # -- log update action
-    Action.create!( title: 'update feeds' )
+    # -- log update activity
+    Activity.create!( text: 'update feeds' )
     
     feeds_fetched = Time.now
     
@@ -45,8 +45,8 @@ class Refresher
       @worker.debug = true   # also pass along worker debug flag if set
     end
 
-    # -- log update action
-    Action.create!( title: "update feeds >#{site_key}<" )
+    # -- log update activity
+    Activity.create!( text: "update feeds >#{site_key}<" )
 
     #####
     # -- update fetched  timestamps for all sites

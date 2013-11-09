@@ -14,7 +14,7 @@ lib/pluto/formatter.rb
 lib/pluto/installer.rb
 lib/pluto/lister.rb
 lib/pluto/manifest_helpers.rb
-lib/pluto/models/action.rb
+lib/pluto/models/activity.rb
 lib/pluto/models/feed.rb
 lib/pluto/models/item.rb
 lib/pluto/models/site.rb

@@ -91,13 +91,6 @@ class CreateDb < ActiveRecord::Migration
       ## todo: add author/authors, category/categories
     end
 
-    create_table :actions do |t|
-      t.string   :title                # e.g. new site, new subscription, update feeds, etc.
-      t.string   :object            # todo: find better names for action attribs ??
-      t.string   :object_type
-      t.timestamps
-    end
-    
   end
     
   def down

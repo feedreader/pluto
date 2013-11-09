@@ -22,8 +22,9 @@ Hoe.spec 'pluto' do
     ['fetcher',   '>= 0.4.1'],    # use min. 0.4.1 - added cache/conditional GET support
     ['logutils',  '>= 0.6'],
     ['feedutils', '>= 0.4.0'],    #  use min. 0.4.0 - added rss 2.0 - content:encoded; added fix for rss.item.guid missing; no more auto-summary in atom
-    ['props',     '>= 1.0.2'],    #  use min. 1.0.2 - added ini support
+    ['props',     '>= 1.0.3'],    #  use min. 1.0.2 - added ini support
     ['textutils', '>= 0.7'],      #  use min. 0.7; moved hy/date helpers to gem; future: add some filters (for include/exclude)
+    ['activityutils', '>= 0.1.0' ],
     ['gli',       '>= 2.5.6']
     ## ['activerecord', '~> 3.2'],  #  NB:  soft dependency, will include activesupport,etc.
   ]

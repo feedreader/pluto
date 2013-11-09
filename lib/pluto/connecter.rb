@@ -24,7 +24,7 @@ class Connecter
 
   def connect!( config = nil )
 
-    if config.nil?   # use DATABASE_URL
+    if config.nil?   # use/try DATABASE_URL from environment
 
       logger.debug "ENV['DATBASE_URL'] - >#{ENV['DATABASE_URL']}<"
 
@@ -40,7 +40,7 @@ class Connecter
           database: db.path[1..-1],
           encoding: 'utf8'
         }
-      else 
+      else   # assume sqlite3
         config = {
           adapter:  db.scheme,       # sqlite3
           database: db.path[1..-1]   # pluto.db (NB: cut off leading /, thus 1..-1)
@@ -51,16 +51,42 @@ class Connecter
     puts 'db settings:'
     pp config
 
+    ### for dbbrowser and other tools add to ActiveRecord
+    
+    if ActiveRecord::Base.configurations.nil?   # todo/check: can this ever happen? remove?
+       puts "ActiveRecord configurations nil - set to empty hash"
+       ActiveRecord::Base.configurations = {}  # make it an empty hash
+    end
+
+    if debug?
+      puts 'ar configurations (before):'
+      pp ActiveRecord::Base.configurations
+    end
+    
+    # note: for now always use pluto key for config storage
+    ActiveRecord::Base.configurations['pluto'] = config
+
+    if debug?
+      puts 'ar configurations (after):'
+      pp ActiveRecord::Base.configurations
+    end
+
+
     # for debugging - disable for production use
     if debug?
       ActiveRecord::Base.logger = Logger.new( STDOUT ) 
     end
 
+
     ActiveRecord::Base.establish_connection( config )
-    
+
     # first time? - auto-run db migratation, that is, create db tables
+    unless ActivityDb::Models::Activity.table_exists?
+      ActivityDb::CreateDb.new.up
+    end
+
     unless Models::Feed.table_exists?
-       CreateDb.new.up  
+      CreateDb.new.up  
     end
   end # method connect!
 
