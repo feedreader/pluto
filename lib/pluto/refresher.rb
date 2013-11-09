@@ -14,6 +14,24 @@ class Refresher
   def debug?()       @debug || false;  end
 
 
+  def update_sites( opts={} )  # update all site configs
+    if debug?
+      ## turn on logging for sql too
+      ActiveRecord::Base.logger = Logger.new( STDOUT )
+      @worker.debug = true   # also pass along worker debug flag if set
+    end
+
+    # -- log update activity
+    Activity.create!( text: 'update sites' )
+
+    #### - hack - use order(:id) instead of .all - avoids rails/activerecord 4 warnings
+
+    Site.order(:id).each do |site|
+      update_site_worker( site )  if site.url.present?  # note: only update if (source) url present
+    end
+  end
+
+
   def update_feeds( opts={} )  # update all feeds
     if debug?
       ## turn on logging for sql too
@@ -23,14 +41,8 @@ class Refresher
 
     # -- log update activity
     Activity.create!( text: 'update feeds' )
-    
-    feeds_fetched = Time.now
-    
+
     #### - hack - use order(:id) instead of .all - avoids rails/activerecord 4 warnings
-    
-    Site.order(:id).each do |site|
-      site.update_attributes!( fetched: feeds_fetched )
-    end
 
     Feed.order(:id).each do |feed|
       update_feed_worker( feed )
@@ -48,12 +60,7 @@ class Refresher
     # -- log update activity
     Activity.create!( text: "update feeds >#{site_key}<" )
 
-    #####
-    # -- update fetched  timestamps for all sites
-    feeds_fetched = Time.now
-
     site = Site.find_by_key!( site_key )
-    site.update_attributes!( fetched: feeds_fetched )
 
     site.feeds.each do |feed|
       update_feed_worker( feed )
@@ -61,7 +68,22 @@ class Refresher
 
   end # method update_feeds
 
+
 private
+  def update_site_worker( site_rec )
+    site_config = @worker.site_by_rec_if_modified( site_rec )
+  
+    # on error or if http-not modified etc. skip update/processing
+    return  if site_config.nil?
+
+    subscriber = Subscriber.new
+    subscriber.debug = debug? ? true : false    # pass along debug flag
+
+    site_key = site_rec.key
+    subscriber.update_subscriptions_for( site_key, site_config )
+  end
+
+
   def update_feed_worker( feed_rec )
     feed = @worker.feed_by_rec_if_modified( feed_rec )
       

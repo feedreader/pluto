@@ -4,6 +4,16 @@ class Updater
 
   include LogUtils::Logging
 
+  ### fix!!!!!: change config    to text   - yes/no - why? why not??
+  #   or pass along struct
+  #      - with hash and text and format(e.g. ini/yml) as fields???
+  #
+  #   - why? - we need to get handle on md5 digest/hash plus on plain text, ideally to store in db
+  ##  - pass along unparsed text!! - not hash struct
+  #      - will get saved in db plus we need to generate md5 hash
+  #    - add filename e.g. ruby.ini|ruby.conf|ruby.yml as opt ??
+  #           or add config format as opt e.g. ini or yml?
+
   def initialize( opts, config )
     @opts    = opts
     @config  = config

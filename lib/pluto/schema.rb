@@ -2,18 +2,38 @@
 module Pluto
 
 class CreateDb < ActiveRecord::Migration
-    
+
   def up
     create_table :sites do |t|
       t.string   :title,     :null => false    # e.g Planet Ruby, Planet JavaScript, etc.
       t.string   :key,       :null => false    # e.g. ruby, js, etc.
-      t.datetime :fetched   #  last fetched/checked date -- make not null ??
 
       ############
       # filters (site-wide)
       t.string   :includes  # regex
       t.string   :excludes  # regex
 
+      ######################
+      # for auto-update of feed list/site config
+
+      t.string   :url    # source url for auto-update (optional)
+
+      ## note: make sure to use same fields for update check as feed 
+
+      t.datetime :fetched   #  last fetched/checked date -- make not null ??
+      t.integer  :http_code   # last http status code e.g. 200,404,etc.
+      t.string   :http_etag    # last http header etag
+      ## note: save last-modified header as text (not datetime) - pass through as is
+      t.string   :http_last_modified   # last http header last-modified - note: save header as plain text!!! pass along in next request as-is
+      t.string   :http_server    # last http server header if present
+
+      t.string   :md5       # md5 hash of body   # -- change to digest??
+      t.text     :body      # last http response body (complete feed!)
+
+      t.datetime :fetched    # last fetched/checked date
+
+      #############
+      # more fields
 
       t.timestamps  # created_at, updated_at
     end

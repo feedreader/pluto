@@ -12,16 +12,17 @@ class Subscriber
 
   def update_subscriptions( config, opts={} )
     # !!!! -- depreciated API - remove - do NOT use anymore
-    puts "warn - [Pluto::Subscriber] depreciated API -- use update_subscriptions_for( site_key)"
+    puts "*** warn - [Pluto::Subscriber] depreciated API -- use update_subscriptions_for( site_key )"
     update_subscriptions_for( 'planet', config, opts )  # default to planet site_key
   end
 
 
   def update_subscriptions_for( site_key, config, opts={} )
     site_attribs = {
-      title: config['title'] || config['name']   # support either title or name
+      title:  config['title'] || config['name'],   # support either title or name
+      source: config['source'] || config['url']    # support source or url   for source url for auto-update (optional)
     }
-    
+
     logger.debug "site_attribs: #{site_attribs.inspect}"
 
     site_rec = Site.find_by_key( site_key )
@@ -49,6 +50,7 @@ class Subscriber
 
       # skip "top-level" feed keys e.g. title, etc. or planet planet sections (e.g. planet,defaults)
       next if ['title','title2','name',
+               'source', 'url',
                'include','includes','exclude','excludes',
                'feeds',
                'planet','defaults'].include?( key )

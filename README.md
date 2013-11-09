@@ -76,8 +76,8 @@ COMMAND OPTIONS
     -n, --dbname=NAME       - Database name (default: <PLANET>.db e.g. ruby.db)
 
 EXAMPLE
-    pluto build ruby.yml
-    pluto build ruby.yml --template news
+    pluto build ruby.ini
+    pluto build ruby.ini --template news
     pluto b ruby
     pluto b ruby -t news
     pluto b            # will use pluto.ini|pluto.yml|planet.ini|planet.yml if present
@@ -127,7 +127,7 @@ SYNOPSIS
     pluto [global options] update FILE
 
 EXAMPLE
-    pluto update ruby.yml
+    pluto update ruby.ini
     pluto u ruby
 ~~~
 
@@ -148,8 +148,8 @@ COMMAND OPTIONS
     -n, --dbname=NAME       - Database name (default: <PLANET>.db e.g. ruby.db)
 
 EXAMPLE
-    pluto merge ruby.yml
-    pluto merge ruby.yml --template news
+    pluto merge ruby.ini
+    pluto merge ruby.ini --template news
     pluto m ruby
     pluto m ruby -t news
 ~~~
