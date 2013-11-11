@@ -23,6 +23,10 @@ lib/pluto/models/utils.rb
 lib/pluto/refresher.rb
 lib/pluto/schema.rb
 lib/pluto/subscriber.rb
+lib/pluto/tasks/env.rake
+lib/pluto/tasks/setup.rake
+lib/pluto/tasks/stats.rake
+lib/pluto/tasks/update.rake
 lib/pluto/updater.rb
 lib/pluto/version.rb
 test/helper.rb

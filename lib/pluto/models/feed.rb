@@ -22,6 +22,9 @@ class Feed < ActiveRecord::Base
 
   ##################################
   # attribute reader aliases
+  #
+  #  todo: check if we can use alias_method :name, :title   - works for non-existing/on-demand-generated method too??
+
   def name()        title;    end  # alias for title
   def description() summary;  end  # alias for summary  -- also add descr shortcut??
   def link()        url;      end  # alias for url

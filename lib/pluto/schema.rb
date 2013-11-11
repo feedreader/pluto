@@ -65,6 +65,18 @@ class CreateDb < ActiveRecord::Migration
       t.datetime :built      # from feed lastBuiltDate(rss)
       t.datetime :touched    # from feed updated(atom)
 
+      ### extras (move to array for custom fields or similar??)
+      t.string   :github   # github handle  (optional)
+      t.string   :twitter  # twitter handle (optional)
+      t.string   :avatar   # gravator or hackergotchi handle (optional)
+
+      ### add class/kind field e.g.
+      # - personal feed/blog/site, that is, individual author
+      # - team blog/site
+      # - org (anization) or com(pany blog/site)
+      # - newsfeed (composite)
+      # - other  (link blog?, podcast?) - why? why not??
+
       ############
       # filters
       t.string   :includes  # regex
@@ -91,10 +103,15 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps   # created_at, updated_at
     end
 
+
     create_table :items do |t|
-      t.string   :title   # todo: add some :null => false ??
       t.string   :guid
       t.string   :url
+
+      ## note: title may contain more than 255 chars!! use text for sure!
+      ## e.g. Rails Girls blog has massive titles in feed
+      
+      t.text     :title   # todo: add some :null => false ??
       t.text     :summary  # e.g. description (rss), summary (atom)
       t.text     :content
       

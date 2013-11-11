@@ -75,6 +75,8 @@ module Pluto
     Connecter.new.connect!( config )
   end
 
+
+  # todo: add alias update_site( config ) ??
   def self.update_subscriptions( config )
     Subscriber.new.update_subscriptions( config )
   end
@@ -82,6 +84,19 @@ module Pluto
   def self.update_feeds
     Refresher.new.update_feeds
   end
+
+  def self.update_sites
+    Refresher.new.update_sites
+  end
+
+  def self.load_tasks
+    # load all builtin Rake tasks (from tasks/*rake)
+    load 'pluto/tasks/env.rake'
+    load 'pluto/tasks/setup.rake'
+    load 'pluto/tasks/stats.rake'
+    load 'pluto/tasks/update.rake'
+  end
+
 
   def self.main
     require 'pluto/cli/main'
