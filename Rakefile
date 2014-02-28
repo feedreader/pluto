@@ -15,11 +15,11 @@ Hoe.spec 'pluto' do
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
-  self.history_file = 'History.md'
+  self.history_file = 'HISTORY.md'
 
   self.extra_deps = [
     ['pakman',    '>= 0.5'], 
-    ['fetcher',   '>= 0.4.1'],    # use min. 0.4.1 - added cache/conditional GET support
+    ['fetcher',   '>= 0.4.3'],    # use min. 0.4.3 - added cache/conditional GET support
     ['logutils',  '>= 0.6'],
     ['feedutils', '>= 0.4.0'],    #  use min. 0.4.0 - added rss 2.0 - content:encoded; added fix for rss.item.guid missing; no more auto-summary in atom
     ['props',     '>= 1.0.3'],    #  use min. 1.0.2 - added ini support

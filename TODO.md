@@ -1,5 +1,6 @@
 # TODOS - Notes, Ideas
 
+- [ ]  rename Models to Model namespace!!
 
 - [] add more helpers - link_to
 - [] add more helpers - stylesheet

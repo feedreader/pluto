@@ -5,6 +5,8 @@ class Fetcher
 
   include LogUtils::Logging
 
+  include Models   # for easy convenience access for Activity etc.
+
   def initialize
     @worker  = ::Fetcher::Worker.new
   end
@@ -86,7 +88,17 @@ class Fetcher
       'last-modified' => feed_rec.http_last_modified
     }
 
-    response = @worker.get( feed_url )
+    begin
+      response = @worker.get( feed_url )
+    rescue SocketError => e
+      ## catch socket error for unknown domain names (e.g. pragdave.blogs.pragprog.com)
+      ###  will result in SocketError -- getaddrinfo: Name or service not known
+      puts "*** error: fetching feed '#{feed_key}' - #{e.to_s}"
+      ### todo/fix: update feed rec in db
+      @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false
+      return nil
+    end
+
     @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false
 
     if response.code == '304'  # not modified (conditional GET - e.g. using etag/last-modified)

@@ -22,7 +22,7 @@ class Refresher
     end
 
     # -- log update activity
-    Activity.create!( text: 'update sites' )
+    Activity.create!( text: "update sites (#{Site.count})" )
 
     #### - hack - use order(:id) instead of .all - avoids rails/activerecord 4 warnings
 
@@ -40,7 +40,7 @@ class Refresher
     end
 
     # -- log update activity
-    Activity.create!( text: 'update feeds' )
+    Activity.create!( text: "update feeds (#{Feed.count})" )
 
     #### - hack - use order(:id) instead of .all - avoids rails/activerecord 4 warnings
 
