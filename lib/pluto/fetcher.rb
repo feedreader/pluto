@@ -94,6 +94,8 @@ class Fetcher
       ## catch socket error for unknown domain names (e.g. pragdave.blogs.pragprog.com)
       ###  will result in SocketError -- getaddrinfo: Name or service not known
       puts "*** error: fetching feed '#{feed_key}' - #{e.to_s}"
+      Activity.create!( text: "*** error: fetching feed '#{feed_key}' - #{e.to_s}" )
+
       ### todo/fix: update feed rec in db
       @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false
       return nil
