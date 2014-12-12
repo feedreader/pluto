@@ -6,7 +6,7 @@
 require 'minitest/autorun'
 
 ## our own code
-require 'pluto-models'
+require 'pluto/models'
 
 
 LogUtils::Logger.root.level = :debug

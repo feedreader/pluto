@@ -27,9 +27,10 @@ module ManifestHelper
     ]
     current_patterns = [
 ##      "*.txt",
-      "*/*.txt"
+      "*/*.txt",
+      "node_modules/*/*.txt", # note: add support for npm installs - use/make slideshow required in name? for namespace in the future???
     ]
-    
+
     patterns = []
     patterns += current_patterns
     patterns += config_patterns
