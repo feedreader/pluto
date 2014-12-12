@@ -33,28 +33,6 @@ title = Planet Ruby
   feed  = http://vienna-rb.at/atom.xml
 ```
 
-or `ruby.yml`:
-
-```
-title: Planet Ruby
-
-
-rubyflow:
-  title: Ruby Flow
-  link:  http://rubyflow.com
-  feed:  http://feeds.feedburner.com/Rubyflow?format=xml
-
-rubyonrails:
-  title: Ruby on Rails Blog
-  link:  http://weblog.rubyonrails.org
-  feed:  http://weblog.rubyonrails.org/feed/atom.xml
-
-viennarb:
-  title: vienna.rb Blog
-  link:  http://vienna-rb.at
-  feed:  http://vienna-rb.at/atom.xml
-```
-
 For more samples, see [`nytimes.ini`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.ini),
 [`js.ini`](https://github.com/feedreader/pluto.samples/blob/master/js.ini),
 [`dart.ini`](https://github.com/feedreader/pluto.samples/blob/master/dart.ini),
@@ -66,8 +44,8 @@ For more samples, see [`nytimes.ini`](https://github.com/feedreader/pluto.sample
 
 ## Real World Usage
 
-[`pluto`](https://github.com/feedreader/pluto) - planet generator command line tool using the pluto-models gem
-[`pluto.live`](https://github.com/feedreader/pluto.live) - sample planet site; sinatra web app/starter template in ruby using the pluto-models gem
+- [`pluto`](https://github.com/feedreader/pluto) - planet generator command line tool using the pluto-models gem
+- [`pluto.live`](https://github.com/feedreader/pluto.live) - sample planet site; sinatra web app/starter template in ruby using the pluto-models gem
 
 
 
