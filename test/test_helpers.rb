@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# encoding: utf-8
 
 ###
 #  to run use
@@ -8,8 +8,15 @@
 
 require 'helper'
 
-class TestHelper < MiniTest::Unit::TestCase
+class TestHelper < MiniTest::Test
 
   ## add some tests; to be done
+
+  def test_banner    
+    puts Pluto.banner
+    
+    assert true
+  end
+
 
 end # class TestHelper

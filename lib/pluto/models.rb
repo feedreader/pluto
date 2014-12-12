@@ -1,7 +1,4 @@
-###
-# NB: for local testing run like:
-#
-# 1.9.x: ruby -Ilib lib/pakman.rb
+# encoding: utf-8
 
 # core and stdlibs
 
@@ -9,7 +6,6 @@ require 'yaml'
 require 'json'
 require 'uri'
 require 'pp'
-require 'optparse'
 require 'fileutils'
 require 'logger'
 require 'date'
@@ -29,9 +25,13 @@ require 'textutils'
 
 require 'activityutils'
 
+require 'props/activerecord'
+require 'logutils/activerecord'
+
+
 # our own code
 
-require 'pluto/version'   # let version always get first
+require 'pluto/version'   # note: let version always get first
 require 'pluto/schema'
 require 'pluto/activerecord'
 
@@ -53,23 +53,8 @@ require 'pluto/updater'
 require 'pluto/lister'
 require 'pluto/formatter'
 
-require 'pluto/cli/opts'     ## fix: make sure fetcher/updater etc. do not depend on cli/opts
-
 
 module Pluto
-
-  def self.banner
-    ### todo: add RUBY_PATCHLEVEL or RUBY_PATCH_LEVEL  e.g. -p124
-    "pluto/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
-  end
-
-  def self.generator   # convenience alias for banner (matches HTML generator meta tag)
-    banner
-  end
-
-  def self.root
-    "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
-  end
 
   def self.connect!( config=nil )  # convenience shortcut
     Connecter.new.connect!( config )
@@ -96,13 +81,6 @@ module Pluto
     load 'pluto/tasks/stats.rake'
     load 'pluto/tasks/update.rake'
   end
-
-
-  def self.main
-    require 'pluto/cli/main'
-    ## Runner.new.run(ARGV) - old code
-  end
-  
 
 end  # module Pluto
 
@@ -148,8 +126,5 @@ class Array
 end
 
 
-if __FILE__ == $0
-  Pluto.main
-else
-  puts Pluto.banner       # say hello
-end
+# say hello
+puts Pluto.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG) 
