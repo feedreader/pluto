@@ -1,4 +1,4 @@
-# pluto-models gem - planet models and generator machinery for easy (re)use
+# pluto-models gem - planet schema 'n' models for easy (re)use
 
 * home  :: [github.com/feedreader/pluto-models](https://github.com/feedreader/pluto-models)
 * bugs  :: [github.com/feedreader/pluto-models/issues](https://github.com/feedreader/pluto-models/issues)
@@ -10,36 +10,6 @@
 
 ## Usage
 
-### Planet Configuration Sample 
-
-`ruby.ini`:
-
-```
-title = Planet Ruby
-
-[rubyflow]
-  title  = Ruby Flow
-  link   = http://rubyflow.com
-  feed   = http://feeds.feedburner.com/Rubyflow?format=xml
-
-[rubyonrails]
-  title = Ruby on Rails Blog
-  link  = http://weblog.rubyonrails.org
-  feed  = http://weblog.rubyonrails.org/feed/atom.xml
-
-[viennarb]
-  title = vienna.rb Blog
-  link  = http://vienna-rb.at
-  feed  = http://vienna-rb.at/atom.xml
-```
-
-For more samples, see [`nytimes.ini`](https://github.com/feedreader/pluto.samples/blob/master/nytimes.ini),
-[`js.ini`](https://github.com/feedreader/pluto.samples/blob/master/js.ini),
-[`dart.ini`](https://github.com/feedreader/pluto.samples/blob/master/dart.ini),
-[`haskell.ini`](https://github.com/feedreader/pluto.samples/blob/master/haskell.ini),
-[`viennarb.ini`](https://github.com/feedreader/pluto.samples/blob/master/viennarb.ini),
-[`beer.ini`](https://github.com/feedreader/pluto.samples/blob/master/beer.ini),
-[`football.ini`](https://github.com/feedreader/pluto.samples/blob/master/football.ini).
 
 
 ## Real World Usage

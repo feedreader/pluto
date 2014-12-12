@@ -19,7 +19,6 @@ require 'active_record'   ## todo: add sqlite3? etc.
 require 'logutils'
 require 'props'     # manage settings/env
 require 'fetcher'   # fetch (download) files
-require 'pakman'    # template pack manager
 require 'feedutils'
 require 'textutils'
 
@@ -42,44 +41,13 @@ require 'pluto/models/site'
 require 'pluto/models/subscription'
 require 'pluto/models/utils'
 
-require 'pluto/manifest_helpers'
 require 'pluto/connecter'
-
-require 'pluto/installer'
-require 'pluto/fetcher'
-require 'pluto/refresher'
-require 'pluto/subscriber'
-require 'pluto/updater'
-require 'pluto/lister'
-require 'pluto/formatter'
 
 
 module Pluto
 
   def self.connect!( config=nil )  # convenience shortcut
     Connecter.new.connect!( config )
-  end
-
-
-  # todo: add alias update_site( config ) ??
-  def self.update_subscriptions( config )
-    Subscriber.new.update_subscriptions( config )
-  end
-
-  def self.update_feeds
-    Refresher.new.update_feeds
-  end
-
-  def self.update_sites
-    Refresher.new.update_sites
-  end
-
-  def self.load_tasks
-    # load all builtin Rake tasks (from tasks/*rake)
-    load 'pluto/tasks/env.rake'
-    load 'pluto/tasks/setup.rake'
-    load 'pluto/tasks/stats.rake'
-    load 'pluto/tasks/update.rake'
   end
 
 end  # module Pluto
