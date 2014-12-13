@@ -2,7 +2,6 @@ HISTORY.md
 Manifest.txt
 README.md
 Rakefile
-lib/pluto/activerecord.rb
 lib/pluto/connecter.rb
 lib/pluto/models.rb
 lib/pluto/models/feed.rb
