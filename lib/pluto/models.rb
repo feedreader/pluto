@@ -33,7 +33,6 @@ require 'logutils/activerecord'
 
 require 'pluto/version'   # note: let version always get first
 require 'pluto/schema'
-require 'pluto/activerecord'
 
 require 'pluto/models/forward'
 require 'pluto/models/feed'
