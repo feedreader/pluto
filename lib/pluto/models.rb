@@ -17,9 +17,8 @@ require 'logger'             # Note: use for ActiveRecord::Base.logger = Logger.
 
 require 'active_record'
 
-require 'logutils'
 require 'props'     # manage settings/env
-require 'fetcher'   # fetch (download) files
+require 'logutils'
 require 'feedutils'
 require 'textutils'
 
