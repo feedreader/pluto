@@ -23,6 +23,7 @@ require 'feedutils'
 require 'textutils'
 
 ## add more activerecords addons/utils
+require 'activerecord/utils'     # add macros e.g. read_attr_w_fallbacks etc.
 require 'activityutils'
 require 'props/activerecord'
 require 'logutils/activerecord'

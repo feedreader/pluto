@@ -7,8 +7,6 @@ module Pluto
 class Feed < ActiveRecord::Base
   self.table_name = 'feeds'
 
-  include Pluto::ActiveRecordMethods  # e.g. read_attribute_w_fallbacks
-
   has_many :items
   has_many :subscriptions
   has_many :sites, :through => :subscriptions

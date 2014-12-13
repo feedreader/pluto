@@ -6,8 +6,6 @@ module Pluto
 class Item < ActiveRecord::Base
   self.table_name = 'items'
 
-  include Pluto::ActiveRecordMethods  # e.g. read_attribute_w_fallbacks
-
   belongs_to :feed
 
   ##################################

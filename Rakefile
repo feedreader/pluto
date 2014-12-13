@@ -26,6 +26,7 @@ Hoe.spec 'pluto-models' do
     ['logutils-activerecord', '>= 0.2.0'],
     ['props-activerecord',    '>= 0.1.0'],
     ['activityutils',         '>= 0.1.0'],
+    ['activerecord-utils',    '>= 0.2.0'],
   ]
 
 
