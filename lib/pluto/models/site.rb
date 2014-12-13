@@ -1,5 +1,7 @@
+# encoding: utf-8
+
 module Pluto
-  module Models
+  module Model
 
 class Site < ActiveRecord::Base
   self.table_name = 'sites'
@@ -15,5 +17,5 @@ class Site < ActiveRecord::Base
 
 end
 
-  end # module Models
+  end # module Model
 end # module Pluto

@@ -1,5 +1,7 @@
+# encoding: utf-8
+
 module Pluto
-  module Models
+  module Model
 
 class Item < ActiveRecord::Base
   self.table_name = 'items'
@@ -69,5 +71,5 @@ class Item < ActiveRecord::Base
 end  # class Item
 
 
-  end # module Models
+  end # module Model
 end # module Pluto

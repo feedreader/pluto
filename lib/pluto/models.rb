@@ -7,14 +7,15 @@ require 'json'
 require 'uri'
 require 'pp'
 require 'fileutils'
-require 'logger'
 require 'date'
 require 'digest/md5'
+
+require 'logger'             # Note: use for ActiveRecord::Base.logger = Logger.new( STDOUT ) for now
 
 
 # 3rd party ruby gems/libs
 
-require 'active_record'   ## todo: add sqlite3? etc.
+require 'active_record'
 
 require 'logutils'
 require 'props'     # manage settings/env
@@ -22,8 +23,8 @@ require 'fetcher'   # fetch (download) files
 require 'feedutils'
 require 'textutils'
 
+## add more activerecords addons/utils
 require 'activityutils'
-
 require 'props/activerecord'
 require 'logutils/activerecord'
 
@@ -34,7 +35,7 @@ require 'pluto/version'   # note: let version always get first
 require 'pluto/schema'
 require 'pluto/activerecord'
 
-require 'pluto/models/activity'
+require 'pluto/models/forward'
 require 'pluto/models/feed'
 require 'pluto/models/item'
 require 'pluto/models/site'
@@ -46,9 +47,63 @@ require 'pluto/connecter'
 
 module Pluto
 
-  def self.connect!( config=nil )  # convenience shortcut
-    Connecter.new.connect!( config )
+  def self.create
+    CreateDb.new.up
+    ConfDb::Model::Prop.create!( key: 'db.schema.planet.version', value: VERSION )
   end
+
+  def self.create_all
+    LogDb.create # add logs table
+    ConfDb.create # add props table
+    ActivityDb::CreateDb.new.up    # todo/check - use ActivityDb.create if exists???
+    Pluto.create
+  end
+
+
+  def self.auto_migrate!
+    # first time? - auto-run db migratation, that is, create db tables
+    unless LogDb::Model::Log.table_exists?
+      LogDb.create # add logs table
+    end
+
+    unless ConfDb::Model::Prop.table_exists?
+      ConfDb.create # add props table
+    end
+
+    ## fix: change to Model from Models
+    unless ActivityDb::Models::Activity.table_exists?
+      ActivityDb::CreateDb.new.up    # todo/check - use ActivityDb.create if exists???
+    end
+
+    unless Model::Feed.table_exists?
+      Pluto.create
+    end    
+  end # method auto_migrate!
+
+
+
+  def self.connect( config={} )  # convenience shortcut without (w/o) automigrate
+    Connecter.new.connect( config )
+  end
+
+  def self.connect!( config={} )  # convenience shortcut w/ automigrate
+    Pluto.connect( config )
+    Pluto.auto_migrate!
+  end
+
+
+  def self.setup_in_memory_db
+    # Database Setup & Config
+    ActiveRecord::Base.logger = Logger.new( STDOUT )
+    ## ActiveRecord::Base.colorize_logging = false - no longer exists - check new api/config setting?
+
+    Pluto.connect( adapter: 'sqlite3',
+                   database: ':memory:' )
+
+    ## build schema
+    Pluto.create_all
+  end # setup_in_memory_dd
+
 
 end  # module Pluto
 

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Pluto
 
 
@@ -21,10 +23,9 @@ class Connecter
     @debug || false
   end
 
+  def connect( config={} )
 
-  def connect!( config = nil )
-
-    if config.nil?   # use/try DATABASE_URL from environment
+    if config.empty?   # use/try DATABASE_URL from environment
 
       logger.debug "ENV['DATBASE_URL'] - >#{ENV['DATABASE_URL']}<"
 
@@ -77,18 +78,8 @@ class Connecter
       ActiveRecord::Base.logger = Logger.new( STDOUT ) 
     end
 
-
     ActiveRecord::Base.establish_connection( config )
-
-    # first time? - auto-run db migratation, that is, create db tables
-    unless ActivityDb::Models::Activity.table_exists?
-      ActivityDb::CreateDb.new.up
-    end
-
-    unless Models::Feed.table_exists?
-      CreateDb.new.up  
-    end
-  end # method connect!
+  end # method connect
 
 
 end # class Connecter

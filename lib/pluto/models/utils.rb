@@ -1,5 +1,7 @@
+# encoding: utf-8
+
 module Pluto
-  module Models
+  module Model
 
 class ItemCursor
 
@@ -43,5 +45,5 @@ class ItemCursor
 end # class ItemCursor
 
 
-  end # module Models
+  end # module Model
 end # module Pluto

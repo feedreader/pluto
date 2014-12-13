@@ -1,5 +1,7 @@
+# encoding: utf-8
+
 module Pluto
-  module Models
+  module Model
 
 
 class Subscription < ActiveRecord::Base
@@ -10,5 +12,5 @@ class Subscription < ActiveRecord::Base
 end
 
 
-  end # module Models
+  end # module Model
 end # module Pluto

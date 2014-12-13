@@ -1,5 +1,8 @@
+# encoding: utf-8
+
+
 module Pluto
-  module Models
+  module Model
 
 class Feed < ActiveRecord::Base
   self.table_name = 'feeds'
@@ -123,5 +126,5 @@ class Feed < ActiveRecord::Base
 end  # class Feed
 
 
-  end # module Models
+  end # module Model
 end # module Pluto
