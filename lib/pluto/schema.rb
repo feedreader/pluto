@@ -109,13 +109,15 @@ class CreateDb < ActiveRecord::Migration
       t.string   :guid
       t.string   :url
 
-      ## note: title may contain more than 255 chars!! use text for sure!
+      ## note: title may contain more than 255 chars!!
       ## e.g. Rails Girls blog has massive titles in feed
-      
-      t.text     :title   # todo: add some :null => false ??
+      ## cut-off/limit to 255
+      ##  also strip tags in titles - why? why not?? - see feed.title2/auto_title2
+
+      t.string   :title   # todo: add some :null => false ??
       t.text     :summary  # e.g. description (rss), summary (atom)
       t.text     :content
-      
+
       t.datetime :published   # from feed (published)  + pubDate(rss)
       t.datetime :touched     # from feed updated (atom)
 

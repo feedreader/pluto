@@ -8,6 +8,11 @@ class Item < ActiveRecord::Base
 
   belongs_to :feed
 
+  ## todo/fix:
+  ##  use a module ref or something; do NOT include all methods - why? why not? 
+  include TextUtils::HypertextHelper   ## e.g. lets us use strip_tags( ht )
+
+
   ##################################
   # attribute reader aliases
   def name()        title;    end  # alias for title
@@ -45,7 +50,7 @@ class Item < ActiveRecord::Base
 
     item_attribs = {
       guid:         data.guid,   # todo: only add for new records???
-      title:        data.title,
+      title:        data.title ? strip_tags(data.title)[0...255] : data.title,   ## limit to 255 chars; strip tags
       url:          data.url,
       summary:      data.summary,
       content:      data.content,

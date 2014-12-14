@@ -12,6 +12,11 @@ class Feed < ActiveRecord::Base
   has_many :sites, :through => :subscriptions
 
 
+  ## todo/fix:
+  ##  use a module ref or something; do NOT include all methods - why? why not? 
+  include TextUtils::HypertextHelper   ## e.g. lets us use strip_tags( ht )
+
+
   def self.latest
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
@@ -95,6 +100,17 @@ class Feed < ActiveRecord::Base
       generator_full = nil
     end
 
+##
+# todo:
+##  strip all tags from title2
+##  limit to 255 chars
+## e.g. title2 such as this exist
+##  This is a low-traffic announce-only list for people interested
+##  in hearing news about Polymer (<a href="http://polymer-project.org">http://polymer-project.org</a>).
+## The higher-traffic mailing list for all kinds of discussion is
+##  <a href="https://groups.google.com/group/polymer-dev">https://groups.google.com/group/polymer-dev</a>
+
+
     feed_attribs = {
         format:       data.format,
         published:    data.published,
@@ -105,7 +121,7 @@ class Feed < ActiveRecord::Base
         # auto_title:     ???,
         # auto_url:       ???,
         # auto_feed_url:  ???,
-        auto_title2:  data.title2,
+        auto_title2:  data.title2 ? strip_tags(data.title2)[0...255] : data.title2,   # limit to 255 chars; strip tags
         generator:    generator_full
       }
 
