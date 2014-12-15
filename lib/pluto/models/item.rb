@@ -16,8 +16,10 @@ class Item < ActiveRecord::Base
   ##################################
   # attribute reader aliases
   def name()        title;    end  # alias for title
-  def description() summary;  end  # alias for summary  -- also add descr shortcut??
+  def description() summary;  end  # alias     for summary  -- also add descr shortcut??
+  def desc()        summary;  end  # alias (2) for summary  -- also add descr shortcut??
   def link()        url;      end  # alias for url
+
 
   def self.latest
     # note: order by first non-null datetime field

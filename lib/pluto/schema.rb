@@ -6,22 +6,27 @@ class CreateDb < ActiveRecord::Migration
 
   def up
     create_table :sites do |t|
-      t.string   :title,     :null => false    # e.g Planet Ruby, Planet JavaScript, etc.
-      t.string   :key,       :null => false    # e.g. ruby, js, etc.
+      t.string   :key,       null: false    # e.g. ruby, js, etc.
+      t.string   :title,     null: false    # e.g Planet Ruby, Planet JavaScript, etc.
+
+      t.string   :author    # owner_name, author_name
+      t.string   :email     # owner_email, author_email
+      t.datetime :updated   # date for subscription list last updated via pluto
 
       ############
       # filters (site-wide)
       t.string   :includes  # regex
       t.string   :excludes  # regex
 
+
       ######################
       # for auto-update of feed list/site config
 
       t.string   :url    # source url for auto-update (optional)
 
-      ## note: make sure to use same fields for update check as feed 
+      ## note: make sure to use same fields for update check as feed
 
-      t.datetime :fetched   #  last fetched/checked date -- make not null ??
+      t.datetime :fetched   #  date for last fetched/checked for feeds via pluto -- make not null ??
       t.integer  :http_code   # last http status code e.g. 200,404,etc.
       t.string   :http_etag    # last http header etag
       ## note: save last-modified header as text (not datetime) - pass through as is
@@ -31,7 +36,6 @@ class CreateDb < ActiveRecord::Migration
       # note: do NOT store body content (that is, text) and md5 digest
       #   use git! and github! commit will be http_etag!!
 
-      t.datetime :fetched    # last fetched/checked date
 
       #############
       # more fields
@@ -39,13 +43,18 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps  # created_at, updated_at
     end
 
+
     create_table :subscriptions do |t|   # has_many join table (sites/feeds)
-      t.references :site, :null => false
-      t.references :feed, :null => false
+      t.references :site, null: false
+      t.references :feed, null: false
       t.timestamps
     end
 
     create_table :feeds do |t|
+      t.string  :key,       null: false
+      t.string  :encoding,  null: false, default: 'utf8'  # charset encoding; default to utf8
+      t.string  :format      # e.g. atom (1.0), rss 2.0, rss 0.7 etc.
+
       t.string  :title        # user supplied title
       t.string  :auto_title   # "fallback" - auto(fill) title from feed
 
@@ -66,10 +75,16 @@ class CreateDb < ActiveRecord::Migration
       t.datetime :built      # from feed lastBuiltDate(rss)
       t.datetime :touched    # from feed updated(atom)
 
+
       ### extras (move to array for custom fields or similar??)
+      t.string   :author   # author_name, owner_name
+      t.string   :email    # author_email, owner_email
+      t.string   :avatar   # gravator or hackergotchi handle (optional)
+
       t.string   :github   # github handle  (optional)
       t.string   :twitter  # twitter handle (optional)
-      t.string   :avatar   # gravator or hackergotchi handle (optional)
+      t.string   :meetup   # meetup handle (optional)
+
 
       ### add class/kind field e.g.
       # - personal feed/blog/site, that is, individual author
@@ -79,16 +94,14 @@ class CreateDb < ActiveRecord::Migration
       # - other  (link blog?, podcast?) - why? why not??
 
       ############
-      # filters
+      # filters (feed-wide)
       t.string   :includes  # regex
       t.string   :excludes  # regex
       # todo: add generic filter list e.g. t.string :filters  (comma,pipe or space separated method names?)
 
       # -- our own (meta) fields
-      t.datetime :last_published # cache last (latest) published for items
-
-      t.string  :key,      :null => false
-      t.string  :format      # e.g. atom (1.0), rss 2.0, rss 0.7 etc.
+      t.datetime :last_published  # cache last (latest) published for items - e.g. latest date from publisehd item
+      t.datetime :fetched    # last fetched date via pluto
 
       t.integer  :http_code   # last http status code e.g. 200,404,etc.
       t.string   :http_etag    # last http header etag
@@ -99,7 +112,6 @@ class CreateDb < ActiveRecord::Migration
       t.string   :md5       # md5 hash of body
       t.text     :body      # last http response body (complete feed!)
 
-      t.datetime :fetched    # last fetched/checked date
 
       t.timestamps   # created_at, updated_at
     end
@@ -122,9 +134,9 @@ class CreateDb < ActiveRecord::Migration
       t.datetime :touched     # from feed updated (atom)
 
       ## todo: add :last_updated_at ??  (NOTE: updated_at already take by auto-timestamps)
-      t.references :feed, :null => false
+      t.references :feed, null: false
 
-      t.datetime :fetched   # last fetched/check date
+      t.datetime :fetched   # last fetched/check date via pluto
       t.timestamps   # created_at, updated_at
 
       ## t.string   :author

@@ -31,10 +31,18 @@ class Feed < ActiveRecord::Base
   #
   #  todo: check if we can use alias_method :name, :title   - works for non-existing/on-demand-generated method too??
 
-  def name()        title;    end  # alias for title
-  def description() summary;  end  # alias for summary  -- also add descr shortcut??
-  def link()        url;      end  # alias for url
-  def feed()        feed_url; end  # alias for feed_url
+  def name()        title;    end  # alias    for title
+  def description() summary;  end  # alias    for summary
+  def desc()        summary;  end  # alias(2) for summary
+  def link()        url;      end  # alias    for url
+  def feed()        feed_url; end  # alias    for feed_url
+
+  def author_name()  author;  end # alias    for author
+  def owner_name()   author;  end # alias(2) for author
+  def owner()        author;  end # alias(3) for author
+  def author_email() email;   end # alias    for email
+  def author_email() email;   end # alias(2) for email
+
 
   def url?()           read_attribute(:url).present?;       end
   def title?()         read_attribute(:title).present?;     end
