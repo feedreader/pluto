@@ -74,11 +74,46 @@ class Feed < ActiveRecord::Base
   def debug=(value)  @debug = value;   end
   def debug?()       @debug || false;  end
 
+
+  def match_terms?( terms, text )   ### make helper method private - why? why not??
+    return false  if text.blank?     ## allow/guard against nil and empty string
+
+    terms.each do |term|
+      if /#{term}/i =~ text      ## Note: lets ignore case (use i regex option) 
+        return true
+      end
+    end
+
+    false  # no term match found
+  end
+
+
+
   def save_from_struct!( data )
 
     update_from_struct!( data )
     
     data.items.each do |item|
+
+      ######
+      ## check for filters (includes/excludes) if present
+      ##  for now just check for includes
+      ##
+      if includes.present?
+        ## split terms (allow comma,pipe) - do NOT use space; allows e.g. terms such as github pages
+        terms = includes.split( /\s*[,|]\s*/ )
+        ## remove leading and trailing white spaces - check - still required when using \s* ??
+        terms = terms.map { |term| term.strip }
+        match = match_terms?( terms, item.title  ) ||
+                match_terms?( terms, item.summary) ||
+                match_terms?( terms, item.content)
+        
+        if match == false
+          puts "** SKIPPING | #{item.title}"
+          puts "  no include terms match: #{terms.join('|')}"
+          next   ## skip to next item
+        end
+      end
 
       item_rec = Item.find_by_guid( item.guid )
       if item_rec.nil?

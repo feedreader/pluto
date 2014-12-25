@@ -2,7 +2,7 @@
 
 ###
 #  to run use
-#     ruby -I ./lib -I ./test test/test_rss.rb
+#     ruby -I ./lib -I ./test test/test_helpers.rb
 #  or better
 #     rake test
 

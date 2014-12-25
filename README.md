@@ -10,6 +10,76 @@
 
 ## Usage
 
+### Models
+
+Site • Feed • Item • Subscription
+
+#### Site
+
+~~~
+class Site
+  has_many :subscriptions
+  has_many :feeds, :through => :subscriptions
+  has_many :items, :through => :feeds
+  ...
+end 
+~~~
+
+#### Feed
+
+~~~
+class Feed
+  has_many :items
+  has_many :subscriptions
+  has_many :sites, :through => :subscriptions
+  ...
+end
+~~~
+
+#### Item
+
+~~~
+class Item
+  belongs_to :feed
+  ...
+end
+~~~
+
+#### Subscription
+
+~~~
+class Subscription
+  belongs_to :site
+  belongs_to :feed
+  ...
+end
+~~~
+
+
+
+### Examples
+
+~~~
+DB_CONFIG = {
+  adapter: 'sqlite3',
+  database: './planet.db'
+}
+
+Pluto.connect( DB_CONFIG )
+
+Pluto::Model::Item.latest.limit(10).each_with_index do |item,i|
+  puts "[#{i+1}] #{item.title}"
+
+  if item.content
+    puts item.content
+  elsif item.summary
+    puts item.summary
+  else
+    ## warn: no content found
+  end
+end
+~~~
+
 
 
 ## Real World Usage
