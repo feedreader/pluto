@@ -8,7 +8,7 @@ Hoe.spec 'pluto-models' do
   self.summary = "pluto-models - planet schema 'n' models for easy (re)use"
   self.description = summary
 
-  self.urls    = ['https://github.com/feedreader/pluto-models']
+  self.urls    = ['https://github.com/feedreader/pluto.models']
 
   self.author  = 'Gerald Bauer'
   self.email   = 'feedreader@googlegroups.com'
@@ -20,8 +20,8 @@ Hoe.spec 'pluto-models' do
   self.extra_deps = [
     ['props',         '>= 1.1.2'],
     ['logutils',      '>= 0.6.1'],
-    ['feedutils',     '>= 0.4.0'],
-    ['textutils',     '>= 0.10.0'],
+    ['feedparser',    '>= 1.0.0'],
+    ['textutils',     '>= 1.0.1'],
     ['activerecord'],
     ['logutils-activerecord', '>= 0.2.0'],
     ['props-activerecord',    '>= 0.1.0'],
