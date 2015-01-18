@@ -13,7 +13,6 @@ class Site < ActiveRecord::Base
   ##################################
   # attribute reader aliases
   def name()        title;    end  # alias for title
-  def fetched_at()  fetched;  end  # - legacy attrib reader -- remove!!!
 
   def owner_name()  author;  end  # alias    for author
   def owner()       author;  end  # alias(2) for author

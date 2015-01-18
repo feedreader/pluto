@@ -10,7 +10,13 @@ require 'helper'
 
 class TestHelper < MiniTest::Test
 
-  ## add some tests; to be done
+  def setup
+    Log.delete_all
+    Site.delete_all
+    Feed.delete_all
+    Subscription.delete_all
+    Item.delete_all
+  end
 
   def test_banner
     puts Pluto.banner

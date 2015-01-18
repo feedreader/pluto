@@ -21,9 +21,9 @@ class Feed < ActiveRecord::Base
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
-    # note: if not published, touched or built use hardcoded 1971-01-01 for now
-    ## order( "coalesce(published,touched,built,'1971-01-01') desc" )
-    order( "coalesce(feeds.last_published,'1971-01-01') desc" )
+    # note: if not updated or published use hardcoded 1971-01-01 for now
+    ## order( "coalesce(updated,published,'1971-01-01') desc" )
+    order( "coalesce(feeds.items_last_updated,'1971-01-01') desc" )
   end
 
   ##################################
@@ -34,6 +34,7 @@ class Feed < ActiveRecord::Base
   def name()        title;    end  # alias    for title
   def description() summary;  end  # alias    for summary
   def desc()        summary;  end  # alias(2) for summary
+  def subtitle()    summary;  end  # alias(3) for summary
   def link()        url;      end  # alias    for url
   def feed()        feed_url; end  # alias    for feed_url
 
@@ -46,28 +47,28 @@ class Feed < ActiveRecord::Base
 
   def url?()           read_attribute(:url).present?;       end
   def title?()         read_attribute(:title).present?;     end
-  def title2?()        read_attribute(:title2).present?;    end
   def feed_url?()      read_attribute(:feed_url).present?;  end
 
   def url()      read_attribute_w_fallbacks( :url,      :auto_url );      end
   def title()    read_attribute_w_fallbacks( :title,    :auto_title );    end
-  def title2()   read_attribute_w_fallbacks( :title2,   :auto_title2 );   end
   def feed_url() read_attribute_w_fallbacks( :feed_url, :auto_feed_url ); end
 
+  def summary?()      read_attribute(:summary).present?;  end
 
+
+  def updated?()    read_attribute(:updated).present?;    end
   def published?()  read_attribute(:published).present?;  end
-  def touched?()    read_attribute(:touched).present?;    end
 
+  def updated
+    ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
+    #    db backed attribute
+    read_attribute_w_fallbacks( :updated, :published )
+  end
 
   def published
     ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
     #    db backed attribute
-
-    read_attribute_w_fallbacks(
-       :published,  
-       :touched,     # try touched (aka updated (ATOM))
-       :built        # try build (aka lastBuildDate (RSS))
-    )
+    read_attribute_w_fallbacks( :published, :updated )
   end
 
 
@@ -75,44 +76,23 @@ class Feed < ActiveRecord::Base
   def debug?()       @debug || false;  end
 
 
-  def match_terms?( terms, text )   ### make helper method private - why? why not??
-    return false  if text.blank?     ## allow/guard against nil and empty string
+  def deep_update_from_struct!( data )
 
-    terms.each do |term|
-      if /#{term}/i =~ text      ## Note: lets ignore case (use i regex option) 
-        return true
-      end
+    ######
+    ## check for filters (includes/excludes) if present
+    ##  for now just check for includes
+    ##
+    if includes.present?
+      includesFilter = FeedFilter::IncludeFilters.new( includes )
+    else
+      includesFilter = nil
     end
 
-    false  # no term match found
-  end
-
-
-
-  def save_from_struct!( data )
-
-    update_from_struct!( data )
-    
     data.items.each do |item|
-
-      ######
-      ## check for filters (includes/excludes) if present
-      ##  for now just check for includes
-      ##
-      if includes.present?
-        ## split terms (allow comma,pipe) - do NOT use space; allows e.g. terms such as github pages
-        terms = includes.split( /\s*[,|]\s*/ )
-        ## remove leading and trailing white spaces - check - still required when using \s* ??
-        terms = terms.map { |term| term.strip }
-        match = match_terms?( terms, item.title  ) ||
-                match_terms?( terms, item.summary) ||
-                match_terms?( terms, item.content)
-        
-        if match == false
-          puts "** SKIPPING | #{item.title}"
-          puts "  no include terms match: #{terms.join('|')}"
-          next   ## skip to next item
-        end
+      if includesFilter && includesFilter.match_item?( item ) == false
+        puts "** SKIPPING | #{item.title}"
+        puts "  no include terms match: #{includes}"
+        next   ## skip to next item
       end
 
       item_rec = Item.find_by_guid( item.guid )
@@ -123,17 +103,37 @@ class Feed < ActiveRecord::Base
         ## todo: check if any attribs changed
         puts "UPDATE | #{item.title}"
       end
-      
+
       item_rec.debug = debug? ? true : false  # pass along debug flag
-      item_rec.update_from_struct!( self, item )
+
+      item_rec.feed_id = id        # feed_rec.id - add feed_id fk_ref
+      item_rec.fetched = fetched   # feed_rec.fetched
+
+      item_rec.update_from_struct!( item )
 
     end  # each item
-  end
+
+
+    #  update  cached value last published for item
+    ##  todo/check: force reload of items - why? why not??
+    last_item_rec = items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
+    if last_item_rec.present?
+      if last_item_rec.updated?
+        self.items_last_updated = last_item_rec.updated
+        ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+      else # try published
+        self.items_last_updated = last_item_rec.published
+        ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+      end
+    end
+
+    update_from_struct!( data )
+  end # method deep_update_from_struct!
 
 
   def update_from_struct!( data )
 
-    ## todo: move to FeedUtils::Feed ??? why? why not??
+    ## todo: move to FeedParser::Feed ??? why? why not??
     if data.generator
       generator_full = ''
       generator_full << data.generator
@@ -145,9 +145,9 @@ class Feed < ActiveRecord::Base
 
 ##
 # todo:
-##  strip all tags from title2
+##  strip all tags from summary (subtitle)
 ##  limit to 255 chars
-## e.g. title2 such as this exist
+## e.g. summary (subtitle) such as this exist
 ##  This is a low-traffic announce-only list for people interested
 ##  in hearing news about Polymer (<a href="http://polymer-project.org">http://polymer-project.org</a>).
 ## The higher-traffic mailing list for all kinds of discussion is
@@ -156,16 +156,14 @@ class Feed < ActiveRecord::Base
 
     feed_attribs = {
         format:       data.format,
+        updated:      data.updated,
         published:    data.published,
-        touched:      data.updated,
-        built:        data.built,
         summary:      data.summary,
+        generator:    generator_full,
         ### todo/fix: add/use
         # auto_title:     ???,
         # auto_url:       ???,
         # auto_feed_url:  ???,
-        auto_title2:  data.title2 ? strip_tags(data.title2)[0...255] : data.title2,   # limit to 255 chars; strip tags
-        generator:    generator_full
       }
 
     if debug?

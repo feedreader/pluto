@@ -21,6 +21,8 @@ require 'props'     # manage settings/env
 require 'logutils'
 require 'textutils'
 require 'feedparser'
+require 'feedfilter'
+
 
 ## add more activerecords addons/utils
 require 'activerecord/utils'     # add macros e.g. read_attr_w_fallbacks etc.

@@ -21,6 +21,7 @@ Hoe.spec 'pluto-models' do
     ['props',         '>= 1.1.2'],
     ['logutils',      '>= 0.6.1'],
     ['feedparser',    '>= 1.0.0'],
+    ['feedfilter',    '>= 1.1.1'],
     ['textutils',     '>= 1.0.1'],
     ['activerecord'],
     ['logutils-activerecord', '>= 0.2.0'],
