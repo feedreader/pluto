@@ -35,6 +35,7 @@ class CreateDb < ActiveRecord::Migration
 
       # note: do NOT store body content (that is, text) and md5 digest
       #   use git! and github! commit will be http_etag!!
+      t.string   :md5       # md5 hash of body
 
 
       #############
@@ -53,37 +54,35 @@ class CreateDb < ActiveRecord::Migration
     create_table :feeds do |t|
       t.string  :key,       null: false
       t.string  :encoding,  null: false, default: 'utf8'  # charset encoding; default to utf8
-      t.string  :format      # e.g. atom (1.0), rss 2.0, rss 0.7 etc.
+      t.string  :format      # e.g. atom (1.0), rss 2.0, etc.
 
-      t.string  :title        # user supplied title
-      t.string  :auto_title   # "fallback" - auto(fill) title from feed
-
-      t.string  :title2        # user supplied title2
-      t.string  :auto_title2   # "fallback" - auto(fill) title2 from feed e.g. subtitle (atom)
-
-      t.string  :url          # user supplied site url
-      t.string  :auto_url     # "fallback" - auto(fill) url from feed
-
+      t.string  :title          # user supplied title
+      t.string  :url            # user supplied site url
       t.string  :feed_url       # user supplied feed url
+
+      t.string  :auto_title     # "fallback" - auto(fill) title from feed
+      t.string  :auto_url       # "fallback" - auto(fill) url from feed
       t.string  :auto_feed_url  # "fallback" - auto discovery feed url from (site) url
 
-      t.text    :summary    # e.g. description (rss)
+      t.text    :summary    # e.g. description (rss), subtitle (atom)
+      ## todo: add auto_summary  - why? why not?
 
       t.string  :generator   # feed generator (e.g. wordpress, etc.)  from feed
-      
-      t.datetime :published  # from feed published(atom)+ pubDate(rss)
-      t.datetime :built      # from feed lastBuiltDate(rss)
-      t.datetime :touched    # from feed updated(atom)
+
+      t.datetime :updated    # from feed updated(atom) + lastBuildDate(rss)
+      t.datetime :published  # from feed published(atom) + pubDate(rss) - note: published basically an alias for created
 
 
       ### extras (move to array for custom fields or similar??)
-      t.string   :author   # author_name, owner_name
-      t.string   :email    # author_email, owner_email
-      t.string   :avatar   # gravator or hackergotchi handle (optional)
+      t.string   :author    # author_name, owner_name
+      t.string   :email     # author_email, owner_email
+      t.string   :avatar    # gravator or hackergotchi handle (optional)
+      t.string   :location  # e.g. Vienna > Austria,  Bamberg > Germany etc. (optional)
 
-      t.string   :github   # github handle  (optional)
-      t.string   :twitter  # twitter handle (optional)
-      t.string   :meetup   # meetup handle (optional)
+      t.string   :github     # github handle  (optional)
+      t.string   :rubygems   # rubygems handle (optional)
+      t.string   :twitter    # twitter handle (optional)
+      t.string   :meetup     # meetup handle (optional)
 
 
       ### add class/kind field e.g.
@@ -100,7 +99,7 @@ class CreateDb < ActiveRecord::Migration
       # todo: add generic filter list e.g. t.string :filters  (comma,pipe or space separated method names?)
 
       # -- our own (meta) fields
-      t.datetime :last_published  # cache last (latest) published for items - e.g. latest date from publisehd item
+      t.datetime :items_last_updated  # cache last (latest) updated for items - e.g. latest date from updated item
       t.datetime :fetched    # last fetched date via pluto
 
       t.integer  :http_code   # last http status code e.g. 200,404,etc.
@@ -123,15 +122,15 @@ class CreateDb < ActiveRecord::Migration
 
       ## note: title may contain more than 255 chars!!
       ## e.g. Rails Girls blog has massive titles in feed
-      ## cut-off/limit to 255
+      ## cut-off/limit to 255 - why?? why not??
       ##  also strip tags in titles - why? why not?? - see feed.title2/auto_title2
 
-      t.string   :title   # todo: add some :null => false ??
+      t.text     :title   # todo: add some :null => false ??
       t.text     :summary  # e.g. description (rss), summary (atom)
       t.text     :content
 
-      t.datetime :published   # from feed (published)  + pubDate(rss)
-      t.datetime :touched     # from feed updated (atom)
+      t.datetime :updated     # from feed updated (atom) + pubDate(rss)
+      t.datetime :published   # from feed published (atom) -- note: published is basically an alias for created
 
       ## todo: add :last_updated_at ??  (NOTE: updated_at already take by auto-timestamps)
       t.references :feed, null: false
