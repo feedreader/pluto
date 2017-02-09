@@ -1,0 +1,8 @@
+HISTORY.md
+Manifest.txt
+README.md
+Rakefile
+lib/pluto/feedfetcher.rb
+lib/pluto/feedfetcher/basic.rb
+lib/pluto/feedfetcher/cond_get_with_cache.rb
+lib/pluto/feedfetcher/version.rb
