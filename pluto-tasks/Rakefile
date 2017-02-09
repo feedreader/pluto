@@ -1,0 +1,31 @@
+require 'hoe'
+require './lib/pluto/tasks/version.rb'
+
+Hoe.spec 'pluto-tasks' do
+
+  self.version = PlutoTasks::VERSION
+
+  self.summary = "pluto-tasks - planet rake tasks (setup, update, stats, etc.)"
+  self.description = summary
+
+  self.urls    = ['https://github.com/feedreader/pluto.tasks']
+
+  self.author  = 'Gerald Bauer'
+  self.email   = 'feedreader@googlegroups.com'
+
+  # switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.md'
+  self.history_file = 'HISTORY.md'
+
+  self.extra_deps = [
+    ['pluto-models',  '>= 1.4.0'],
+    ['pluto-update',  '>= 1.6.0'],
+  ]
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+    required_ruby_version: '>= 1.9.2'
+  }
+
+end

@@ -4,6 +4,8 @@ Gem Family:
 
 - [**pluto**](pluto) - command line tool for planet (static) site generator - lets you build web pages from published web feeds
 - [pluto-models](pluto-models) - planet schema 'n' models for easy (re)use
+- [pluto-tasks](pluto-tasks) - planet rake tasks (setup, update, stats, etc.)
+
 
 
 
