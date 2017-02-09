@@ -1,0 +1,35 @@
+require 'hoe'
+require './lib/pluto/cli/version.rb'
+
+Hoe.spec 'pluto' do
+
+  self.version = PlutoCli::VERSION
+
+  self.summary = 'pluto - Another Planet Generator'
+  self.description = 'pluto - Another Planet Generator (Lets You Build Web Pages from Published Web Feeds)'
+
+  self.urls    = ['https://github.com/feedreader/pluto']
+
+  self.author  = 'Gerald Bauer'
+  self.email   = 'feedreader@googlegroups.com'
+
+  # switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.md'
+  self.history_file = 'HISTORY.md'
+
+  self.extra_deps = [
+    ['pluto-models', '>= 1.4.0'],
+    ['pluto-update', '>= 1.6.0'],
+    ['pluto-merge',  '>= 1.1.0'],
+    ['pluto-tasks',  '>= 1.5.2'],
+    ['gli',          '>= 2.12.2'],
+    ['sqlite3'],
+  ]
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+   required_ruby_version: '>= 1.9.2'
+  }
+
+end
