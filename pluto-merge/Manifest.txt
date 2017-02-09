@@ -1,0 +1,11 @@
+HISTORY.md
+Manifest.txt
+README.md
+Rakefile
+config/pluto.index.yml
+lib/pluto/merge.rb
+lib/pluto/merge/formatter.rb
+lib/pluto/merge/installer.rb
+lib/pluto/merge/lister.rb
+lib/pluto/merge/manifest_helpers.rb
+lib/pluto/merge/version.rb

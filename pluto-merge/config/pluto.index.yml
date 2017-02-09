@@ -1,0 +1,23 @@
+#########################################
+# Pluto Update Index for Template Packs
+
+
+#############
+# shortcuts for fetching template packs
+#   maps shortcut to URI
+
+blank: https://raw.github.com/planet-templates/planet-blank/master/blank.txt
+
+top: https://raw.github.com/planet-templates/planet-top/master/top.txt
+
+news: https://raw.github.com/planet-templates/planet-news/master/news.txt
+
+feeds: https://raw.github.com/planet-templates/planet-feeds/master/feeds.txt
+
+classic: https://raw.github.com/planet-templates/planet-classic/master/classic.txt
+
+
+####
+# all:
+#   - add why? why not??
+#
