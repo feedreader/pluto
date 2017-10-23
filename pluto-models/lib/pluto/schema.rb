@@ -2,9 +2,11 @@
 
 module Pluto
 
-class CreateDb < ActiveRecord::Migration
+class CreateDb
 
-  def up
+def up
+
+ActiveRecord::Schema.define do
     create_table :sites do |t|
       t.string   :key,       null: false    # e.g. ruby, js, etc.
       t.string   :title,     null: false    # e.g Planet Ruby, Planet JavaScript, etc.
@@ -142,12 +144,10 @@ class CreateDb < ActiveRecord::Migration
       ## todo: add author/authors, category/categories
     end
 
-  end
-    
-  def down
-    raise ActiveRecord::IrreversibleMigration
-  end
-    
-end  # class CreateDb
-   
+end # block Schema.define
+
+end # method up
+
+end # class CreateDb
+
 end  # module Pluto

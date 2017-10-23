@@ -13,7 +13,7 @@ class Feed < ActiveRecord::Base
 
 
   ## todo/fix:
-  ##  use a module ref or something; do NOT include all methods - why? why not? 
+  ##  use a module ref or something; do NOT include all methods - why? why not?
   include TextUtils::HypertextHelper   ## e.g. lets us use strip_tags( ht )
 
 
@@ -133,16 +133,6 @@ class Feed < ActiveRecord::Base
 
   def update_from_struct!( data )
 
-    ## todo: move to FeedParser::Feed ??? why? why not??
-    if data.generator
-      generator_full = ''
-      generator_full << data.generator
-      generator_full << " @version=#{data.generator_version}"   if data.generator_version
-      generator_full << " @uri=#{data.generator_uri}"           if data.generator_uri
-    else
-      generator_full = nil
-    end
-
 ##
 # todo:
 ##  strip all tags from summary (subtitle)
@@ -153,13 +143,12 @@ class Feed < ActiveRecord::Base
 ## The higher-traffic mailing list for all kinds of discussion is
 ##  <a href="https://groups.google.com/group/polymer-dev">https://groups.google.com/group/polymer-dev</a>
 
-
     feed_attribs = {
         format:       data.format,
         updated:      data.updated,
         published:    data.published,
         summary:      data.summary,
-        generator:    generator_full,
+        generator:    data.generator.to_s,    ## note: use single-line/string generator stringified -- might return null (if no data)
         ### todo/fix: add/use
         # auto_title:     ???,
         # auto_url:       ???,

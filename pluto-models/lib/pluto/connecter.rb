@@ -4,7 +4,7 @@ module Pluto
 
 
 # DB Connecter / Connection Manager
-#   lets you establish connection 
+#   lets you establish connection
 
 class Connecter
 
@@ -15,13 +15,9 @@ class Connecter
   end
 
 
-  def debug=(value)
-    @debug = value
-  end
+  def debug=(value) @debug = value; end
+  def debug?()      @debug || false; end
 
-  def debug?
-    @debug || false
-  end
 
   def connect( config={} )
 
@@ -53,7 +49,7 @@ class Connecter
     pp config
 
     ### for dbbrowser and other tools add to ActiveRecord
-    
+
     if ActiveRecord::Base.configurations.nil?   # todo/check: can this ever happen? remove?
        puts "ActiveRecord configurations nil - set to empty hash"
        ActiveRecord::Base.configurations = {}  # make it an empty hash
@@ -63,7 +59,7 @@ class Connecter
       puts 'ar configurations (before):'
       pp ActiveRecord::Base.configurations
     end
-    
+
     # note: for now always use pluto key for config storage
     ActiveRecord::Base.configurations['pluto'] = config
 
@@ -75,7 +71,7 @@ class Connecter
 
     # for debugging - disable for production use
     if debug?
-      ActiveRecord::Base.logger = Logger.new( STDOUT ) 
+      ActiveRecord::Base.logger = Logger.new( STDOUT )
     end
 
     ActiveRecord::Base.establish_connection( config )

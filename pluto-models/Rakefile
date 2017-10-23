@@ -8,33 +8,33 @@ Hoe.spec 'pluto-models' do
   self.summary = "pluto-models - planet schema 'n' models for easy (re)use"
   self.description = summary
 
-  self.urls    = ['https://github.com/feedreader/pluto.models']
+  self.urls    = ['https://github.com/feedreader/pluto']
 
   self.author  = 'Gerald Bauer'
-  self.email   = 'feedreader@googlegroups.com'
+  self.email   = 'wwwmake@googlegroups.com'
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
   self.history_file = 'HISTORY.md'
 
   self.extra_deps = [
-    ['props',         '>= 1.1.2'],
+    ['props',         '>= 1.2.0'],
     ['logutils',      '>= 0.6.1'],
-    ['feedparser',    '>= 1.0.0'],
+    ['feedparser',    '>= 2.1.0'],
     ['feedfilter',    '>= 1.1.1'],
-    ['textutils',     '>= 1.0.1'],
+    ['textutils',     '>= 1.4.0'],
     ['activerecord'],
-    ['logutils-activerecord', '>= 0.2.0'],
-    ['props-activerecord',    '>= 0.1.0'],
-    ['activityutils',         '>= 0.1.0'],
-    ['activerecord-utils',    '>= 0.2.0'],
+    ['logutils-activerecord', '>= 0.2.1'],
+    ['props-activerecord',    '>= 0.2.0'],
+    ['activityutils',         '>= 0.1.1'],
+    ['activerecord-utils',    '>= 0.4.0'],
   ]
 
 
   self.licenses = ['Public Domain']
 
   self.spec_extras = {
-    required_ruby_version: '>= 1.9.2'
+    required_ruby_version: '>= 2.3'
   }
 
 end
