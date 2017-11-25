@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   belongs_to :feed
 
   ## todo/fix:
-  ##  use a module ref or something; do NOT include all methods - why? why not? 
+  ##  use a module ref or something; do NOT include all methods - why? why not?
   include TextUtils::HypertextHelper   ## e.g. lets us use strip_tags( ht )
   include FeedFilter::AdsFilter        ## e.g. lets us use strip_ads( ht )
 

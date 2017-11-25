@@ -6,7 +6,7 @@ module Pluto
 
 class Subscription < ActiveRecord::Base
   self.table_name = 'subscriptions'
-  
+
   belongs_to :site
   belongs_to :feed
 end

@@ -42,4 +42,4 @@ end  # module Pluto
 
 
 # say hello
-puts PlutoUpdate.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG) 
+puts PlutoUpdate.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

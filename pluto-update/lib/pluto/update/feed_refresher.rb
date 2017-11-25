@@ -14,7 +14,7 @@ class FeedRefresher
   include Models
 
   def initialize
-    ## @worker = FeedFetcherBasic.new  ## -- simple fetch (strategy); no cache, no cond get etc. 
+    ## @worker = FeedFetcherBasic.new  ## -- simple fetch (strategy); no cache, no cond get etc.
     @worker  = FeedFetcherCondGetWithCache.new
   end
 

@@ -16,5 +16,5 @@ require 'pluto/feedfetcher/cond_get_with_cache'
 
 
 # say hello
-puts PlutoFeedFetcher.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG) 
+puts PlutoFeedFetcher.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
 

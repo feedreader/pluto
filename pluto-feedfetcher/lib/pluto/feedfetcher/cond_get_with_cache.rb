@@ -57,7 +57,7 @@ class FeedFetcherCondGetWithCache
     if response.code != '200'   # note Net::HTTP response.code is a string in ruby
 
       puts "*** error: fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
-      
+
       feed_attribs = {
         http_code:          response.code.to_i,
         http_server:        response.header[ 'server' ],
@@ -65,10 +65,10 @@ class FeedFetcherCondGetWithCache
         http_last_modified: nil,
         body:               nil,
         md5:                nil,
-        fetched:            feed_fetched 
+        fetched:            feed_fetched
       }
       feed_rec.update_attributes!( feed_attribs )
-      
+
       ## add log error activity -- in future add to error log - better - why? why not?
       Activity.create!( text: "*** error: fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}" )
 
@@ -103,7 +103,7 @@ class FeedFetcherCondGetWithCache
          # tell ruby the encoding
          # encode to utf-8
          ## use all in code encode ?? e.g. feed_xml_cleaned = feed_xml.encode( Encoding::UTF_8, Encoding::ISO_8859_1 )
-         feed_xml_cleaned = feed_xml.dup.force_encoding( Encoding::ISO_8859_1 ).encode( Encoding::UTF_8 ) 
+         feed_xml_cleaned = feed_xml.dup.force_encoding( Encoding::ISO_8859_1 ).encode( Encoding::UTF_8 )
       end
       feed_xml = feed_xml_cleaned
     rescue EncodingError => e
@@ -128,13 +128,13 @@ class FeedFetcherCondGetWithCache
 
     last_feed_md5 = feed_rec.md5
     feed_md5 = Digest::MD5.hexdigest( feed_xml )
-    
+
     if last_feed_md5 && last_feed_md5 == feed_md5
       # not all servers handle conditional gets, so while not much can be
       # done about the bandwidth, but if the response body is identical
       # the downstream processing (parsing, caching, ...) can be avoided.
       #  - thanks to planet mars -fido.rb for the idea, cheers.
-      
+
       puts "no change; md5 digests match; skipping parsing feed"
       return nil   # no updates available; nothing to do
     end
@@ -173,7 +173,7 @@ class FeedFetcherCondGetWithCache
 
     logger.debug "feed_xml:"
     logger.debug feed_xml[ 0..300 ] # get first 300 chars
-      
+
     puts "Before parsing feed >#{feed_key}<..."
 
     ### move to feedutils

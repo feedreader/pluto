@@ -78,7 +78,7 @@ module Pluto
 
     unless Model::Feed.table_exists?
       Pluto.create
-    end    
+    end
   end # method auto_migrate!
 
 
@@ -111,4 +111,4 @@ end  # module Pluto
 
 
 # say hello
-puts Pluto.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG) 
+puts Pluto.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

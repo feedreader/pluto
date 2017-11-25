@@ -25,7 +25,7 @@ task :setup => :environment do
   config_path = "./#{key}.ini"
   if File.exists?( config_path )
     config = INI.load_file( config_path )
- 
+
     puts "dump planet setup settings:"
     pp config
     # note: allow multiple planets (sites) for a single install

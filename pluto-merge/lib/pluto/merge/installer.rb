@@ -6,9 +6,9 @@ module Pluto
 class Installer
 
 ### fix: remove opts, use config (wrapped!!)
-  
+
   include LogUtils::Logging
-  
+
   def initialize( opts )
     @opts    = opts
   end
@@ -19,8 +19,8 @@ class Installer
   def install( shortcut_or_source )
 
     logger.debug "fetch >#{shortcut_or_source}<"
-    
-    ## check for builtin shortcut (assume no / or \) 
+
+    ## check for builtin shortcut (assume no / or \)
     if shortcut_or_source.index( '/' ).nil? && shortcut_or_source.index( '\\' ).nil?
       shortcut = shortcut_or_source
       sources = opts.map_fetch_shortcut( shortcut )
@@ -49,10 +49,10 @@ class Installer
 
     pakname = File.basename( uri.path ).downcase.gsub('.txt','')
     pakpath = File.expand_path( "#{opts.config_path}/#{pakname}" )
-    
+
     logger.debug "packname >#{pakname}<"
     logger.debug "pakpath >#{pakpath}<"
-  
+
     Pakman::Fetcher.new.fetch_pak( src, pakpath )
   end
 

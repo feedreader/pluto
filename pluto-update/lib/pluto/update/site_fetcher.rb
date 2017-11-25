@@ -66,10 +66,10 @@ class SiteFetcher
         http_server:        response.header[ 'server' ],
         http_etag:          nil,
         http_last_modified: nil,
-        fetched:            site_fetched 
+        fetched:            site_fetched
       }
       site_rec.update_attributes!( site_attribs )
-      
+
       ## add log error activity -- in future add to error log - better - why? why not?
       Activity.create!( text: "*** error: fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}" )
 

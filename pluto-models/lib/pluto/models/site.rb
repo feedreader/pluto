@@ -5,14 +5,14 @@ module Pluto
 
 class Site < ActiveRecord::Base
   self.table_name = 'sites'
-  
+
   has_many :subscriptions
   has_many :feeds, :through => :subscriptions
   has_many :items, :through => :feeds
 
   ##################################
   # attribute reader aliases
-  def name()        title;    end  # alias for title
+  def name()        title;   end  # alias for title
 
   def owner_name()  author;  end  # alias    for author
   def owner()       author;  end  # alias(2) for author
@@ -67,7 +67,7 @@ class Site < ActiveRecord::Base
       ## change - model/table/schema!!!
       Activity.create!( text: "new site >#{key}< - #{title}" )
     end
-    
+
     update_attributes!( site_attribs )
 
 
@@ -135,38 +135,38 @@ class Site < ActiveRecord::Base
 ##
 # auto-fill; convenience helpers
 
-    if feed_hash['meetup']
+      if feed_hash['meetup']
 ##  link/url      = http://www.meetup.com/vienna-rb
 ##  feed/feed_url = http://www.meetup.com/vienna-rb/events/rss/vienna.rb/
 
-      feed_attribs[:url]      = "http://www.meetup.com/#{feed_hash['meetup']}"    if feed_attribs[:url].nil?
-      feed_attribs[:feed_url] = "http://www.meetup.com/#{feed_hash['meetup']}/events/rss/#{feed_hash['meetup']}/"    if feed_attribs[:feed_url].nil?
-    end
+        feed_attribs[:url]      = "http://www.meetup.com/#{feed_hash['meetup']}"    if feed_attribs[:url].nil?
+        feed_attribs[:feed_url] = "http://www.meetup.com/#{feed_hash['meetup']}/events/rss/#{feed_hash['meetup']}/"    if feed_attribs[:feed_url].nil?
+      end
 
-    if feed_hash['googlegroups']
+      if feed_hash['googlegroups']
 ##  link/url      = https://groups.google.com/group/beerdb or
 ##                  https://groups.google.com/forum/#!forum/beerdb
 ##  feed/feed_url = https://groups.google.com/forum/feed/beerdb/topics/atom.xml?num=15
 
-      feed_attribs[:url]      = "https://groups.google.com/group/#{feed_hash['googlegroups']}"    if feed_attribs[:url].nil?
-      feed_attribs[:feed_url] = "https://groups.google.com/forum/feed//#{feed_hash['googlegroups']}/topics/atom.xml?num=15"    if feed_attribs[:feed_url].nil?
-    end
+        feed_attribs[:url]      = "https://groups.google.com/group/#{feed_hash['googlegroups']}"    if feed_attribs[:url].nil?
+        feed_attribs[:feed_url] = "https://groups.google.com/forum/feed//#{feed_hash['googlegroups']}/topics/atom.xml?num=15"    if feed_attribs[:feed_url].nil?
+      end
 
-    if feed_hash['github'] && feed_hash['github'].index('/')  ## e.g. jekyll/jekyll
+      if feed_hash['github'] && feed_hash['github'].index('/')  ## e.g. jekyll/jekyll
 ## link/url      = https://github.com/jekyll/jekyll
 ## feed/feed_url = https://github.com/jekyll/jekyll/commits/master.atom
 
-      feed_attribs[:url]      = "https://github.com/#{feed_hash['github']}"    if feed_attribs[:url].nil?
-      feed_attribs[:feed_url] = "https://github.com/#{feed_hash['github']}/commits/master.atom"    if feed_attribs[:feed_url].nil?
-    end
+        feed_attribs[:url]      = "https://github.com/#{feed_hash['github']}"    if feed_attribs[:url].nil?
+        feed_attribs[:feed_url] = "https://github.com/#{feed_hash['github']}/commits/master.atom"    if feed_attribs[:feed_url].nil?
+      end
 
-    if feed_hash['rubygems'] && feed_attribs[:url].nil? && feed_attribs[:feed_url].nil?
+      if feed_hash['rubygems'] && feed_attribs[:url].nil? && feed_attribs[:feed_url].nil?
 ## link/url      = http://rubygems.org/gems/jekyll
 ## feed/feed_url = http://rubygems.org/gems/jekyll/versions.atom
 
-      feed_attribs[:url]      = "http://rubygems.org/gems/#{feed_hash['rubygems']}"    if feed_attribs[:url].nil?
-      feed_attribs[:feed_url] = "http://rubygems.org/gems/#{feed_hash['rubygems']}/versions.atom"    if feed_attribs[:feed_url].nil?
-    end
+        feed_attribs[:url]      = "http://rubygems.org/gems/#{feed_hash['rubygems']}"    if feed_attribs[:url].nil?
+        feed_attribs[:feed_url] = "http://rubygems.org/gems/#{feed_hash['rubygems']}/versions.atom"    if feed_attribs[:feed_url].nil?
+      end
 
 
       puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
@@ -186,7 +186,7 @@ class Site < ActiveRecord::Base
 
       #  add subscription record
       #   note: subscriptions get cleaned out on update first (see above)
-      subscriptions.create!( feed_id: feed_rec.id )   
+      subscriptions.create!( feed_id: feed_rec.id )
     end
 
   end # method deep_update_from_hash!

@@ -44,9 +44,9 @@ class FeedFetcherBasic
 
     puts "Before parsing feed >#{feed_key}<..."
 
-    
+
     feed_xml
-    
+
     ## fix/todo: check for feed.nil?   -> error parsing!!!
     #    or throw exception
     # feed = FeedUtils::Parser.parse( feed_xml )
@@ -83,7 +83,7 @@ private
     # for now "hardcoded" to utf8 - what else can we do?
     # - note: force_encoding will NOT change the chars only change the assumed encoding w/o translation
     xml = xml.force_encoding( Encoding::UTF_8 )
-    logger.debug "xml.encoding.name (after): #{xml.encoding.name}"      
+    logger.debug "xml.encoding.name (after): #{xml.encoding.name}"
 
     xml
   end

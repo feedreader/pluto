@@ -10,7 +10,7 @@ class SysInfo
   def initialize( opts )
     @opts = opts
   end
-  
+
   attr_reader :opts
 
 
@@ -44,7 +44,7 @@ EOS
   # dump Pluto settings
   # config.dump
   # puts
-      
+
 
   ## todo: add more gem version info
   # todo: add  logutils version
