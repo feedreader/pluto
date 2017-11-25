@@ -29,7 +29,7 @@ class ItemCursor
 #   new date also **always** starts new feed
 #  - e.g. used for grouping within day (follows planet planet convention)
 
-      if new_date || last_feed_id != item.feed.id 
+      if new_date || last_feed_id != item.feed.id
         new_feed = true
       else
         new_feed = false
@@ -41,7 +41,7 @@ class ItemCursor
       last_feed_id   = item.feed.id
     end
   end # method each
-    
+
 end # class ItemCursor
 
 

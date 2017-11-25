@@ -22,12 +22,12 @@ class Lister
 
     puts ''
     puts 'Installed template packs in search path'
-    
+
     installed_template_manifest_patterns.each_with_index do |pattern,i|
       puts "    [#{i+1}] #{pattern.gsub(home,'~')}"
     end
     puts '  include:'
-    
+
     manifests = installed_template_manifests
     if manifests.empty?
       puts "    -- none --"

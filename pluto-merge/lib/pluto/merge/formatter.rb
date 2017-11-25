@@ -9,7 +9,7 @@ class Formatter
 
   include Models
   include ManifestHelper
-  
+
   include TextUtils::DateHelper  # e.g. lets us use time_ago_in_words
   include TextUtils::HypertextHelper # e.g. lets us use link_to, strip_tags, sanitize, textify, etc.
 
@@ -25,7 +25,7 @@ class Formatter
     ### remove - always use make( site_key )
     ## fix: change arg to planet_key or just key or similar
     #  todo: rename run to some less generic  - merge/build/etc. ??
-    
+
     site_key = arg
     site_key = site_key.downcase.gsub('.ini','').gsub('.yml','')  # remove .ini|.yml extension if present
 
@@ -47,19 +47,19 @@ class Formatter
 
     # check for matching manifests
     manifests = installed_template_manifests.select { |m| m[0] == manifest_name+'.txt' }
-        
+
     if manifests.empty?
-      
+
       ### try - autodownload
       puts "*** template pack '#{manifest_name}' not found; trying auto-install..."
-      
+
       Installer.new( opts ).install( manifest_name )
 
       ### try again
-      
+
       # check for matching manifests
       manifests = installed_template_manifests.select { |m| m[0] == manifest_name+'.txt' }
-      
+
       if manifests.empty?
          puts "*** error: unknown template pack '#{manifest_name}'; use pluto ls to list installed template packs"
          exit 2

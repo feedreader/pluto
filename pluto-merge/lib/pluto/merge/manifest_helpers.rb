@@ -13,14 +13,14 @@ module ManifestHelper
   ##
   #  note: required attribs (in host class) include:
   #     - opts.config_path
-  
+
   def installed_template_manifest_patterns
 
     # 1) search .    # that is, working/current dir
     # 2) search <config_dir>
     # 3) search <gem>/templates
 
-### 
+###
 # Note
 # -- for now - no longer ship w/ builtin template packs
 # - download on demand if needed
@@ -48,8 +48,8 @@ module ManifestHelper
     excludes = [
       "Manifest.txt",
       "*/Manifest.txt"
-    ]    
-    
+    ]
+
     Pakman::Finder.new.find_manifests( installed_template_manifest_patterns, excludes )
   end
 

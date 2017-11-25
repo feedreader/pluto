@@ -11,7 +11,7 @@ require 'helper'
 class TestFilter < MiniTest::Test
 
   def test_includes
-    
+
     feed1 = Feed.create!(
       key: 'test',
       title: 'Test',
@@ -26,7 +26,7 @@ class TestFilter < MiniTest::Test
     feed_data = FeedParser::Feed.new
     feed_data.title = 'Test'
     feed_data.items = []
-    
+
     item_data = FeedParser::Item.new
     item_data.title = 'Test #1'
     item_data.summary = 'Test'

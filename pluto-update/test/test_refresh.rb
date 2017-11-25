@@ -34,4 +34,3 @@ class TestRefresh < MiniTest::Test
   end
 
 end # class TestRefresh
-

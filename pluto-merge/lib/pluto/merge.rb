@@ -27,4 +27,4 @@ end  # module Pluto
 
 
 # say hello
-puts PlutoMerge.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG) 
+puts PlutoMerge.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

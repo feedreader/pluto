@@ -13,7 +13,7 @@ desc 'pluto -=- update planet (feeds)'
 task :update_feeds => :environment do
 
   Pluto.update_feeds
-  
+
   puts 'Done (Update Feeds).'
 end
 

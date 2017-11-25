@@ -13,7 +13,7 @@ class Opts
     @verbose = true     if options[:verbose] == true
 
     @db_path   = options[:dbpath]  if options[:dbpath].present?
-    
+
     if options[:dbname].present?
       ##########
       # note: c.default_value '<PLANET>.db e.g. ruby.db'
@@ -52,7 +52,7 @@ class Opts
   def config_path=(value)
     @config_path = value
   end
-  
+
   def config_path
     ## @config_path || '~/.pluto'   --- old code
     @config_path || File.join( Env.home, '.pluto' )
@@ -62,7 +62,7 @@ class Opts
   def output_path=(value)
     @output_path = value
   end
-  
+
   def output_path
     @output_path || '.'
   end
@@ -75,10 +75,10 @@ class Opts
   def map_fetch_shortcut( key )
     # NB: always returns an array!!!  0,1 or more entries
     # - no value - return empty ary
-    
+
     ## todo: normalize key???
     value = @shortcuts.fetch( key, nil )
-    
+
     if value.nil?
       []
     elsif value.kind_of?( String )

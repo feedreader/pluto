@@ -9,9 +9,9 @@ program_desc 'another planet generator (lets you build web pages from published 
 version PlutoCli::VERSION
 
 
-## some setup code 
+## some setup code
 
-LogUtils::Logger.root.level = :info   # set logging level to info 
+LogUtils::Logger.root.level = :info   # set logging level to info
 
 logger = LogUtils::Logger.root
 
@@ -93,7 +93,7 @@ def expand_config_args( args )
     end
   end
   new_args
-  
+
 end # method expand_config_args
 
 
@@ -110,7 +110,7 @@ switch [:q, :quiet], negatable: false
 desc 'Configuration Path'
 arg_name 'PATH'
 default_value opts.config_path
-flag [:c, :config] 
+flag [:c, :config]
 
 
 ### note: mostly for debugging lets you fetch individual feeds
@@ -205,7 +205,7 @@ command [:merge, :m] do |c|
       #   all use the same code
 
       db_name = opts.db_name? ? opts.db_name : "#{name}.db"
- 
+
       db_config = {
         adapter:  'sqlite3',
         database: "#{opts.db_path}/#{db_name}"
@@ -214,10 +214,10 @@ command [:merge, :m] do |c|
       Pluto.connect( db_config )
 
       config = load_config( arg )
-    
+
       Pluto::Formatter.new( opts, config ).run( name )
     end
-    
+
     puts 'Done.'
   end
 end # command merge
@@ -251,7 +251,7 @@ command [:update, :up, :u] do |c|
       #   all use the same code
 
       db_name = opts.db_name? ? opts.db_name : "#{name}.db"
- 
+
       db_config = {
         adapter:  'sqlite3',
         database: "#{opts.db_path}/#{db_name}"
@@ -319,7 +319,7 @@ command [:build, :b] do |c|
       Pluto::Updater.new( opts, config ).run( name )
       Pluto::Formatter.new( opts, config ).run( name )
     end
-    
+
     puts 'Done.'
   end
 end # command build
@@ -342,7 +342,7 @@ command [:install,:i] do |c|
 
   c.action do |g,o,args|
     logger.debug 'hello from install command'
-        
+
     args.each do |arg|
       Pluto::Installer.new( opts ).install( arg )  ## todo: remove opts merge into config
     end

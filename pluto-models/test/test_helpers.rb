@@ -36,7 +36,7 @@ class TestHelper < MiniTest::Test
 
   def test_auto_migrate
     Pluto.auto_migrate!
-    
+
     assert true   ## if we get here it should workd
   end
 
