@@ -8,4 +8,3 @@ task :stats => :environment do
   puts "  Sites: #{Pluto::Model::Site.count}"
   puts "  Subscriptions:  #{Pluto::Model::Subscription.count}"
 end
-

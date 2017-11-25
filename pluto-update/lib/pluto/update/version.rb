@@ -22,4 +22,3 @@ module PlutoUpdate
   end
 
 end # module PlutoUpdate
-

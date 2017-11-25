@@ -35,4 +35,3 @@ task :site => :environment do
 end
 
 ### todo: add new task :sites
-

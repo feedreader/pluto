@@ -71,4 +71,3 @@ class TestSite < MiniTest::Test
 
 
 end # class TestSite
-

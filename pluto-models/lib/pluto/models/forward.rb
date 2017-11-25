@@ -17,4 +17,3 @@ Activity = ActivityDb::Models::Activity
   Models = Model
 
 end # module Pluto
-

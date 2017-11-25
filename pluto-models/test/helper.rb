@@ -23,4 +23,3 @@ Subscription = Pluto::Model::Subscription
 
 
 Pluto.setup_in_memory_db
-
