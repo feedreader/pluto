@@ -37,4 +37,3 @@ task :setup => :environment do
 
   puts 'Done.'
 end
-

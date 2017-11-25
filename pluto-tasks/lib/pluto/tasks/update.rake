@@ -22,4 +22,3 @@ desc 'pluto -=- update planet (site configs + feeds)'
 task :update => [:update_sites, :update_feeds] do
   puts 'Done.'
 end
-

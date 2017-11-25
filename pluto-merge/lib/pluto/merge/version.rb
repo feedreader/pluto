@@ -22,4 +22,3 @@ module PlutoMerge
   end
 
 end # module PlutoUpdate
-

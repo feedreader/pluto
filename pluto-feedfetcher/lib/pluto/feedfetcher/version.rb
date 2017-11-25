@@ -21,4 +21,3 @@ module PlutoFeedFetcher
   end
 
 end # module PlutoFeedFetcher
-

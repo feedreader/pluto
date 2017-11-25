@@ -21,4 +21,3 @@ module PlutoCli
   end
 
 end # module PlutoCli
-

@@ -57,4 +57,3 @@ private
 end # class SiteRefresher
 
 end # module Pluto
-
