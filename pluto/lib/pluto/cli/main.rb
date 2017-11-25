@@ -382,7 +382,11 @@ pre do |g,c,o,args|
 
   puts PlutoCli.banner
 
-  LogUtils::Logger.root.level = :debug    if opts.verbose?
+  if opts.verbose?
+    LogUtils::Logger.root.level = :debug
+  elsif opts.quiet?
+    LogUtils::Logger.root.level = :warn
+  end
 
   logger.debug "   executing command #{c.name}"
   true

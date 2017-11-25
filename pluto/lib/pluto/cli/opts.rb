@@ -10,7 +10,8 @@ class Opts
 
 
   def merge_gli_options!( options={} )
-    @verbose = true     if options[:verbose] == true
+    @verbose = true   if options[:verbose] == true
+    @quiet = true     if options[:quiet] == true
 
     @db_path   = options[:dbpath]  if options[:dbpath].present?
 
@@ -48,6 +49,15 @@ class Opts
   def verbose?
     @verbose || false
   end
+
+  def quiet=(value)
+    @quiet = true  # note: always assumes true for now; default is false
+  end
+
+  def quiet?
+    @quiet || false
+  end
+
 
   def config_path=(value)
     @config_path = value
