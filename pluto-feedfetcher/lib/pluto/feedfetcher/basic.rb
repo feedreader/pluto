@@ -42,7 +42,7 @@ class FeedFetcherBasic
     ### todo/fix:
     ###  return feed_xml !!! - move FeedUtils::Parser.parse to update or someting !!!
 
-    puts "Before parsing feed >#{feed_key}<..."
+    logger.info "Before parsing feed >#{feed_key}<..."
 
 
     feed_xml
@@ -61,17 +61,17 @@ private
     response = @worker.get( url )
 
     ## if debug?
-      puts "http status #{response.code} #{response.message}"
+      logger.debug "http status #{response.code} #{response.message}"
 
-      puts "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
-      puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
-      puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
+      logger.debug "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
+      logger.debug "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
+      logger.debug "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
     ## end
 
     xml = response.body
 
     ###
-    # NB: Net::HTTP will NOT set encoding UTF-8 etc.
+    # Note: Net::HTTP will NOT set encoding UTF-8 etc.
     # will mostly be ASCII
     # - try to change encoding to UTF-8 ourselves
     logger.debug "xml.encoding.name (before): #{xml.encoding.name}"

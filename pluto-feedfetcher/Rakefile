@@ -8,10 +8,10 @@ Hoe.spec 'pluto-feedfetcher' do
   self.summary = "pluto-feedfetcher - fetch web feeds (w/ conditional HTTP get e.g. use etags, if-modified-since etc.)"
   self.description = summary
 
-  self.urls    = ['https://github.com/feedreader/pluto.feed.fetcher']
+  self.urls    = ['https://github.com/feedreader/pluto']
 
   self.author  = 'Gerald Bauer'
-  self.email   = 'feedreader@googlegroups.com'
+  self.email   = 'wwwmake@googlegroups.com'
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
