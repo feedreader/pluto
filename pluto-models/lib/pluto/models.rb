@@ -45,6 +45,7 @@ require 'pluto/models/utils'
 
 require 'pluto/connecter'
 
+include LogUtils::Logging
 
 module Pluto
 
@@ -111,4 +112,4 @@ end  # module Pluto
 
 
 # say hello
-puts Pluto.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+logger.info Pluto.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

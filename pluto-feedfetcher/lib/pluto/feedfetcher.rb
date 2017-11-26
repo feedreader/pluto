@@ -13,7 +13,7 @@ require 'pluto/feedfetcher/version'   # Note: let version always go first
 require 'pluto/feedfetcher/basic'
 require 'pluto/feedfetcher/cond_get_with_cache'
 
-
+include LogUtils::Logging
 
 # say hello
-puts PlutoFeedFetcher.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+logger.info PlutoFeedFetcher.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

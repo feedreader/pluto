@@ -52,14 +52,14 @@ class SiteFetcher
         ##
         ##  fix/todo: use ahead-of-time preprocessor ?? in the future to simplify???
       else
-        puts "OK - fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
-        puts "no change; request returns not modified (304); skipping parsing site config"
+        logger.info "OK - fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
+        logger.info "no change; request returns not modified (304); skipping parsing site config"
         return nil   # no updates available; nothing to do
       end
 
     elsif response.code != '200'   # note Net::HTTP response.code is a string in ruby
 
-      puts "*** error: fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
+      logger.warn "*** error fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
 
       site_attribs = {
         http_code:          response.code.to_i,
@@ -78,7 +78,7 @@ class SiteFetcher
       # assume 200; continue w/ processing
     end
 
-    puts "OK - fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
+    logger.info "OK - fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
 
     site_attribs = {
       http_code:          response.code.to_i,
@@ -88,11 +88,9 @@ class SiteFetcher
       fetched:            site_fetched
     }
 
-    ## if debug?
-      puts "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
-      puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
-      puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
-    ## end
+    logger.debug "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
+    logger.debug "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
+    logger.debug "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
 
     site_rec.update_attributes!( site_attribs )
 
@@ -122,7 +120,7 @@ class SiteFetcher
     ## todo/fix:
     ### move INI.load out of this method!! - return site_text or nil
     ##
-    ## puts "Before parsing site config >#{site_key}<..."
+    ## logger.debug "Before parsing site config >#{site_key}<..."
     ##
     # assume ini format for now
     ## site_config = INI.load( site_text )

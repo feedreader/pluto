@@ -26,10 +26,10 @@ class Installer
       sources = opts.map_fetch_shortcut( shortcut )
 
       if sources.empty?
-        puts "** Error: No mapping found for shortcut '#{shortcut}'."
+        logger.error "** No mapping found for shortcut '#{shortcut}'."
         return
       end
-      puts "  Mapping fetch shortcut '#{shortcut}' to: #{sources.join(',')}"
+      logger.info "  Mapping fetch shortcut '#{shortcut}' to: #{sources.join(',')}"
     else
       sources = [shortcut_or_source]  # pass arg through unmapped
     end

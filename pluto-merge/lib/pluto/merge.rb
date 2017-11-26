@@ -15,6 +15,7 @@ require 'pluto/merge/installer'
 require 'pluto/merge/lister'
 require 'pluto/merge/formatter'
 
+include LogUtils::Logging
 
 module Pluto
 
@@ -27,4 +28,4 @@ end  # module Pluto
 
 
 # say hello
-puts PlutoMerge.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+logger.info PlutoMerge.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
