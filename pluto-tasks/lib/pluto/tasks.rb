@@ -9,8 +9,7 @@ require 'pluto/update'
 
 require 'pluto/tasks/version'   # note: let version always get first
 
-
-
+include LogUtils::Logging
 
 #############
 ### todo/fix: use/find better name? - e.g. Fetcher.read_utf8!()  move out of global ns etc.
@@ -20,7 +19,7 @@ def fixme_fetcher_read_utf8!( src )
   worker = Fetcher::Worker.new
   res = worker.get_response( src )
   if res.code != '200'
-    puts "sorry; failed to fetch >#{src} - HTTP #{res.code} - #{res.message}"
+    logger.error "sorry; failed to fetch >#{src} - HTTP #{res.code} - #{res.message}"
     exit 1
   end
 
@@ -53,7 +52,7 @@ module Pluto
     ###
     ## todo:
     ##  move into a method for (re)use
-    puts "trying to fetch pluto.index.ini shortcut planet registry..."
+    logger.info "trying to fetch pluto.index.ini shortcut planet registry..."
 
     index_txt = fixme_fetcher_read_utf8!( 'https://raw.githubusercontent.com/feedreader/planets/master/pluto.index.ini' )
     shortcuts = INI.load( index_txt )
@@ -61,7 +60,7 @@ module Pluto
 
     shortcut = shortcuts[key]
     if shortcut.nil?
-      puts "sorry; no planet shortcut found for key >#{key}<"
+      logger.error "sorry; no planet shortcut found for key >#{key}<"
       exit 1
     end
 
@@ -73,7 +72,7 @@ module Pluto
 
   ## todo: use a better name? setup_planet_for ?? other name??
   def self.setup_planet( key )
-    puts "trying to fetch pluto.index.ini shortcut planet registry..."
+    logger.info "trying to fetch pluto.index.ini shortcut planet registry..."
 
     index_txt = fixme_fetcher_read_utf8!( 'https://raw.githubusercontent.com/feedreader/planets/master/planets.ini' )
     shortcuts = INI.load( index_txt )
@@ -81,7 +80,7 @@ module Pluto
 
     shortcut = shortcuts[key]
     if shortcut.nil?
-      puts "sorry; no planet shortcut found for key >#{key}<"
+      logger.error "sorry; no planet shortcut found for key >#{key}<"
       exit 1
     end
 
@@ -103,8 +102,8 @@ module Pluto
       config_txt = InclPreproc.from_url( config_url ).read
       config = INI.load( config_txt )
 
-      puts "dump planet setup settings:"
-      pp config
+      logger.info "dump planet setup settings:"
+      logger.info config.pretty_inspect
       # note: allow multiple planets (sites) for a single install
       Pluto::Model::Site.deep_create_or_update_from_hash!( config_key, config )
 
@@ -118,4 +117,4 @@ end  # module Pluto
 
 
 # say hello
-puts PlutoTasks.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+logger.info PlutoTasks.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

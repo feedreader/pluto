@@ -19,7 +19,7 @@ class TestHelper < MiniTest::Test
   end
 
   def test_banner
-    puts Pluto.banner
+    Pluto.banner
 
     assert true    ## if we get here it should workd
   end

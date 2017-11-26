@@ -36,7 +36,7 @@ class FeedFetcherCondGetWithCache
     rescue SocketError => e
       ## catch socket error for unknown domain names (e.g. pragdave.blogs.pragprog.com)
       ###  will result in SocketError -- getaddrinfo: Name or service not known
-      puts "*** error: fetching feed '#{feed_key}' - #{e.to_s}"
+      logger.warn "*** error fetching feed '#{feed_key}' - #{e.to_s}"
       Activity.create!( text: "*** error: fetching feed '#{feed_key}' - #{e.to_s}" )
 
       ### todo/fix: update feed rec in db
@@ -47,8 +47,8 @@ class FeedFetcherCondGetWithCache
     @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false
 
     if response.code == '304'  # not modified (conditional GET - e.g. using etag/last-modified)
-      puts "OK - fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
-      puts "no change; request returns not modified (304); skipping parsing feed"
+      logger.info "OK - fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
+      logger.info "no change; request returns not modified (304); skipping parsing feed"
       return nil   # no updates available; nothing to do
     end
 
@@ -56,7 +56,7 @@ class FeedFetcherCondGetWithCache
 
     if response.code != '200'   # note Net::HTTP response.code is a string in ruby
 
-      puts "*** error: fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
+      logger.warn "*** error fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
 
       feed_attribs = {
         http_code:          response.code.to_i,
@@ -75,7 +75,7 @@ class FeedFetcherCondGetWithCache
       return nil  #  sorry; no feed for parsing available
     end
 
-    puts "OK - fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
+    logger.info "OK - fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}"
 
     feed_xml = response.body
     ###
@@ -95,7 +95,7 @@ class FeedFetcherCondGetWithCache
       feed_xml_cleaned = feed_xml.dup.force_encoding( Encoding::UTF_8 )
       unless feed_xml_cleaned.valid_encoding?
 
-         puts "*** warn: feed '#{feed_key}' charset encoding not valid utf8 - trying latin1"
+         logger.warn "*** feed '#{feed_key}' charset encoding not valid utf8 - trying latin1"
          Activity.create!( text: "*** warn: feed '#{feed_key}' charset encoding not valid utf8 - trying latin1" )
          # Some of it might be old Windows code page
          # -- (Windows Code Page CP1252 is ISO_8859_1 is Latin-1 - check ??)
@@ -107,7 +107,7 @@ class FeedFetcherCondGetWithCache
       end
       feed_xml = feed_xml_cleaned
     rescue EncodingError => e
-      puts "*** warn: feed '#{feed_key}' charset encoding to utf8 failed; throwing out invalid bits - #{e.to_s}"
+      logger.warn "*** feed '#{feed_key}' charset encoding to utf8 failed; throwing out invalid bits - #{e.to_s}"
       Activity.create!( text: "*** warn: feed '#{feed_key}' charset encoding to utf8 failed; throwing out invalid bits - #{e.to_s}" )
 
       # Force it to UTF-8, throwing out invalid bits
@@ -135,7 +135,7 @@ class FeedFetcherCondGetWithCache
       # the downstream processing (parsing, caching, ...) can be avoided.
       #  - thanks to planet mars -fido.rb for the idea, cheers.
 
-      puts "no change; md5 digests match; skipping parsing feed"
+      logger.info "no change; md5 digests match; skipping parsing feed"
       return nil   # no updates available; nothing to do
     end
 
@@ -149,11 +149,9 @@ class FeedFetcherCondGetWithCache
       fetched:            feed_fetched
     }
 
-    ## if debug?
-      puts "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
-      puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
-      puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
-    ## end
+    logger.debug "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
+    logger.debug "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
+    logger.debug "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
 
     ### note: might crash w/ encoding errors when saving in postgress
     ##  e.g. PG::CharacterNotInRepertoire: ERROR: ...
@@ -165,7 +163,7 @@ class FeedFetcherCondGetWithCache
       feed_rec.update_attributes!( feed_attribs )
     rescue Exception => e
       # log db error; and continue
-      puts "*** error: updating feed database record '#{feed_key}' - #{e.to_s}"
+      logger.warn "*** error updating feed database record '#{feed_key}' - #{e.to_s}"
       Activity.create!( text: "*** error: updating feed database record '#{feed_key}' - #{e.to_s}" )
       return nil  #  sorry; corrupt feed; parsing not possible; fix char encoding - make it an option in config??
     end
@@ -174,7 +172,7 @@ class FeedFetcherCondGetWithCache
     logger.debug "feed_xml:"
     logger.debug feed_xml[ 0..300 ] # get first 300 chars
 
-    puts "Before parsing feed >#{feed_key}<..."
+    logger.info "Before parsing feed >#{feed_key}<..."
 
     ### move to feedutils
     ### logger.debug "using stdlib RSS::VERSION #{RSS::VERSION}"

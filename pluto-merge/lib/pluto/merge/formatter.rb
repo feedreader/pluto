@@ -51,7 +51,7 @@ class Formatter
     if manifests.empty?
 
       ### try - autodownload
-      puts "*** template pack '#{manifest_name}' not found; trying auto-install..."
+      logger.warn "*** template pack '#{manifest_name}' not found; trying auto-install..."
 
       Installer.new( opts ).install( manifest_name )
 
@@ -61,7 +61,7 @@ class Formatter
       manifests = installed_template_manifests.select { |m| m[0] == manifest_name+'.txt' }
 
       if manifests.empty?
-         puts "*** error: unknown template pack '#{manifest_name}'; use pluto ls to list installed template packs"
+         logger.error "*** unknown template pack '#{manifest_name}'; use pluto ls to list installed template packs"
          exit 2
       end
     end
@@ -71,7 +71,7 @@ class Formatter
 
     @site = Site.find_by_key( site_key )
     if @site.nil?
-      puts "*** warn: no site with key '#{site_key}' found; using untitled site record"
+      logger.warn "*** no site with key '#{site_key}' found; using untitled site record"
       @site = Site.new
       @site.title = 'Planet Untitled'
     end

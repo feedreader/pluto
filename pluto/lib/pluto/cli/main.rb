@@ -27,8 +27,8 @@ opts    = Pluto::Opts.new
 def load_config( name )
   config = INI.load_file( name )
 
-  puts "dump >#{name}<:"
-  pp config
+  logger.info "dump >#{name}<:"
+  logger.info config.pretty_inspect
 
   config
 end
@@ -43,7 +43,7 @@ def find_default_config_path
     return candidate  if File.exists?( candidate )   ## todo: use ./candidate -- why? why not??
   end
 
-  puts "*** note: no default planet configuration found, that is, no #{candidates.join('|')} found in working folder"
+  logger.error "*** no default planet configuration found, that is, no #{candidates.join('|')} found in working folder"
   nil  # return nil; no conifg existing candidate found/present; sorry
 end
 
@@ -60,7 +60,7 @@ def find_config_path( name )
   end
 
   # no extensions matching; sorry
-  puts "*** note: no configuration found w/ extensions #{candidates.join('|')} for '#{name}'"
+  logger.error "*** no configuration found w/ extensions #{candidates.join('|')} for '#{name}'"
   # todo/check/fix - ?? -skip; remove from arg  - or just pass through ???
   nil  # return nil; no config found/present; sorry
 end
@@ -151,17 +151,17 @@ command [:fetch, :f] do |c|
     args.each do |arg|
       feed_rec = Pluto::Model::Feed.find_by_key!( arg )
 
-      puts "feed_rec:"
-      pp feed_rec
+      logger.info "feed_rec:"
+      logger.info feed_rec.pretty_inspect
 
       fetcher = Pluto::FeedFetcherBasic.new
       fetcher.debug = true  # by default debug is true (only used for debuggin! - save feed to file, etc.)
 
       feed = fetcher.fetch( feed_rec )
-      ## pp feed
+      ## logger.info feed.pretty_inspect
     end
 
-    puts 'Done.'
+    logger.info 'Done.'
   end
 end # command fetch
 
@@ -218,7 +218,7 @@ command [:merge, :m] do |c|
       Pluto::Formatter.new( opts, config ).run( name )
     end
 
-    puts 'Done.'
+    logger.info 'Done.'
   end
 end # command merge
 
@@ -266,7 +266,7 @@ command [:update, :up, :u] do |c|
       Pluto::Updater.new( opts, config ).run( name )
     end
 
-    puts 'Done.'
+    logger.info 'Done.'
   end
 end # command fetch
 
@@ -320,7 +320,7 @@ command [:build, :b] do |c|
       Pluto::Formatter.new( opts, config ).run( name )
     end
 
-    puts 'Done.'
+    logger.info 'Done.'
   end
 end # command build
 
@@ -364,13 +364,13 @@ end
 desc '(Debug) Show global options, options, arguments for test command'
 command :test do |c|
   c.action do |g,o,args|
-    puts 'hello from test command'
-    puts 'g/global_options:'
-    pp g
-    puts 'o/options:'
-    pp o
-    puts 'args:'
-    pp args
+    logger.info 'hello from test command'
+    logger.info 'g/global_options:'
+    logger.info g.pretty_inspect
+    logger.info 'o/options:'
+    logger.info o.pretty_inspect
+    logger.info 'args:'
+    logger.info args.pretty_inspect
   end
 end
 
@@ -380,7 +380,7 @@ pre do |g,c,o,args|
   opts.merge_gli_options!( g )
   opts.merge_gli_options!( o )
 
-  puts PlutoCli.banner
+  logger.info PlutoCli.banner
 
   if opts.verbose?
     LogUtils::Logger.root.level = :debug
@@ -400,13 +400,13 @@ end
 
 
 on_error do |e|
-  puts
-  puts "*** error: #{e.message}"
-  puts
+  logger.error ''
+  logger.error "*** error: #{e.message}"
+  logger.error ''
 
   ## todo/fix: find a better way to print; just raise exception e.g. raise e  - why? why not??
-  ## puts e.backtrace.inspect  if opts.verbose?
-  raise e   if opts.verbose?
+  ## logger.error e.backtrace.inspect  if opts.verbose?
+  raise e   #if opts.verbose?
 
   false # skip default error handling
 end

@@ -13,6 +13,7 @@ class Item < ActiveRecord::Base
   include TextUtils::HypertextHelper   ## e.g. lets us use strip_tags( ht )
   include FeedFilter::AdsFilter        ## e.g. lets us use strip_ads( ht )
 
+  include LogUtils::Logging
 
   ##################################
   # attribute reader aliases
@@ -67,12 +68,10 @@ class Item < ActiveRecord::Base
       published:    data.published,
     }
 
-    if debug?
-      puts "*** dump item_attribs w/ class types:"
-      item_attribs.each do |key,value|
-        next if [:summary,:content].include?( key )   # skip summary n content
-        puts "  #{key}: >#{value}< : #{value.class.name}"
-      end
+    logger.debug "*** dump item_attribs w/ class types:"
+    item_attribs.each do |key,value|
+      next if [:summary,:content].include?( key )   # skip summary n content
+      logger.debug "  #{key}: >#{value}< : #{value.class.name}"
     end
 
     update_attributes!( item_attribs )

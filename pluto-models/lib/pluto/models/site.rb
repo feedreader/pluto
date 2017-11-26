@@ -10,6 +10,8 @@ class Site < ActiveRecord::Base
   has_many :feeds, :through => :subscriptions
   has_many :items, :through => :feeds
 
+  include LogUtils::Logging
+  
   ##################################
   # attribute reader aliases
   def name()        title;   end  # alias for title
@@ -20,8 +22,6 @@ class Site < ActiveRecord::Base
 
   def owner_email()  email;  end  # alias    for email
   def author_email() email;  end  # alias(2) for email
-
-
 
   def self.deep_create_or_update_from_hash!( name, config, opts={} )
 
@@ -58,8 +58,6 @@ class Site < ActiveRecord::Base
     site_key = config['key'] || config['slug']
     site_attribs[:key] = site_key   if site_key
 
-
-    logger = LogUtils::Logger.root
     logger.debug "site_attribs: #{site_attribs.inspect}"
 
     if new_record?
@@ -168,8 +166,7 @@ class Site < ActiveRecord::Base
         feed_attribs[:feed_url] = "http://rubygems.org/gems/#{feed_hash['rubygems']}/versions.atom"    if feed_attribs[:feed_url].nil?
       end
 
-
-      puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
+      logger.info "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
 
       feed_rec = Feed.find_by_key( feed_key )
       if feed_rec.nil?

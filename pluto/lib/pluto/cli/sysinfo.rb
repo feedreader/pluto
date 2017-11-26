@@ -15,7 +15,7 @@ class SysInfo
 
 
   def dump
-  puts <<EOS
+    logger.info <<EOS
 
 #{PlutoCli.banner}
 
@@ -41,14 +41,13 @@ Pluto config: #{opts.config_path}
 
 EOS
 
-  # dump Pluto settings
-  # config.dump
-  # puts
+    # dump Pluto settings
+    # config.dump
 
 
-  ## todo: add more gem version info
-  # todo: add  logutils version
-  #       add  gli2     version
+    ## todo: add more gem version info
+    # todo: add  logutils version
+    #       add  gli2     version
   end
 
 end # class SysInfo

@@ -16,6 +16,7 @@ class Feed < ActiveRecord::Base
   ##  use a module ref or something; do NOT include all methods - why? why not?
   include TextUtils::HypertextHelper   ## e.g. lets us use strip_tags( ht )
 
+  include LogUtils::Logging
 
   def self.latest
     # note: order by first non-null datetime field
@@ -90,18 +91,18 @@ class Feed < ActiveRecord::Base
 
     data.items.each do |item|
       if includesFilter && includesFilter.match_item?( item ) == false
-        puts "** SKIPPING | #{item.title}"
-        puts "  no include terms match: #{includes}"
+        logger.info "** SKIPPING | #{item.title}"
+        logger.info "  no include terms match: #{includes}"
         next   ## skip to next item
       end
 
       item_rec = Item.find_by_guid( item.guid )
       if item_rec.nil?
         item_rec  = Item.new
-        puts "** NEW | #{item.title}"
+        logger.info "** NEW | #{item.title}"
       else
         ## todo: check if any attribs changed
-        puts "UPDATE | #{item.title}"
+        logger.info "UPDATE | #{item.title}"
       end
 
       item_rec.debug = debug? ? true : false  # pass along debug flag
@@ -132,16 +133,14 @@ class Feed < ActiveRecord::Base
 
 
   def update_from_struct!( data )
-
-##
-# todo:
-##  strip all tags from summary (subtitle)
-##  limit to 255 chars
-## e.g. summary (subtitle) such as this exist
-##  This is a low-traffic announce-only list for people interested
-##  in hearing news about Polymer (<a href="http://polymer-project.org">http://polymer-project.org</a>).
-## The higher-traffic mailing list for all kinds of discussion is
-##  <a href="https://groups.google.com/group/polymer-dev">https://groups.google.com/group/polymer-dev</a>
+    # todo:
+    ##  strip all tags from summary (subtitle)
+    ##  limit to 255 chars
+    ## e.g. summary (subtitle) such as this exist
+    ##  This is a low-traffic announce-only list for people interested
+    ##  in hearing news about Polymer (<a href="http://polymer-project.org">http://polymer-project.org</a>).
+    ## The higher-traffic mailing list for all kinds of discussion is
+    ##  <a href="https://groups.google.com/group/polymer-dev">https://groups.google.com/group/polymer-dev</a>
 
     feed_attribs = {
         format:       data.format,
@@ -155,13 +154,9 @@ class Feed < ActiveRecord::Base
         # auto_feed_url:  ???,
       }
 
-    if debug?
-        ## puts "*** dump feed_attribs:"
-        ## pp feed_attribs
-        puts "*** dump feed_attribs w/ class types:"
-        feed_attribs.each do |key,value|
-          puts "  #{key}: >#{value}< : #{value.class.name}"
-        end
+    logger.debug "*** dump feed_attribs w/ class types:"
+    feed_attribs.each do |key,value|
+      logger.debug "  #{key}: >#{value}< : #{value.class.name}"
     end
 
     update_attributes!( feed_attribs )

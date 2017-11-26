@@ -16,7 +16,7 @@ require 'pluto/update/feed_refresher'
 require 'pluto/update/site_refresher'
 require 'pluto/update/site_fetcher'
 
-
+include LogUtils::Logging
 
 module Pluto
 
@@ -42,4 +42,4 @@ end  # module Pluto
 
 
 # say hello
-puts PlutoUpdate.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+logger.info PlutoUpdate.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

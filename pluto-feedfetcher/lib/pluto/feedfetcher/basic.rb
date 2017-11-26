@@ -42,7 +42,7 @@ class FeedFetcherBasic
     ### todo/fix:
     ###  return feed_xml !!! - move FeedUtils::Parser.parse to update or someting !!!
 
-    puts "Before parsing feed >#{feed_key}<..."
+    logger.debug "Before parsing feed >#{feed_key}<..."
 
 
     feed_xml
@@ -60,13 +60,11 @@ private
   def fix_me_fetch_utf8( url )
     response = @worker.get( url )
 
-    ## if debug?
-      puts "http status #{response.code} #{response.message}"
+    logger.debug "http status #{response.code} #{response.message}"
 
-      puts "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
-      puts "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
-      puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
-    ## end
+    logger.debug "http header - server: #{response.header['server']} - #{response.header['server'].class.name}"
+    logger.debug "http header - etag: #{response.header['etag']} - #{response.header['etag'].class.name}"
+    logger.debug "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
 
     xml = response.body
 

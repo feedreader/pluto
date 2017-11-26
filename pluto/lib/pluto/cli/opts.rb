@@ -22,7 +22,7 @@ class Opts
       #    otherwise it will get set
 
       @db_name   = options[:dbname]
-      puts "setting opts.db_name to '#{options[:dbname]}'"
+      logger.info "setting opts.db_name to '#{options[:dbname]}'"
     end
 
     @config_path = options[:config]    if options[:config].present?
