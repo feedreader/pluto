@@ -10,8 +10,24 @@ class Opts
 
 
   def merge_gli_options!( options={} )
-    @verbose = true   if options[:verbose] == true
-    @quiet = true     if options[:quiet] == true
+    ###
+    #  todo/check: renamve verbose to debug and quiet to error - why? why not?
+    #    use a single (internal) variable for log level - why? why not?
+
+    if options[:verbose] == true   ## debug level
+      @verbose = @warn = @quiet = true
+    end
+
+    if options[:warn]    == true   ## warn level
+      @warn = @quiet = true
+      @verbose = false
+    end
+
+    if options[:quiet]   == true   ## error level (for now) - why? why not?
+      @quiet = true
+      @verbose = @warn = false
+    end
+
 
     @db_path   = options[:dbpath]  if options[:dbpath].present?
 
@@ -42,21 +58,20 @@ class Opts
   def manifest=(value)   @manifest = value;  end
   def manifest()         @manifest || 'blank' ;  end
 
-  def verbose=(value)
-    @verbose = true  # note: always assumes true for now; default is false
-  end
 
-  def verbose?
-    @verbose || false
-  end
+  ##  # note: always assumes true for now for verbose/quiet/warn; default is false
+  def verbose=(value)   @verbose = true;   end
+  def verbose?()        @verbose || false; end
+  def debug?()          @verbose || false; end   ## add debug? alias for verbose
 
-  def quiet=(value)
-    @quiet = true  # note: always assumes true for now; default is false
-  end
+  def warn=(value)      @warn = true;     end
+  def warn?()           @warn || false;   end
 
-  def quiet?
-    @quiet || false
-  end
+  def quiet=(value)     @quiet = true;    end   ## use error/error? - why? why not?
+  def quiet?()          @quiet || false;  end
+  def error?()          @quiet || false;  end   ## add error? alias for quiet
+
+
 
 
   def config_path=(value)
@@ -64,7 +79,7 @@ class Opts
   end
 
   def config_path
-    ## @config_path || '~/.pluto'   --- old code
+    ## note: defaults to  ~/.pluto
     @config_path || File.join( Env.home, '.pluto' )
   end
 

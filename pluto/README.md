@@ -56,8 +56,8 @@ COMMAND OPTIONS
 EXAMPLE
     pluto build ruby.ini
     pluto build ruby.ini --template news
-    pluto b ruby
-    pluto b ruby -t news
+    pluto b ruby.ini
+    pluto b ruby.ini -t news
     pluto b            # will use planet.ini if present
 ```
 
@@ -106,7 +106,7 @@ SYNOPSIS
 
 EXAMPLE
     pluto update ruby.ini
-    pluto u ruby
+    pluto u ruby.ini
 ```
 
 
@@ -128,8 +128,8 @@ COMMAND OPTIONS
 EXAMPLE
     pluto merge ruby.ini
     pluto merge ruby.ini --template news
-    pluto m ruby
-    pluto m ruby -t news
+    pluto m ruby.ini
+    pluto m ruby.ini -t news
 ```
 
 

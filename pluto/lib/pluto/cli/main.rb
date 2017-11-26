@@ -26,43 +26,7 @@ opts    = Pluto::Opts.new
 
 def load_config( name )
   config = INI.load_file( name )
-
-  puts "dump >#{name}<:"
-  pp config
-
   config
-end
-
-
-def find_default_config_path
-  candidates =  [ 'pluto.ini',
-                  'planet.ini'
-                   ]
-
-  candidates.each do |candidate|
-    return candidate  if File.exists?( candidate )   ## todo: use ./candidate -- why? why not??
-  end
-
-  puts "*** note: no default planet configuration found, that is, no #{candidates.join('|')} found in working folder"
-  nil  # return nil; no conifg existing candidate found/present; sorry
-end
-
-
-def find_config_path( name )
-  extname    = File.extname( name )   # return '' or '.ini' or '.conf' or '.cfg' or '.txt -???' etc.
-
-  return name  if extname.present?    # nothing to do; extension already present
-
-  candidates = [ '.ini' ]
-
-  candidates.each do |candidate|
-    return "#{name}#{candidate}"  if File.exists?( "#{name}#{candidate}" )
-  end
-
-  # no extensions matching; sorry
-  puts "*** note: no configuration found w/ extensions #{candidates.join('|')} for '#{name}'"
-  # todo/check/fix - ?? -skip; remove from arg  - or just pass through ???
-  nil  # return nil; no config found/present; sorry
 end
 
 # end
@@ -71,40 +35,23 @@ end
 
 
 
-def expand_config_args( args )
-
-  # 1) no args - try to find default config e.g. pluto.ini etc.
-  if args.length == 0
-    new_arg = find_default_config_path
-
-    return [] if new_arg.nil?
-    return [new_arg] # create a new args w/ one item e.g. ['pluto.yml']
-  end
-
-  # 2) expand extname if no extname and config present
-
-  new_args = []
-  args.each do |arg|
-    new_arg = find_config_path( arg )
-    if new_arg.nil?
-      # skip for now
-    else
-      new_args << new_arg
-    end
-  end
-  new_args
-
-end # method expand_config_args
-
-
 
 ## "global" options (switches/flags)
 
 desc '(Debug) Show debug messages'
-switch [:verbose], negatable: false    ## todo: use -w for short form? check ruby interpreter if in use too?
+switch [:verbose, :debug], negatable: false
+
+
+##  todo/check:
+## use quiet (warn) and quieter (error) - why? why not?
+##  use quiet for warn level (not error) as default - why? why not?
+
+desc 'Only show errors and fatal messages'
+switch [:q, :quiet, :err, :error], negatable: false
 
 desc 'Only show warnings, errors and fatal messages'
-switch [:q, :quiet], negatable: false
+switch [:w, :warn], negatable: false
+
 
 
 desc 'Configuration Path'
@@ -195,7 +142,8 @@ command [:merge, :m] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from merge command'
 
-    args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
+    ## note: no more "magic" - remove expand_config_args!! - always pass in planet.ini or similar
+    ## args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
     args.each do |arg|
       name    = File.basename( arg, '.*' )
@@ -214,6 +162,10 @@ command [:merge, :m] do |c|
       Pluto.connect( db_config )
 
       config = load_config( arg )
+      if opts.verbose?
+        puts "dump >#{name}<:"
+        pp config
+      end
 
       Pluto::Formatter.new( opts, config ).run( name )
     end
@@ -241,7 +193,8 @@ command [:update, :up, :u] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from update command'
 
-    args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
+    ## note: no more "magic" - remove expand_config_args!! - always pass in planet.ini or similar
+    ## args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
     args.each do |arg|
       name    = File.basename( arg, '.*' )
@@ -262,6 +215,10 @@ command [:update, :up, :u] do |c|
       Pluto.connect!( db_config )
 
       config = load_config( arg )
+      if opts.verbose?
+        puts "dump >#{name}<:"
+        pp config
+      end
 
       Pluto::Updater.new( opts, config ).run( name )
     end
@@ -299,7 +256,8 @@ command [:build, :b] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from build command'
 
-    args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
+    ## note: no more "magic" - remove expand_config_args!! - always pass in planet.ini or similar
+    ## args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
 
     args.each do |arg|
       name    = File.basename( arg, '.*' )
@@ -315,6 +273,10 @@ command [:build, :b] do |c|
       Pluto.connect!( db_config )
 
       config = load_config( arg )
+      if opts.verbose?
+        puts "dump >#{name}<:"
+        pp config
+      end
 
       Pluto::Updater.new( opts, config ).run( name )
       Pluto::Formatter.new( opts, config ).run( name )
@@ -384,8 +346,12 @@ pre do |g,c,o,args|
 
   if opts.verbose?
     LogUtils::Logger.root.level = :debug
-  elsif opts.quiet?
+  elsif opts.warn?
     LogUtils::Logger.root.level = :warn
+  elsif opts.quiet?
+    LogUtils::Logger.root.level = :error
+  else
+    ## do nothing; keep :info level (default)
   end
 
   logger.debug "   executing command #{c.name}"
