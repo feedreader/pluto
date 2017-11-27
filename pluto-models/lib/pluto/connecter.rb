@@ -45,27 +45,29 @@ class Connecter
       end
     end  # if config.nil?
 
-    puts 'db settings:'
-    pp config
+    logger.info 'db settings:'
+    logger.info config.pretty_inspect
 
     ### for dbbrowser and other tools add to ActiveRecord
 
     if ActiveRecord::Base.configurations.nil?   # todo/check: can this ever happen? remove?
-       puts "ActiveRecord configurations nil - set to empty hash"
+       logger.debug "ActiveRecord configurations nil - set to empty hash"
        ActiveRecord::Base.configurations = {}  # make it an empty hash
     end
 
+    ## todo/fix: remove debug? option - why? why not?
+    ##    (just) use logger level eg. logger.debug
     if debug?
-      puts 'ar configurations (before):'
-      pp ActiveRecord::Base.configurations
+      logger.debug 'ar configurations (before):'
+      logger.debug ActiveRecord::Base.configurations.pretty_inspect
     end
 
     # note: for now always use pluto key for config storage
     ActiveRecord::Base.configurations['pluto'] = config
 
     if debug?
-      puts 'ar configurations (after):'
-      pp ActiveRecord::Base.configurations
+      logger.debug 'ar configurations (after):'
+      logger.debug ActiveRecord::Base.configurations.pretty_inspect
     end
 
 

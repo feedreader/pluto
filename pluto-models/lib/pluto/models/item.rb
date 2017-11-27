@@ -4,6 +4,16 @@ module Pluto
   module Model
 
 class Item < ActiveRecord::Base
+
+## logging w/ ActiveRecord
+##   todo/check: check if logger instance method is present by default?
+##     only class method present?
+##   what's the best way to add logging to activerecord (use "builtin" machinery??)
+
+  def debug=(value)  @debug = value;   end
+  def debug?()       @debug || false;  end
+
+
   self.table_name = 'items'
 
   belongs_to :feed
@@ -46,11 +56,11 @@ class Item < ActiveRecord::Base
   end
 
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
-
 
   def update_from_struct!( data )
+
+    logger = LogUtils::Logger.root
+
     ## check: new item/record?  not saved?  add guid
     #   otherwise do not add guid  - why? why not?
 
@@ -68,10 +78,10 @@ class Item < ActiveRecord::Base
     }
 
     if debug?
-      puts "*** dump item_attribs w/ class types:"
+      logger.debug "*** dump item_attribs w/ class types:"
       item_attribs.each do |key,value|
         next if [:summary,:content].include?( key )   # skip summary n content
-        puts "  #{key}: >#{value}< : #{value.class.name}"
+        logger.debug "  #{key}: >#{value}< : #{value.class.name}"
       end
     end
 

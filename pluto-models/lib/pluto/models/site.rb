@@ -4,6 +4,9 @@ module Pluto
   module Model
 
 class Site < ActiveRecord::Base
+
+
+
   self.table_name = 'sites'
 
   has_many :subscriptions
@@ -46,6 +49,8 @@ class Site < ActiveRecord::Base
 
   def deep_update_from_hash!( config, opts={} )
 
+    logger = LogUtils::Logger.root
+
     site_attribs = {
       title:   config['title']  || config['name'],   # support either title or name
       url:     config['source'] || config['url'],    # support source or url   for source url for auto-update (optional)
@@ -59,7 +64,6 @@ class Site < ActiveRecord::Base
     site_attribs[:key] = site_key   if site_key
 
 
-    logger = LogUtils::Logger.root
     logger.debug "site_attribs: #{site_attribs.inspect}"
 
     if new_record?
@@ -169,7 +173,7 @@ class Site < ActiveRecord::Base
       end
 
 
-      puts "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
+      logger.info "Updating feed subscription >#{feed_key}< - >#{feed_attribs[:feed_url]}<..."
 
       feed_rec = Feed.find_by_key( feed_key )
       if feed_rec.nil?
