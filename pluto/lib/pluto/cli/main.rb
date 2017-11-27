@@ -34,23 +34,34 @@ end
 ###########################
 
 
+def expand_config_args( args )
+  ## todo/check:  rename method?? e.g. check_config_args
+  ##              or  auto_complete_config_ars similar? why? why not??
+
+  if args.empty?      ## no args? args.length == 0
+    ['planet.ini']    #    add default planet.ini for convenience
+  else
+    args   # pass through as-is
+  end
+end
+
 
 
 ## "global" options (switches/flags)
-
-desc '(Debug) Show debug messages'
-switch [:verbose, :debug], negatable: false
 
 
 ##  todo/check:
 ## use quiet (warn) and quieter (error) - why? why not?
 ##  use quiet for warn level (not error) as default - why? why not?
 
-desc 'Only show errors and fatal messages'
-switch [:q, :quiet, :err, :error], negatable: false
-
 desc 'Only show warnings, errors and fatal messages'
-switch [:w, :warn], negatable: false
+switch [:q, :quiet, :w, :warn], negatable: false
+
+desc 'Only show errors and fatal messages'
+switch [:quieter, :err, :error], negatable: false
+
+desc '(Debug) Show debug messages'
+switch [:verbose, :debug], negatable: false
 
 
 
@@ -142,8 +153,7 @@ command [:merge, :m] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from merge command'
 
-    ## note: no more "magic" - remove expand_config_args!! - always pass in planet.ini or similar
-    ## args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
+    args = expand_config_args( args )   # if missing add default config (e.g. planet.ini)
 
     args.each do |arg|
       name    = File.basename( arg, '.*' )
@@ -193,8 +203,7 @@ command [:update, :up, :u] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from update command'
 
-    ## note: no more "magic" - remove expand_config_args!! - always pass in planet.ini or similar
-    ## args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
+    args = expand_config_args( args )   # if missing add default config (e.g. planet.ini)
 
     args.each do |arg|
       name    = File.basename( arg, '.*' )
@@ -256,8 +265,7 @@ command [:build, :b] do |c|
   c.action do |g,o,args|
     logger.debug 'hello from build command'
 
-    ## note: no more "magic" - remove expand_config_args!! - always pass in planet.ini or similar
-    ## args = expand_config_args( args )   # add missing .ini|.yml extension if missing or add default config (e.g. pluto.ini)
+    args = expand_config_args( args )   # if missing add default config (e.g. planet.ini)
 
     args.each do |arg|
       name    = File.basename( arg, '.*' )
@@ -348,7 +356,7 @@ pre do |g,c,o,args|
     LogUtils::Logger.root.level = :debug
   elsif opts.warn?
     LogUtils::Logger.root.level = :warn
-  elsif opts.quiet?
+  elsif opts.error?
     LogUtils::Logger.root.level = :error
   else
     ## do nothing; keep :info level (default)

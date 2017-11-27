@@ -15,16 +15,16 @@ class Opts
     #    use a single (internal) variable for log level - why? why not?
 
     if options[:verbose] == true   ## debug level
-      @verbose = @warn = @quiet = true
+      @verbose = @warn = @error = true
     end
 
-    if options[:warn]    == true   ## warn level
-      @warn = @quiet = true
+    if options[:warn]    == true   ## warn level -- alias for quiet
+      @warn = @error = true
       @verbose = false
     end
 
-    if options[:quiet]   == true   ## error level (for now) - why? why not?
-      @quiet = true
+    if options[:error]   == true   ## error level  -- alias for quieter
+      @error = true
       @verbose = @warn = false
     end
 
@@ -60,16 +60,18 @@ class Opts
 
 
   ##  # note: always assumes true for now for verbose/quiet/warn; default is false
+  ##  todo: switch verbose to debug internally - why? why not?
   def verbose=(value)   @verbose = true;   end
   def verbose?()        @verbose || false; end
   def debug?()          @verbose || false; end   ## add debug? alias for verbose
 
   def warn=(value)      @warn = true;     end
   def warn?()           @warn || false;   end
+  def quiet?()          @warn || false;  end   ## add quiet? alias for warn
 
-  def quiet=(value)     @quiet = true;    end   ## use error/error? - why? why not?
-  def quiet?()          @quiet || false;  end
-  def error?()          @quiet || false;  end   ## add error? alias for quiet
+  def error=(value)     @error = true;    end
+  def error?()          @error || false;  end
+  def quieter?()        @error || false;  end   ## add quieter? alias for error
 
 
 
