@@ -124,6 +124,23 @@ class Feed < ActiveRecord::Base
 
     end  # each item
 
+    guids_in_feed = data.items.map {|item| item.guid}
+    earliest_still_in_feed = data.items.min_by(&:published).published
+
+    items_no_longer_present =
+      Item
+        .where(feed_id: id)
+        .where.not(published: nil)
+        .where("published > ?", earliest_still_in_feed)
+        .where.not(guid: guids_in_feed)
+
+    unless items_no_longer_present.empty?
+      logger.info "#{items_no_longer_present.size} items no longer present in the feed (presumed removed at source). Deleting from pluto db"
+      items_no_longer_present.each do |item|
+        logger.info "** DELETE | #{item.title}"
+        item.destroy
+      end
+    end
 
     #  update  cached value last published for item
     ##  todo/check: force reload of items - why? why not??
