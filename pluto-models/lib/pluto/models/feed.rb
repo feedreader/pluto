@@ -124,6 +124,19 @@ class Feed < ActiveRecord::Base
 
     end  # each item
 
+
+    ###
+    #  delete (old) feed items if no longer in feed AND
+    #   date range is in (lastest/current) feed list
+    #
+    #  thanks to Harry Wood
+    #   see https://github.com/feedreader/pluto/pull/16
+    #    for more comments
+
+    #
+    #  todo/fix: use a delete feature/command line flag to make it optional - why? why not?
+
+
     guids_in_feed = data.items.map {|item| item.guid}
     earliest_still_in_feed = data.items.min_by(&:published).published
 
@@ -141,6 +154,7 @@ class Feed < ActiveRecord::Base
         item.destroy
       end
     end
+
 
     #  update  cached value last published for item
     ##  todo/check: force reload of items - why? why not??
