@@ -67,7 +67,7 @@ class FeedFetcherCondGetWithCache
         md5:                nil,
         fetched:            feed_fetched
       }
-      feed_rec.update_attributes!( feed_attribs )
+      feed_rec.update!( feed_attribs )
 
       ## add log error activity -- in future add to error log - better - why? why not?
       Activity.create!( text: "*** error: fetching feed '#{feed_key}' - HTTP status #{response.code} #{response.message}" )
@@ -162,7 +162,7 @@ class FeedFetcherCondGetWithCache
     #  in the future check for different charset than utf-8 ?? possible?? how to deal with non-utf8 charsets??
 
     begin
-      feed_rec.update_attributes!( feed_attribs )
+      feed_rec.update!( feed_attribs )
     rescue Exception => e
       # log db error; and continue
       logger.error "*** error: updating feed database record '#{feed_key}' - #{e.to_s}"

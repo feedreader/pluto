@@ -72,7 +72,7 @@ class Site < ActiveRecord::Base
       Activity.create!( text: "new site >#{key}< - #{title}" )
     end
 
-    update_attributes!( site_attribs )
+    update!( site_attribs )
 
 
     # -- log update activity
@@ -186,7 +186,7 @@ class Site < ActiveRecord::Base
         Activity.create!( text: "new feed >#{feed_key}< - #{feed_attribs[:title]}" )
       end
 
-      feed_rec.update_attributes!( feed_attribs )
+      feed_rec.update!( feed_attribs )
 
       #  add subscription record
       #   note: subscriptions get cleaned out on update first (see above)
