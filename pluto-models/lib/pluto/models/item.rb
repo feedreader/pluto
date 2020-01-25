@@ -37,7 +37,7 @@ class Item < ActiveRecord::Base
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
     # note: if not updated,published use hardcoded 1971-01-01 for now
-    order( "coalesce(items.updated,items.published,'1971-01-01') desc" )
+    order( Arel.sql( "coalesce(items.updated,items.published,'1971-01-01') desc" ) )
   end
 
   def updated?()    read_attribute(:updated).present?;  end
@@ -85,7 +85,7 @@ class Item < ActiveRecord::Base
       end
     end
 
-    update_attributes!( item_attribs )
+    update!( item_attribs )
   end
 
 end  # class Item

@@ -35,7 +35,7 @@ class Feed < ActiveRecord::Base
 
     # note: if not updated or published use hardcoded 1971-01-01 for now
     ## order( "coalesce(updated,published,'1971-01-01') desc" )
-    order( "coalesce(feeds.items_last_updated,'1971-01-01') desc" )
+    order( Arel.sql( "coalesce(feeds.items_last_updated,'1971-01-01') desc" ) )
   end
 
   ##################################
@@ -208,7 +208,7 @@ class Feed < ActiveRecord::Base
         end
     end
 
-    update_attributes!( feed_attribs )
+    update!( feed_attribs )
   end
 
 end  # class Feed

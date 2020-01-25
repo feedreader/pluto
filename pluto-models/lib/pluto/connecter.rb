@@ -63,7 +63,10 @@ class Connecter
     end
 
     # note: for now always use pluto key for config storage
-    ActiveRecord::Base.configurations['pluto'] = config
+    configs = ActiveRecord::Base.configurations.to_h.reject { |db_config| db_config.env_name == 'pluto' }
+    configs['pluto'] = config
+
+    ActiveRecord::Base.configurations = configs
 
     if debug?
       logger.debug 'ar configurations (after):'

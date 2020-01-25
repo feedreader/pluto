@@ -68,7 +68,7 @@ class SiteFetcher
         http_last_modified: nil,
         fetched:            site_fetched
       }
-      site_rec.update_attributes!( site_attribs )
+      site_rec.update!( site_attribs )
 
       ## add log error activity -- in future add to error log - better - why? why not?
       Activity.create!( text: "*** error: fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}" )
@@ -94,7 +94,7 @@ class SiteFetcher
       puts "http header - last-modified: #{response.header['last-modified']} - #{response.header['last-modified'].class.name}"
     ## end
 
-    site_rec.update_attributes!( site_attribs )
+    site_rec.update!( site_attribs )
 
 
     #################
