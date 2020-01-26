@@ -8,26 +8,26 @@ Hoe.spec 'pluto-update' do
   self.summary = "pluto-update - planet feed 'n' subscription updater"
   self.description = summary
 
-  self.urls    = ['https://github.com/feedreader/pluto.update']
+  self.urls    = ['https://github.com/feedreader/pluto']
 
   self.author  = 'Gerald Bauer'
   self.email   = 'feedreader@googlegroups.com'
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
-  self.history_file = 'HISTORY.md'
+  self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
-    ['pluto-models',      '>= 1.4.0'],
-    ['pluto-feedfetcher', '>= 0.1.0'],
-    ['fetcher',           '>= 0.4.4'],
+    ['pluto-models',      '>= 1.5.2'],
+    ['pluto-feedfetcher', '>= 0.1.2'],
+    ['fetcher',           '>= 0.4.5'],
     ['preproc',           '>= 0.1.0'],
   ]
 
   self.licenses = ['Public Domain']
 
   self.spec_extras = {
-    required_ruby_version: '>= 1.9.2'
+    required_ruby_version: '>= 2.2.2'
   }
 
 end

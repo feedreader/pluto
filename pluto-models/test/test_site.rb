@@ -30,18 +30,19 @@ class TestSite < MiniTest::Test
     Site.deep_create_or_update_from_hash!( 'ruby', site_config )
 
     assert_equal 1, Site.count
-    assert_equal 3, Feed.count
+    assert_equal 2, Feed.count
 
     ruby = Site.find_by_key!( 'ruby' )
     assert_equal 'Planet Ruby', ruby.title
-    assert_equal 3, ruby.subscriptions.count
-    assert_equal 3, ruby.feeds.count
+    assert_equal 2, ruby.subscriptions.count
+    assert_equal 2, ruby.feeds.count
 
     rubylang = Feed.find_by_key!( 'rubylang' )
     assert_equal 'Ruby Lang News', rubylang.title
     assert_equal 'http://www.ruby-lang.org/en/news', rubylang.url
     assert_equal 'http://www.ruby-lang.org/en/feeds/news.rss', rubylang.feed_url
   end
+
 
   def test_site_update
     site_text   = File.read( "#{Pluto.root}/test/data/ruby.ini")
@@ -56,12 +57,12 @@ class TestSite < MiniTest::Test
     Site.deep_create_or_update_from_hash!( 'ruby', site_config )
 
     assert_equal 1, Site.count
-    assert_equal 3, Feed.count
+    assert_equal 2, Feed.count
 
     ruby = Site.find_by_key!( 'ruby' )
     assert_equal 'Planet Ruby', ruby.title
-    assert_equal 3, ruby.subscriptions.count
-    assert_equal 3, ruby.feeds.count
+    assert_equal 2, ruby.subscriptions.count
+    assert_equal 2, ruby.feeds.count
 
     rubylang = Feed.find_by_key!( 'rubylang' )
     assert_equal 'Ruby Lang News', rubylang.title

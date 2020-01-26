@@ -15,12 +15,12 @@ Hoe.spec 'pluto-models' do
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
-  self.history_file = 'HISTORY.md'
+  self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
     ['props',         '>= 1.2.0'],
     ['logutils',      '>= 0.6.1'],
-    ['feedparser',    '>= 2.1.0'],
+    ['feedparser',    '>= 2.1.1'],
     ['feedfilter',    '>= 1.1.1'],
     ['textutils',     '>= 1.4.0'],
     ['activerecord'],
@@ -34,7 +34,7 @@ Hoe.spec 'pluto-models' do
   self.licenses = ['Public Domain']
 
   self.spec_extras = {
-    required_ruby_version: '>= 2.3'
+    required_ruby_version: '>= 2.2.2'
   }
 
 end

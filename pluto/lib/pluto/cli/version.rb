@@ -4,7 +4,7 @@ module PlutoCli
 
   MAJOR = 1
   MINOR = 3
-  PATCH = 1
+  PATCH = 2
   VERSION = [MAJOR,MINOR,PATCH].join('.')
 
   def self.version

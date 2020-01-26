@@ -26,11 +26,6 @@ title = Planet Ruby
   title = Ruby on Rails Blog
   link  = http://weblog.rubyonrails.org
   feed  = http://weblog.rubyonrails.org/feed/atom.xml
-
-[viennarb]
-  title = vienna.rb Blog
-  link  = http://vienna-rb.at
-  feed  = http://vienna-rb.at/atom.xml
 ```
 
 For more samples, see [`nytimes.ini`](https://github.com/feedreader/planets/blob/master/nytimes.ini),
@@ -45,14 +40,14 @@ For more samples, see [`nytimes.ini`](https://github.com/feedreader/planets/blob
 #### Meetup
 
 ```
-meetup = vienna-rb
+meetup = parisrb
 ```
 
 gets auto-completed to
 
 ```
-link = http://www.meetup.com/vienna-rb
-feed = http://www.meetup.com/vienna-rb/events/rss/vienna.rb/
+link = http://www.meetup.com/parisrb
+feed = http://www.meetup.com/parisrb/events/rss/parisrb/
 ```
 
 #### Google Groups
@@ -93,6 +88,7 @@ gets auto-completed to
 link = http://rubygems.org/gems/jekyll
 feed = http://rubygems.org/gems/jekyll/versions.atom
 ```
+
 
 
 ## License

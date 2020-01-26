@@ -15,7 +15,7 @@ class SysInfo
 
 
   def dump
-  puts <<EOS
+  puts <<TXT
 
 #{PlutoCli.banner}
 
@@ -39,7 +39,7 @@ Gems versions:
 Pluto config: #{opts.config_path}
   Pluto root: #{Pluto.root}
 
-EOS
+TXT
 
   # dump Pluto settings
   # config.dump
