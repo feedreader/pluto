@@ -25,6 +25,17 @@ move test/data to a shared folder
 see sportdb for a model?
 ```
 
+## double check config again
+
+```
+With newer ActiveRecord the amount of the deprecation warnings is growing:
+
+DEPRECATION WARNING: Setting `ActiveRecord::Base.configurations` with `[]=` 
+is deprecated. 
+Use `ActiveRecord::Base.configurations=` 
+directly to set the configurations instead.
+```
+
 ## more warnings 
 
 ```
