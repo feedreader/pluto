@@ -25,7 +25,7 @@ move test/data to a shared folder
 see sportdb for a model?
 ```
 
-## double check config again
+## double check config again (in pluto-models/connecter)
 
 ```
 With newer ActiveRecord the amount of the deprecation warnings is growing:
