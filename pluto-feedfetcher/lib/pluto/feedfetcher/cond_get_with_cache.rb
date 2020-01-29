@@ -36,8 +36,8 @@ class FeedFetcherCondGetWithCache
     rescue SocketError, SystemCallError => e
       ## catch socket error for unknown domain names (e.g. pragdave.blogs.pragprog.com)
       ###  will result in SocketError -- getaddrinfo: Name or service not known
-      logger.error "*** error: fetching feed '#{feed_key}' - #{e.to_s}"
-      Activity.create!( text: "*** error: fetching feed '#{feed_key}' - #{e.to_s}" )
+      logger.error "*** error: fetching feed '#{feed_key}' - [#{e.class.name}] #{e.to_s}"
+      Activity.create!( text: "*** error: fetching feed '#{feed_key}' - [#{e.class.name}] #{e.to_s}" )
 
       ### todo/fix: update feed rec in db
       @worker.use_cache = false   # fix/todo: restore old use_cache setting instead of false

@@ -89,85 +89,87 @@ class Feed < ActiveRecord::Base
 
     logger = LogUtils::Logger.root
 
-    ######
-    ## check for filters (includes/excludes) if present
-    ##  for now just check for includes
-    ##
-    if includes.present?
-      includesFilter = FeedFilter::IncludeFilters.new( includes )
-    else
-      includesFilter = nil
-    end
+    ## note: handle case with empty feed, that is, feed with NO items / entries
+    ##                                                    (e.g. data.items.size == 0).
+    if data.items.size > 0
 
-    data.items.each do |item|
-      if includesFilter && includesFilter.match_item?( item ) == false
-        logger.info "** SKIPPING | #{item.title}"
-        logger.info "  no include terms match: #{includes}"
-        next   ## skip to next item
-      end
-
-      item_rec = Item.find_by_guid( item.guid )
-      if item_rec.nil?
-        item_rec  = Item.new
-        logger.info "** NEW | #{item.title}"
+      ######
+      ## check for filters (includes/excludes) if present
+      ##  for now just check for includes
+      ##
+      if includes.present?
+        includesFilter = FeedFilter::IncludeFilters.new( includes )
       else
-        ## todo: check if any attribs changed
-        logger.info "UPDATE | #{item.title}"
+        includesFilter = nil
       end
 
-      item_rec.debug = debug? ? true : false  # pass along debug flag
+      data.items.each do |item|
+        if includesFilter && includesFilter.match_item?( item ) == false
+          logger.info "** SKIPPING | #{item.title}"
+          logger.info "  no include terms match: #{includes}"
+          next   ## skip to next item
+        end
 
-      item_rec.feed_id = id        # feed_rec.id - add feed_id fk_ref
-      item_rec.fetched = fetched   # feed_rec.fetched
+        item_rec = Item.find_by_guid( item.guid )
+        if item_rec.nil?
+          item_rec  = Item.new
+          logger.info "** NEW | #{item.title}"
+        else
+          ## todo: check if any attribs changed
+          logger.info "UPDATE | #{item.title}"
+        end
 
-      item_rec.update_from_struct!( item )
+        item_rec.debug = debug? ? true : false  # pass along debug flag
 
-    end  # each item
+        item_rec.feed_id = id        # feed_rec.id - add feed_id fk_ref
+        item_rec.fetched = fetched   # feed_rec.fetched
 
-
-    ###
-    #  delete (old) feed items if no longer in feed AND
-    #   date range is in (lastest/current) feed list
-    #
-    #  thanks to Harry Wood
-    #   see https://github.com/feedreader/pluto/pull/16
-    #    for more comments
-
-    #
-    #  todo/fix: use a delete feature/command line flag to make it optional - why? why not?
+        item_rec.update_from_struct!( item )
+      end  # each item
 
 
-    guids_in_feed = data.items.map {|item| item.guid}
-    earliest_still_in_feed = data.items.min_by(&:published).published
+      ###
+      #  delete (old) feed items if no longer in feed AND
+      #   date range is in (lastest/current) feed list
+      #
+      #  thanks to Harry Wood
+      #   see https://github.com/feedreader/pluto/pull/16
+      #    for more comments
 
-    items_no_longer_present =
-      Item
-        .where(feed_id: id)
-        .where.not(published: nil)
-        .where("published > ?", earliest_still_in_feed)
-        .where.not(guid: guids_in_feed)
+      #  todo/fix: use a delete feature/command line flag to make it optional - why? why not?
 
-    unless items_no_longer_present.empty?
-      logger.info "#{items_no_longer_present.size} items no longer present in the feed (presumed removed at source). Deleting from pluto db"
-      items_no_longer_present.each do |item|
-        logger.info "** DELETE | #{item.title}"
-        item.destroy
+      guids_in_feed = data.items.map {|item| item.guid }
+      earliest_still_in_feed = data.items.min_by {|item| item.published }.published
+
+      items_no_longer_present =
+        Item
+          .where(feed_id: id)
+          .where.not(published: nil)
+          .where("published > ?", earliest_still_in_feed)
+          .where.not(guid: guids_in_feed)
+
+      unless items_no_longer_present.empty?
+        logger.info "#{items_no_longer_present.size} items no longer present in the feed (presumed removed at source). Deleting from planet db"
+        items_no_longer_present.each do |item|
+          logger.info "** DELETE | #{item.title}"
+          item.destroy
+        end
       end
-    end
 
 
-    #  update  cached value last published for item
-    ##  todo/check: force reload of items - why? why not??
-    last_item_rec = items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
-    if last_item_rec.present?
-      if last_item_rec.updated?
-        self.items_last_updated = last_item_rec.updated
-        ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
-      else # try published
-        self.items_last_updated = last_item_rec.published
-        ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+      #  update  cached value last published for item
+      ##  todo/check: force reload of items - why? why not??
+      last_item_rec = items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
+      if last_item_rec.present?
+        if last_item_rec.updated?
+          self.items_last_updated = last_item_rec.updated
+          ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+        else # try published
+          self.items_last_updated = last_item_rec.published
+          ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+        end
       end
-    end
+    end  # check for if data.items.size > 0  (that is, feed has feed items/entries)
 
     update_from_struct!( data )
   end # method deep_update_from_struct!
