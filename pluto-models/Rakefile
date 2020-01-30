@@ -20,7 +20,7 @@ Hoe.spec 'pluto-models' do
   self.extra_deps = [
     ['props',         '>= 1.2.0'],
     ['logutils',      '>= 0.6.1'],
-    ['feedparser',    '>= 2.1.1'],
+    ['feedparser',    '>= 2.1.2'],
     ['feedfilter',    '>= 1.1.1'],
     ['textutils',     '>= 1.4.0'],
     ['activerecord'],

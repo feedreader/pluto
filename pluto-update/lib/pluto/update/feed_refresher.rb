@@ -64,12 +64,31 @@ class FeedRefresher
 
 private
   def refresh_feed_worker( feed_rec )
-    feed_xml = @worker.fetch( feed_rec )
+    text = @worker.fetch( feed_rec )
 
     # on error or if http-not modified etc. skip update/processing
-    return  if feed_xml.nil?
+    return  if text.nil?
 
-    feed = FeedParser::Parser.parse( feed_xml )
+    parser = FeedParser::Parser.new( text )
+    feed = if parser.is_xml?
+             parser.parse_xml
+           elsif parser.is_json?    ## support JSON Feed
+             parser.parse_json
+             ##  note: reading/parsing microformat is for now optional
+             ##    microformats gem requires nokogiri
+             ##       nokogiri (uses libxml c-extensions) makes it hard to install (sometime)
+             ##       thus, if you want to use it, please opt-in to keep the install "light"
+           elsif defined?( Microformats ) && parser.is_microformats?
+             parser.parse_microformats
+           else  ## unknown feed format - return error; do NOT fallback assuming xml for now
+             logger.error "*** error: unknown feed format (is XML or JSON?) for '#{feed_rec.key}' - #{feed_rec.feed_url} starting with: #{text.lstrip[0..20]}"
+             Activity.create!( text: "*** error: unknown feed format (is XML or JSON?) for '#{feed_rec.key}' - #{feed_rec.feed_url} starting with: #{text.lstrip[0..20]}" )
+             
+             nil  ## note: return nil for no feed / processing error
+          end
+
+    return  if feed.nil?
+
 
     ## fix/todo: reload feed_red   - fetched date updated etc.
     ##  check if needed for access to fetched date
