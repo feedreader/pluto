@@ -1,3 +1,8 @@
+For documentation, see the [Pluto Planet Guide »](http://feedreader.github.io)
+
+
+---
+
 # pluto - planet (static) website generator - auto-build web pages from published web feeds
 
 Gem Family:
@@ -9,8 +14,6 @@ Gem Family:
 - [pluto-merge](pluto-merge) - planet site generator (that is, merge 'n' manage planet templates)
 - [pluto-tasks](pluto-tasks) - planet rake tasks (setup, update, stats, etc.)
 
-
-For documentation, see the [Pluto Planet Guide »](http://feedreader.github.io)
 
 
 ## pluto.starter Quick Starter Kit 
