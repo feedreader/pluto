@@ -16,7 +16,7 @@ Gem Family:
 
 
 
-## pluto.starter Quick Starter Kit 
+## Pluto Quick Starter Kit 
 
 (Auto-)build your own (static) planet news site from web feeds, set the [/pluto.starter](https://github.com/feedreader/pluto.starter) quick starter template repo.
 
