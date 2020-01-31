@@ -1,4 +1,4 @@
-For documentation, see the [Pluto Planet Guide »](http://feedreader.github.io)
+For documentation, see the [Planet Pluto Guide »](http://feedreader.github.io)
 
 
 ---
