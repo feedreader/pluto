@@ -1,4 +1,4 @@
-# pluto - planet (static) site generator - auto-build web pages from published web feeds
+# pluto - planet (static) website generator - auto-build web pages from published web feeds
 
 Gem Family:
 
