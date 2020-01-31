@@ -10,10 +10,22 @@ Gem Family:
 - [pluto-tasks](pluto-tasks) - planet rake tasks (setup, update, stats, etc.)
 
 
+For documentation, see the [Pluto Planet Guide »](http://feedreader.github.io)
 
-## Planet Templates / Themes
+
+## pluto.starter Quick Starter Kit 
+
+(Auto-)build your own (static) planet news site from web feeds, set the [/pluto.starter](https://github.com/feedreader/pluto.starter) quick starter template repo.
+
+### More Planet Templates / Themes
 
 For planet templates / themes, see the [/planet-templates org](https://github.com/planet-templates). Packs include:  blank, top, hacker, news, paper, digest, and more.
+
+
+
+## planet.rb Quick Starter Script - Use Your Static Website Compiler / Builder of Choice
+
+(Auto-)add articles & blog posts to your (jekyll & friends) static website via feeds and planet pluto, see the [/planet.rb](https://github.com/feedreader/planet.rb) template repo.
 
 
 ## More
