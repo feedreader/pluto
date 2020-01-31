@@ -3,7 +3,7 @@ For documentation, see the [Planet Pluto Guide »](http://feedreader.github.io)
 
 ---
 
-# pluto - planet (static) website generator - auto-build web pages from published web feeds
+# pluto - planet feed reader and (static) website generator - auto-build web pages from published web feeds
 
 Gem Family:
 
@@ -33,7 +33,7 @@ For planet templates / themes, see the [/planet-templates org](https://github.co
 
 ## More
 
-For web apps using the planet machinery, see the [/plutolive org](https://github.com/plutolive).
+For web apps using the planet feed reader machinery, see the [/plutolive org](https://github.com/plutolive).
 Web apps include:
 pluto.admin, pluto.live.starter, pluto.live, and others.
 
