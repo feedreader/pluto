@@ -35,3 +35,21 @@ def version_check( *versions )
     outdated
 end
 
+
+def version_check!( *versions )
+  outdated = version_check( *versions )
+      
+  if outdated.size > 0   ## any outdated gems/libraries
+      puts "!!! error: version check failed - #{outdated.size} outdated gem(s):"
+      outdated.each do |rec|
+          name         = rec[0]
+          min_version  = rec[1]
+          used_version = rec[2]
+          puts "   #{name} - min version required #{min_version} > used/installed version #{used_version}"
+      end
+      puts
+      puts "sorry - cannot continue; please update the outdated gem(s)"
+      
+      exit 1
+  end   
+end

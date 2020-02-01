@@ -15,7 +15,7 @@ require 'pluto/cli/updater'
 require 'pluto/cli/version_check'
 
 
-outdated = version_check( 
+version_check!( 
   ['pakman',            '1.1.0', Pakman::VERSION], 
   ['fetcher',           '0.4.5', Fetcher::VERSION],
   ['feedparser',        '2.1.2', FeedParser::VERSION],
@@ -28,22 +28,6 @@ outdated = version_check(
   ['pluto-update',      '1.6.3', PlutoUpdate::VERSION],
   ['pluto-feedfetcher', '0.1.4', PlutoFeedFetcher::VERSION],
   ['pluto-merge',       '1.1.0', PlutoMerge::VERSION] )
-
-  
-if outdated.size > 0   ## any outdated gems/libraries
-  puts "!!! error: pluto version check failed - #{outdated.size} outdated gem(s):"
-  outdated.each do |rec|
-    name         = rec[0]
-    min_version  = rec[1]
-    used_version = rec[2]
-    puts "   #{name} - min version required #{min_version} > used/installed version #{used_version}"
-  end
-  puts
-  puts "sorry - cannot continue; please update the outdated gem(s)"
-
-  exit 1
-end
-
 
 
 
