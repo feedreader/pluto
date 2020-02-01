@@ -9,3 +9,4 @@ lib/pluto/cli/opts.rb
 lib/pluto/cli/sysinfo.rb
 lib/pluto/cli/updater.rb
 lib/pluto/cli/version.rb
+lib/pluto/cli/version_check.rb

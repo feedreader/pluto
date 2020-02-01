@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+
+##
+# to run / test use
+#   ruby -I ./lib bin/pluto about
+#   ruby -I ./lib bin/pluto help
+# etc.
+
+
 require 'pluto'
 
 Pluto.main
