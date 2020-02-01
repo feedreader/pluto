@@ -1,10 +1,7 @@
-# encoding: utf-8
-
 ###
 #  to run use
 #     ruby -I ./lib -I ./test test/test_site.rb
-#  or better
-#     rake test
+
 
 require 'helper'
 
@@ -20,7 +17,7 @@ class TestSite < MiniTest::Test
 
 
   def test_site_create
-    site_text   = File.read( "#{Pluto.root}/test/data/ruby.ini")
+    site_text   = File.read( "#{Pluto::Test.data_dir}/ruby.ini")
     site_config = INI.load( site_text )
     ## pp site_config
 
@@ -45,7 +42,7 @@ class TestSite < MiniTest::Test
 
 
   def test_site_update
-    site_text   = File.read( "#{Pluto.root}/test/data/ruby.ini")
+    site_text   = File.read( "#{Pluto::Test.data_dir}/ruby.ini")
     site_config = INI.load( site_text )
     ## pp site_config
 

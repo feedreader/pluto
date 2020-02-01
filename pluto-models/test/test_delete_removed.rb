@@ -1,10 +1,7 @@
-# encoding: utf-8
-
 ###
 #  to run use
 #     ruby -I ./lib -I ./test test/test_delete_removed.rb
-#  or better
-#     rake test
+
 
 require 'helper'
 

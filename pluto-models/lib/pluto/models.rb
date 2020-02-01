@@ -106,7 +106,19 @@ module Pluto
   end # setup_in_memory_dd
 
 
+  #########################################
+  ## let's put test configuration in its own namespace / module
+  class Test    ## todo/check: works with module too? use a module - why? why not?
+  
+    ####
+    #  todo/fix:  find a better way to configure shared test datasets - why? why not?
+    #    note: use one-up (..) directory for now as default - why? why not?
+    def self.data_dir()        @data_dir ||= '../test'; end
+    def self.data_dir=( path ) @data_dir = path; end
+  end # class Test
+
 end  # module Pluto
+
 
 
 

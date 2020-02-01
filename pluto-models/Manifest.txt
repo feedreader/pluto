@@ -12,7 +12,6 @@ lib/pluto/models/subscription.rb
 lib/pluto/models/utils.rb
 lib/pluto/schema.rb
 lib/pluto/version.rb
-test/data/ruby.ini
 test/helper.rb
 test/test_delete_removed.rb
 test/test_filter.rb

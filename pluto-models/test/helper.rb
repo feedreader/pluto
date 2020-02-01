@@ -1,8 +1,4 @@
-## $:.unshift(File.dirname(__FILE__))
-
-
 ## minitest setup
-
 require 'minitest/autorun'
 
 ## our own code
@@ -12,7 +8,7 @@ require 'pluto/models'
 LogUtils::Logger.root.level = :debug
 
 
-## some shortcuts
+## add some (ActiveRecord model class) shortcuts
 Log         = LogDb::Model::Log
 Prop        = ConfDb::Model::Prop
 
