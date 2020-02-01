@@ -5,11 +5,6 @@ require 'pluto/models'
 require 'pluto/feedfetcher'
 
 
-# more 3rd party gems
-require 'fetcher'    # fetch (text) documents
-require 'preproc'    # include preprocessor
-
-
 # our own code
 require 'pluto/update/version'   # Note: let version always go first
 require 'pluto/update/feed_refresher'
@@ -28,14 +23,9 @@ module Pluto
     SiteRefresher.new.refresh_sites
   end
 
-### convenience alias w/ update_  -- use refresh (only) - why? why not??
-  def self.update_feeds
-    FeedRefresher.new.refresh_feeds
-  end
-
-  def self.update_sites
-    SiteRefresher.new.refresh_sites
-  end
+  ### convenience aliases w/ update_  -- use refresh (only) - why? why not??
+  def self.update_feeds() refresh_feeds; end 
+  def self.update_sites() refresh_sites; end
 
 end  # module Pluto
 

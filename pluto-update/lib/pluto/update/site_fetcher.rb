@@ -12,8 +12,8 @@ class SiteFetcher
     @worker  = Fetcher::Worker.new
   end
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
+  def debug?()  Pluto.config.debug?;  end
+
 
   def fetch( site_rec )
     ####################################################
@@ -45,18 +45,10 @@ class SiteFetcher
 
     if response.code == '304'  # not modified (conditional GET - e.g. using etag/last-modified)
 
-      if site_text.index('@include')
-        ## note: if the site_text includes @include
-        ##  we must revalidate complete file hierachy(tree) for now
-        ### continue;
-        ##
-        ##  fix/todo: use ahead-of-time preprocessor ?? in the future to simplify???
-      else
-        puts "OK - fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
-        puts "no change; request returns not modified (304); skipping parsing site config"
-        return nil   # no updates available; nothing to do
-      end
-
+      puts "OK - fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
+      puts "no change; request returns not modified (304); skipping parsing site config"
+      return nil   # no updates available; nothing to do
+ 
     elsif response.code != '200'   # note Net::HTTP response.code is a string in ruby
 
       puts "*** error: fetching site '#{site_key}' - HTTP status #{response.code} #{response.message}"
@@ -97,36 +89,10 @@ class SiteFetcher
     site_rec.update!( site_attribs )
 
 
-    #################
-    ### fix: add support for http_etag cache etc.  - how??
-    ###
-    ###   use from_text( text, base: base )  !!!!!!!!
-    ###    do NOT reissue first request
-    ##
-    ##  fix: use special case/method for update_with_includes!!!
-    ##    keep it simple w/o includes (do NOT mix in one method)
-    ##  split into two methods!!!
-
-    ## retry w/ preprocesser
-    ## refetch if @include found w/ all includes included
-    if site_text.index('@include')
-      site_text = InclPreproc.from_url( site_url ).read
-    end
-
     ## logger.debug "site_text:"
     ## logger.debug site_text[ 0..300 ] # get first 300 chars
 
     site_text
-
-    ###
-    ## todo/fix:
-    ### move INI.load out of this method!! - return site_text or nil
-    ##
-    ## puts "Before parsing site config >#{site_key}<..."
-    ##
-    # assume ini format for now
-    ## site_config = INI.load( site_text )
-    ## site_config
   end
 
 end # class SiteFetcher

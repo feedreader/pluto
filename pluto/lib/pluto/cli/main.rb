@@ -90,7 +90,8 @@ command [:fetch, :f] do |c|
     logger.debug 'hello from fetch command'
 
     ##  turn on debug flag by default; no need to passing --verbose
-    LogUtils::Logger.root.level = :debug
+    Pluto.config.debug        = true
+    Pluto.config.logger.level = :debug
     opts.verbose = true
 
     # add dbname as opts property
@@ -113,7 +114,6 @@ command [:fetch, :f] do |c|
       pp feed_rec
 
       fetcher = Pluto::FeedFetcherBasic.new
-      fetcher.debug = true  # by default debug is true (only used for debuggin! - save feed to file, etc.)
 
       feed = fetcher.fetch( feed_rec )
       ## pp feed
@@ -353,11 +353,12 @@ pre do |g,c,o,args|
   puts PlutoCli.banner
 
   if opts.verbose?
-    LogUtils::Logger.root.level = :debug
+    Pluto.config.debug        = true
+    Pluto.config.logger.level = :debug
   elsif opts.warn?
-    LogUtils::Logger.root.level = :warn
+    Pluto.config.logger.level = :warn
   elsif opts.error?
-    LogUtils::Logger.root.level = :error
+    Pluto.config.logger.level = :error
   else
     ## do nothing; keep :info level (default)
   end

@@ -10,8 +10,8 @@ class Item < ActiveRecord::Base
 ##     only class method present?
 ##   what's the best way to add logging to activerecord (use "builtin" machinery??)
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
+
+  def debug?()  Pluto.config.debug?;  end
 
 
   self.table_name = 'items'
@@ -36,8 +36,8 @@ class Item < ActiveRecord::Base
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
-    # note: if not updated,published use hardcoded 1971-01-01 for now
-    order( Arel.sql( "coalesce(items.updated,items.published,'1971-01-01') desc" ) )
+    # note: if not updated,published use hardcoded 1970-01-01 for now
+    order( Arel.sql( "coalesce(items.updated,items.published,'1970-01-01') desc" ) )
   end
 
   def updated?()    read_attribute(:updated).present?;  end

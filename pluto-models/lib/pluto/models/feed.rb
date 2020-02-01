@@ -12,8 +12,8 @@ class Feed < ActiveRecord::Base
 ##     only class method present?
 ##   what's the best way to add logging to activerecord (use "builtin" machinery??)
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
+
+  def debug?()  Pluto.config.debug?;  end
 
 
 
@@ -33,9 +33,9 @@ class Feed < ActiveRecord::Base
     # note: order by first non-null datetime field
     #   coalesce - supported by sqlite (yes), postgres (yes)
 
-    # note: if not updated or published use hardcoded 1971-01-01 for now
-    ## order( "coalesce(updated,published,'1971-01-01') desc" )
-    order( Arel.sql( "coalesce(feeds.items_last_updated,'1971-01-01') desc" ) )
+    # note: if not updated or published use hardcoded 1970-01-01 for now
+    ## was: order( "coalesce(updated,published,'1970-01-01') desc" )
+    order( Arel.sql( "coalesce(feeds.items_last_updated,'1970-01-01') desc" ) )
   end
 
   ##################################
@@ -118,8 +118,6 @@ class Feed < ActiveRecord::Base
           ## todo: check if any attribs changed
           logger.info "UPDATE | #{item.title}"
         end
-
-        item_rec.debug = debug? ? true : false  # pass along debug flag
 
         item_rec.feed_id = id        # feed_rec.id - add feed_id fk_ref
         item_rec.fetched = fetched   # feed_rec.fetched

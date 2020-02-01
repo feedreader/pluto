@@ -18,8 +18,8 @@ Hoe.spec 'pluto' do
   self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
-    ['pluto-models', '>= 1.5.3'],
-    ['pluto-update', '>= 1.6.2'],
+    ['pluto-models', '>= 1.5.4'],
+    ['pluto-update', '>= 1.6.3'],
     ['pluto-merge',  '>= 1.1.0'],
     ['pluto-tasks',  '>= 1.5.3'],
     ['gli',          '>= 2.12.2'],

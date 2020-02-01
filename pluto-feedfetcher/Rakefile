@@ -18,7 +18,7 @@ Hoe.spec 'pluto-feedfetcher' do
   self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
-    ['pluto-models',  '>= 1.5.3'],
+    ['pluto-models',  '>= 1.5.4'],
     ['fetcher',       '>= 0.4.5'],
   ]
 

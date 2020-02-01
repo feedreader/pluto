@@ -2,19 +2,19 @@
 
 
 ## minitest setup
-
 require 'minitest/autorun'
 
 ## our own code
 require 'pluto/update'
 
 
-LogUtils::Logger.root.level = :debug
+Pluto.config.debug        = true
+Pluto.config.logger.level = :debug
 
 
 ## some shortcuts
-Log         = LogDb::Model::Log
-Prop        = ConfDb::Model::Prop
+Log          = LogDb::Model::Log
+Prop         = ConfDb::Model::Prop
 
 Site         = Pluto::Model::Site
 Feed         = Pluto::Model::Feed

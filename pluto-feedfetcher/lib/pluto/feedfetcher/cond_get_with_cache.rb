@@ -11,8 +11,7 @@ class FeedFetcherCondGetWithCache
     @worker  = Fetcher::Worker.new
   end
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
+  def debug?()  Pluto.config.debug?;  end
 
 
   def fetch( feed_rec )

@@ -5,7 +5,8 @@ require 'minitest/autorun'
 require 'pluto/models'
 
 
-LogUtils::Logger.root.level = :debug
+Pluto.config.debug        = true
+Pluto.config.logger.level = :debug
 
 
 ## add some (ActiveRecord model class) shortcuts

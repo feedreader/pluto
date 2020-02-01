@@ -18,17 +18,12 @@ class FeedRefresher
     @worker  = FeedFetcherCondGetWithCache.new
   end
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
+  def debug?()  Pluto.config.debug?;  end
+
 
 
   def refresh_feeds( opts={} )  # refresh (fetch+parse+update) all feeds
-    if debug?
-      ## turn on logging for sql too
-      ActiveRecord::Base.logger = Logger.new( STDOUT )
-      @worker.debug = true   # also pass along worker debug flag if set
-    end
-
+  
     start_time = Time.now
     Activity.create!( text: "start update feeds (#{Feed.count})" )
 
@@ -44,12 +39,7 @@ class FeedRefresher
 
 
   def refresh_feeds_for( site_key, opts={} ) # refresh (fetch+parse+update) feeds for site
-    if debug?
-      ## turn on logging for sql too
-      ActiveRecord::Base.logger = Logger.new( STDOUT )
-      @worker.debug = true   # also pass along worker debug flag if set
-    end
-
+  
     # -- log update activity
     Activity.create!( text: "update feeds >#{site_key}<" )
 
@@ -107,10 +97,6 @@ private
     #  move to_datetime to feedutils!! if it works
     ##   todo: move this comments to feedutils??
 
-
-    feed_rec.debug = debug? ? true : false    # pass along debug flag
-
-    ## fix/todo: pass debug flag as opts - debug: true|false !!!!!!
     # fix/todo: find a better name - why? why not?? => use update_from_struct!
     feed_rec.deep_update_from_struct!( feed )
 

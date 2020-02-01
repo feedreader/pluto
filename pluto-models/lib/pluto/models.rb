@@ -34,6 +34,7 @@ require 'logutils/activerecord'
 # our own code
 
 require 'pluto/version'   # note: let version always get first
+require 'pluto/config'
 require 'pluto/schema'
 
 require 'pluto/models/forward'

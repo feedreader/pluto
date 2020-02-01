@@ -2,6 +2,7 @@ CHANGELOG.md
 Manifest.txt
 README.md
 Rakefile
+lib/pluto/config.rb
 lib/pluto/connecter.rb
 lib/pluto/models.rb
 lib/pluto/models/feed.rb

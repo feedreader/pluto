@@ -10,7 +10,7 @@ class ItemCursor
   end
 
   def each
-    last_updated      = Time.local( 1971, 1, 1 )
+    last_updated      = Time.local( 1970, 1, 1 )
     last_feed_id      = -1     ## todo: use feed_key instead of id?? why? why not??
 
     @items.each do |item|

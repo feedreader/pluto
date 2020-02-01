@@ -43,17 +43,11 @@ class Updater
 
     ###################
     # step 1) update site subscriptions
-
-    # pass along debug/verbose setting/switch
-    ## site_updater.debug = true    if opts.verbose?
     Model::Site.deep_create_or_update_from_hash!( site_key, config )
 
     ##############################
     # step 2) update feeds
     feed_refresher = FeedRefresher.new
-
-    # pass along debug/verbose setting/switch
-    feed_refresher.debug = true    if opts.verbose?
     feed_refresher.refresh_feeds_for( site_key )
   end # method run
 

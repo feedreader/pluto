@@ -9,14 +9,15 @@ module Pluto
 class Connecter
 
   include LogUtils::Logging
+  
+
 
   def initialize
     # do nothing for now
   end
 
+  def debug?()  Pluto.config.debug?;  end
 
-  def debug=(value) @debug = value; end
-  def debug?()      @debug || false; end
 
 
   def connect( config={} )

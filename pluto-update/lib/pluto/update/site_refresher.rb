@@ -18,16 +18,11 @@ class SiteRefresher
     @worker  = SiteFetcher.new
   end
 
-  def debug=(value)  @debug = value;   end
-  def debug?()       @debug || false;  end
+  def debug?()  Pluto.config.debug?;  end
+
 
   def refresh_sites( opts={} )  # refresh (fetch+parse+update) all site configs
-    if debug?
-      ## turn on logging for sql too
-      ActiveRecord::Base.logger = Logger.new( STDOUT )
-      @worker.debug = true   # also pass along worker debug flag if set
-    end
-
+ 
     start_time = Time.now
     Activity.create!( text: "start update sites (#{Site.count})" )
 
@@ -50,7 +45,6 @@ private
 
     site_config = INI.load( site_text )
 
-    ### site_rec.debug = debug? ? true : false    # pass along debug flag
     site_rec.deep_update_from_hash!( site_config )
   end
 
