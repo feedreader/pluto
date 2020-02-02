@@ -1,0 +1,9 @@
+##############
+# feedbase / feed database
+
+*.db
+
+
+##############
+# output build directories
+o/
