@@ -1,4 +1,3 @@
-require 'pluto/models'
 require 'pluto/update'
 
 
