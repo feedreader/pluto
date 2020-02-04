@@ -98,14 +98,14 @@ resulting in:
 
 ```
 100 Latest News Items
-   0d   2020-02-04 00:00:00 - RubyNess @ Inverness, Scotland, United Kingdom - Ruby Conferences 'n' Camps Update - planetruby.github.io
-   0d   2020-02-04 00:00:00 - Ruby by the Bay (Ruby for Good, West Coast Edition) @ Marin Headlands (near San Francisco), California, United States - Ruby Conferences 'n' Camps Update - planetruby.github.io
+   0d   2020-02-04 00:00:00 - RubyNess @ Inverness, Scotland, United Kingdom - planetruby.github.io
+   0d   2020-02-04 00:00:00 - Ruby by the Bay (Ruby for Good, West Coast Edition) @ Marin Headlands (near San Francisco), California, United States - planetruby.github.io
    8d   2020-01-27 14:44:38 - RubyMine 2020.1 EAP is Open!  - jetbrains.com
   11d   2020-01-24 00:00:00 - Crowdfunding for 2020 scholarships has commenced - railsgirlssummerofcode.org
   15d   2020-01-20 00:00:00 - Alumni Interview with Keziah Naggita - railsgirlssummerofcode.org
   16d   2020-01-19 00:00:00 - This week in Rails - Rack 2.1 released, disallowed deprecations, and more! - weblog.rubyonrails.org
   19d   2020-01-16 00:00:00 - Rails Camp West @ Diablo Lake, Washington, United States - Ruby Conferences 'n' Camps Update - planetruby.github.io
-  19d   2020-01-16 00:00:00 - RubyConf Belarus (BY) @ Minsk, Belarus - Ruby Conferences 'n' Camps Update - planetruby.github.io
+  19d   2020-01-16 00:00:00 - RubyConf Belarus (BY) @ Minsk, Belarus - planetruby.github.io
   22d   2020-01-13 14:00:39 - Guide to String Encoding in Ruby - tenderlovemaking.com
   23d   2020-01-12 23:00:00 - A Migration Path to Bundler 2+ - eregon.me
   24d   2020-01-11 00:00:00 - This week in Rails - Deprecations, bugfixes and improvements! - weblog.rubyonrails.org
@@ -186,7 +186,7 @@ News.subscribe(
 News.update
 
 
-# step 3) mix up all postings in a new page
+# step 3) mix up all news items in a new page
 
 NEWSFEED_TEMPLATE = <<TXT
 <% News.latest.limit(100).each do |item| %>
