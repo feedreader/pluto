@@ -1,0 +1,211 @@
+:::::::::::::::::::::::::::::::::::::::::::::::::::
+:: 793 news items from 21 channels:
+
+By Year:
+  year 2010: 4
+  year 2011: 26
+  year 2012: 7
+  year 2013: 96
+  year 2014: 56
+  year 2015: 81
+  year 2016: 95
+  year 2017: 85
+  year 2018: 119
+  year 2019: 102
+  year 2020: 23
+
+By Month in 2020:
+  month 1: 21
+  month 2: 2
+
+By Week in 2020:
+  week  1:   11   - Mon Dec 30, 2019 to Sun Jan 05, 2020
+  week  2:    2   - Mon Jan 06, 2020 to Sun Jan 12, 2020
+  week  3:    4   - Mon Jan 13, 2020 to Sun Jan 19, 2020
+  week  4:    2   - Mon Jan 20, 2020 to Sun Jan 26, 2020
+  week  5:    2   - Mon Jan 27, 2020 to Sun Feb 02, 2020
+  week  6:    2   - Mon Feb 03, 2020 to Sun Feb 09, 2020
+
+By Week in 2019:
+  week  1:    4   - Mon Dec 31, 2018 to Sun Jan 06, 2019
+  week  2:    1   - Mon Jan 07, 2019 to Sun Jan 13, 2019
+  week  3:    2   - Mon Jan 14, 2019 to Sun Jan 20, 2019
+  week  4:    3   - Mon Jan 21, 2019 to Sun Jan 27, 2019
+  week  5:    2   - Mon Jan 28, 2019 to Sun Feb 03, 2019
+  week  6:    1   - Mon Feb 04, 2019 to Sun Feb 10, 2019
+  week  7:    1   - Mon Feb 11, 2019 to Sun Feb 17, 2019
+  week  8:    0   - Mon Feb 18, 2019 to Sun Feb 24, 2019
+  week  9:    3   - Mon Feb 25, 2019 to Sun Mar 03, 2019
+  week 10:    4   - Mon Mar 04, 2019 to Sun Mar 10, 2019
+  week 11:    2   - Mon Mar 11, 2019 to Sun Mar 17, 2019
+  week 12:    3   - Mon Mar 18, 2019 to Sun Mar 24, 2019
+  week 13:    3   - Mon Mar 25, 2019 to Sun Mar 31, 2019
+  week 14:    3   - Mon Apr 01, 2019 to Sun Apr 07, 2019
+  week 15:    2   - Mon Apr 08, 2019 to Sun Apr 14, 2019
+  week 16:    0   - Mon Apr 15, 2019 to Sun Apr 21, 2019
+  week 17:    3   - Mon Apr 22, 2019 to Sun Apr 28, 2019
+  week 18:    0   - Mon Apr 29, 2019 to Sun May 05, 2019
+  week 19:    1   - Mon May 06, 2019 to Sun May 12, 2019
+  week 20:    0   - Mon May 13, 2019 to Sun May 19, 2019
+  week 21:    1   - Mon May 20, 2019 to Sun May 26, 2019
+  week 22:    2   - Mon May 27, 2019 to Sun Jun 02, 2019
+  week 23:    0   - Mon Jun 03, 2019 to Sun Jun 09, 2019
+  week 24:    2   - Mon Jun 10, 2019 to Sun Jun 16, 2019
+  week 25:    0   - Mon Jun 17, 2019 to Sun Jun 23, 2019
+  week 26:    4   - Mon Jun 24, 2019 to Sun Jun 30, 2019
+  week 27:    1   - Mon Jul 01, 2019 to Sun Jul 07, 2019
+  week 28:    1   - Mon Jul 08, 2019 to Sun Jul 14, 2019
+  week 29:    0   - Mon Jul 15, 2019 to Sun Jul 21, 2019
+  week 30:    2   - Mon Jul 22, 2019 to Sun Jul 28, 2019
+  week 31:    2   - Mon Jul 29, 2019 to Sun Aug 04, 2019
+  week 32:    0   - Mon Aug 05, 2019 to Sun Aug 11, 2019
+  week 33:    3   - Mon Aug 12, 2019 to Sun Aug 18, 2019
+  week 34:    2   - Mon Aug 19, 2019 to Sun Aug 25, 2019
+  week 35:    0   - Mon Aug 26, 2019 to Sun Sep 01, 2019
+  week 36:    1   - Mon Sep 02, 2019 to Sun Sep 08, 2019
+  week 37:    3   - Mon Sep 09, 2019 to Sun Sep 15, 2019
+  week 38:    5   - Mon Sep 16, 2019 to Sun Sep 22, 2019
+  week 39:    0   - Mon Sep 23, 2019 to Sun Sep 29, 2019
+  week 40:    5   - Mon Sep 30, 2019 to Sun Oct 06, 2019
+  week 41:    3   - Mon Oct 07, 2019 to Sun Oct 13, 2019
+  week 42:    2   - Mon Oct 14, 2019 to Sun Oct 20, 2019
+  week 43:    1   - Mon Oct 21, 2019 to Sun Oct 27, 2019
+  week 44:    1   - Mon Oct 28, 2019 to Sun Nov 03, 2019
+  week 45:    2   - Mon Nov 04, 2019 to Sun Nov 10, 2019
+  week 46:    0   - Mon Nov 11, 2019 to Sun Nov 17, 2019
+  week 47:    2   - Mon Nov 18, 2019 to Sun Nov 24, 2019
+  week 48:    3   - Mon Nov 25, 2019 to Sun Dec 01, 2019
+  week 49:    4   - Mon Dec 02, 2019 to Sun Dec 08, 2019
+  week 50:    3   - Mon Dec 09, 2019 to Sun Dec 15, 2019
+  week 51:    8   - Mon Dec 16, 2019 to Sun Dec 22, 2019
+  week 52:    2   - Mon Dec 23, 2019 to Sun Dec 29, 2019
+
+This Year:    23
+This Month:   2
+This Week:    2
+Today:        2
+
+100 Latest News Items
+   0d   2020-02-04 00:00:00 UTC - RubyNess @ Inverness, Scotland, United Kingdom - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+   0d   2020-02-04 00:00:00 UTC - Ruby by the Bay (Ruby for Good, West Coast Edition) @ Marin Headlands (near San Francisco), California, United States - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+   8d   2020-01-27 14:44:38 UTC - RubyMine 2020.1 EAP is Open! - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+   8d   2020-01-27 00:00:00 UTC - Ruby Retreat New Zealand (NZ) @ Mt Cheeseman (near Christchurch), New Zealand - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  11d   2020-01-24 00:00:00 UTC - Crowdfunding for 2020 scholarships has commenced - https://railsgirlssummerofcode.org/blog.xml
+  15d   2020-01-20 00:00:00 UTC - Alumni Interview with Keziah Naggita - https://railsgirlssummerofcode.org/blog.xml
+  16d   2020-01-19 00:00:00 UTC - This week in Rails - Rack 2.1 released, disallowed deprecations, and more! - http://weblog.rubyonrails.org/feed/atom.xml
+  19d   2020-01-16 00:00:00 UTC - Rails Camp West @ Diablo Lake, Washington, United States - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  19d   2020-01-16 00:00:00 UTC - RubyConf Belarus (BY) @ Minsk, Belarus - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  22d   2020-01-13 14:00:39 UTC - Guide to String Encoding in Ruby - http://tenderlovemaking.com/atom.xml
+  23d   2020-01-12 23:00:00 UTC - A Migration Path to Bundler 2+ - https://eregon.me/blog/feed.xml
+  24d   2020-01-11 00:00:00 UTC - This week in Rails - Deprecations, bugfixes and improvements! - http://weblog.rubyonrails.org/feed/atom.xml
+  30d   2020-01-05 00:00:00 UTC - This week in Rails - The 2019 edition - http://weblog.rubyonrails.org/feed/atom.xml
+  30d   2020-01-05 00:00:00 UTC - RubyInstaller 2.7.0-1 released - https://rubyinstaller.org/feed.xml
+  32d   2020-01-03 05:26:08 UTC - Solutions for 'Cant find gem bundler (>= 0.a) with executable bundle' - http://bundler.io/blog/feed.xml
+  32d   2020-01-03 05:26:08 UTC - January and February Bundler Update - http://bundler.io/blog/feed.xml
+  32d   2020-01-03 05:26:08 UTC - December 2018 Bundler Update - http://bundler.io/blog/feed.xml
+  32d   2020-01-03 05:26:08 UTC - An update on the Bundler 2 release - http://bundler.io/blog/feed.xml
+  32d   2020-01-03 05:26:08 UTC - Announcing Bundler 2.0 - http://bundler.io/blog/feed.xml
+  32d   2020-01-03 05:26:08 UTC - November 2018 Bundler Update - http://bundler.io/blog/feed.xml
+  32d   2020-01-03 00:00:00 UTC - Submit Your Open Source Projects - https://railsgirlssummerofcode.org/blog.xml
+  33d   2020-01-02 00:00:00 UTC - Birmingham on Rails @ Birmingham, Alabama, United States - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  34d   2020-01-01 00:00:00 UTC - Happy new year & Sinatra 2.0.8! - http://sinatrarb.com/feed.xml
+  39d   2019-12-27 00:00:00 UTC - Ruby 2.7.0, Rails 6.0.2.1 and more - http://weblog.rubyonrails.org/feed/atom.xml
+  41d   2019-12-25 00:00:00 UTC - Ruby 2.7.0 Released - http://www.ruby-lang.org/en/feeds/news.rss
+  45d   2019-12-21 12:00:00 UTC - Ruby 2.7.0-rc2 Released - http://www.ruby-lang.org/en/feeds/news.rss
+  46d   2019-12-20 00:00:00 UTC - 3.1.2 Released - http://blog.rubygems.org/atom.xml
+  48d   2019-12-18 19:26:01 UTC - Rails 5.2.4.1 has been released! - http://weblog.rubyonrails.org/feed/atom.xml
+  48d   2019-12-18 19:25:51 UTC - Rails 6.0.2.1 has been released! - http://weblog.rubyonrails.org/feed/atom.xml
+  48d   2019-12-18 00:00:00 UTC - The Curious Case of the Table-Locking UPDATE Query - http://www.schneems.com/feed.xml
+  49d   2019-12-17 12:00:00 UTC - Ruby 2.7.0-rc1 Released - http://www.ruby-lang.org/en/feeds/news.rss
+  50d   2019-12-16 00:00:00 UTC - 3.1.1 Released - http://blog.rubygems.org/atom.xml
+  50d   2019-12-16 00:00:00 UTC - 3.1.0 Released - http://blog.rubygems.org/atom.xml
+  53d   2019-12-13 18:28:01 UTC - Rails 6.0.2 has been released! - http://weblog.rubyonrails.org/feed/atom.xml
+  54d   2019-12-12 12:00:00 UTC - Separation of positional and keyword arguments in Ruby 3.0 - http://www.ruby-lang.org/en/feeds/news.rss
+  57d   2019-12-09 16:27:24 UTC - Rails 6.0.2.rc2 has been released! - http://weblog.rubyonrails.org/feed/atom.xml
+  63d   2019-12-03 00:00:00 UTC - RubyConf Australia @ Melbourne, Victoria, Australia - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  63d   2019-12-03 00:00:00 UTC - ParisRB Conf @ Paris, France - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  63d   2019-12-03 00:00:00 UTC - Rubyfuza @ Cape Town, South Africa - Ruby Conferences 'n' Camps Update - http://planetruby.github.io/calendar/feed.xml
+  64d   2019-12-02 00:00:00 UTC - Join the New RGSoC Orga Team - https://railsgirlssummerofcode.org/blog.xml
+  65d   2019-12-01 00:00:00 UTC - Rails 6.0.2.rc1, 5.2.4, and something different… - http://weblog.rubyonrails.org/feed/atom.xml
+  68d   2019-11-28 12:00:51 UTC - RubyMine 2019.3 Released: RuboCop Severities Mapping, Better Run Anything, and More - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+  69d   2019-11-27 15:51:48 UTC - Rails 5.2.4 has been released! - http://weblog.rubyonrails.org/feed/atom.xml
+  73d   2019-11-23 12:00:00 UTC - Ruby 2.7.0-preview3 Released - http://www.ruby-lang.org/en/feeds/news.rss
+  78d   2019-11-18 00:00:00 UTC - RGSoC Returns for 2020 - https://railsgirlssummerofcode.org/blog.xml
+  87d   2019-11-09 23:00:00 UTC - The Delegation Challenge of Ruby 2.7 - https://eregon.me/blog/feed.xml
+  90d   2019-11-06 00:00:00 UTC - Why does my App's Memory Use Grow Over Time? - http://www.schneems.com/feed.xml
+  97d   2019-10-30 00:00:00 UTC - JRuby 9.2.9.0 Released - http://www.jruby.org/atom.xml
+ 105d   2019-10-22 12:00:00 UTC - Ruby 2.7.0-preview2 Released - http://www.ruby-lang.org/en/feeds/news.rss
+ 111d   2019-10-16 00:00:00 UTC - 2020 Fukuoka Ruby Award Competition - Entries to be judged by Matz - http://www.ruby-lang.org/en/feeds/news.rss
+ 112d   2019-10-15 05:18:18 UTC - Debugging hidden memory leaks in Ruby - http://samsaffron.com/posts.rss
+ 115d   2019-10-12 19:40:41 UTC - My Career Goals - http://tenderlovemaking.com/atom.xml
+ 118d   2019-10-09 10:48:06 UTC - Find usages in RubyMine - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 120d   2019-10-07 11:01:44 UTC - Running Rails tasks with Run Anything - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 121d   2019-10-06 22:00:00 UTC - A New Expectation Syntax for ruby/spec - https://eregon.me/blog/feed.xml
+ 125d   2019-10-02 09:00:00 UTC - Ruby 2.4.9 Released - http://www.ruby-lang.org/en/feeds/news.rss
+ 125d   2019-10-02 00:00:00 UTC - RubyInstaller 2.6.5-1, 2.5.7-1 and 2.4.9-1 released - https://rubyinstaller.org/feed.xml
+ 126d   2019-10-01 11:00:00 UTC - CVE-2019-16201: Regular Expression Denial of Service vulnerability of WEBrick's Digest access authentication - http://www.ruby-lang.org/en/feeds/news.rss
+ 126d   2019-10-01 11:00:00 UTC - Ruby 2.6.5 Released - http://www.ruby-lang.org/en/feeds/news.rss
+ 137d   2019-09-20 09:18:18 UTC - Announcing Hanami v1.3.3 - https://hanamirb.org/atom.xml
+ 137d   2019-09-20 00:00:00 UTC - RubyGems.org and Chef Gem Ownership - http://blog.rubygems.org/atom.xml
+ 139d   2019-09-18 16:09:00 UTC - Start It Up: Improving JRuby’s Startup Time - http://blog.headius.com/feed.xml
+ 139d   2019-09-18 03:09:58 UTC - Passenger 6.0.4 Debian 10 Buster - https://blog.phusion.nl/rss/
+ 141d   2019-09-16 09:04:29 UTC - Ending Support for RubyMotion and Heroku Integration Plugins - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 144d   2019-09-13 11:13:35 UTC - RubyMine 2019.3 EAP is Open! - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 145d   2019-09-12 19:17:27 UTC - Passenger 6.0.3 Restarting the Releases - https://blog.phusion.nl/rss/
+ 147d   2019-09-10 00:00:00 UTC - RubyInstaller 2.6.4-1, 2.5.6-1 and 2.4.7-1 released - https://rubyinstaller.org/feed.xml
+ 154d   2019-09-03 15:20:26 UTC - ESP8266 and Plantower Particle Sensor - http://tenderlovemaking.com/atom.xml
+ 167d   2019-08-21 00:00:00 UTC - A new maintainer and Sinatra 2.0.6! - http://sinatrarb.com/feed.xml
+ 168d   2019-08-20 15:00:00 UTC - Jekyll 4.0.0 Released - http://jekyllrb.com/feed.xml
+ 172d   2019-08-16 00:00:00 UTC - 3.0.6 Released - http://blog.rubygems.org/atom.xml
+ 172d   2019-08-16 00:00:00 UTC - 3.0.5 Released - http://blog.rubygems.org/atom.xml
+ 176d   2019-08-12 00:00:00 UTC - JRuby 9.2.8.0 Released - http://www.jruby.org/atom.xml
+ 184d   2019-08-04 15:43:31 UTC - Jekyll 4.0.0.pre.beta1 Released - http://jekyllrb.com/feed.xml
+ 190d   2019-07-29 11:04:29 UTC - RubyMine 2019.2 Released: Faster Debugger, Ruby 2.7, Rails 6, and Much More - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 193d   2019-07-26 13:45:33 UTC - Announcing Hanami Validations v2.0.0.alpha1 - https://hanamirb.org/atom.xml
+ 193d   2019-07-26 13:22:47 UTC - Announcing Hanami v1.3.2 - https://hanamirb.org/atom.xml
+ 207d   2019-07-12 00:00:00 UTC - Puma 4: Hammering Out H13s—A Debugging Story - http://www.schneems.com/feed.xml
+ 217d   2019-07-02 15:21:02 UTC - Jekyll 3.8.6 Released - http://jekyllrb.com/feed.xml
+ 221d   2019-06-28 09:44:05 UTC - Debugging in RubyMine - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 223d   2019-06-26 15:14:14 UTC - Instance Variable Performance - http://tenderlovemaking.com/atom.xml
+ 223d   2019-06-26 00:00:00 UTC - Puma 4: New I/O 4 Your Server - http://www.schneems.com/feed.xml
+ 224d   2019-06-25 12:46:21 UTC - YARD support in RubyMine - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 235d   2019-06-14 00:00:00 UTC - 3.0.4 Released - http://blog.rubygems.org/atom.xml
+ 235d   2019-06-14 00:00:00 UTC - 2.7.10 Released - http://blog.rubygems.org/atom.xml
+ 250d   2019-05-30 18:38:11 UTC - RubyMine 2019.2 EAP is Open! - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 252d   2019-05-28 06:54:25 UTC - Tests that sometimes fail - http://samsaffron.com/posts.rss
+ 258d   2019-05-22 09:29:08 UTC - Learn RubyMine with IDE Features Trainer - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 272d   2019-05-08 00:00:00 UTC - Code with these open source projects this season - https://railsgirlssummerofcode.org/blog.xml
+ 286d   2019-04-24 14:52:18 UTC - RubyMine 2019.1.1 is Available - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 287d   2019-04-23 22:00:00 UTC - How TruffleRuby’s Startup Time Became Faster Than MRI’s - https://eregon.me/blog/feed.xml
+ 287d   2019-04-23 10:01:48 UTC - Ruby QuickRef - http://blog.zenspider.com/atom.xml
+ 300d   2019-04-10 02:12:04 UTC - My i3 window manager setup - http://samsaffron.com/posts.rss
+ 301d   2019-04-09 00:00:00 UTC - JRuby 9.2.7.0 Released - http://www.jruby.org/atom.xml
+ 305d   2019-04-05 15:05:18 UTC - RubyMine 2019.1 Released! - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 305d   2019-04-05 00:00:00 UTC - How you can submit your open source project — and what is different this year - https://railsgirlssummerofcode.org/blog.xml
+ 309d   2019-04-01 08:20:18 UTC - RubyMine Navigation: Recent Locations Popup - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 310d   2019-03-31 23:44:35 UTC - Why I stuck with Windows for 6 years while developing Discourse - http://samsaffron.com/posts.rss
+ 313d   2019-03-28 13:55:22 UTC - How to work with Docker/Docker Compose from RubyMine - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+ 316d   2019-03-25 18:32:48 UTC - Profile Ruby & Rails Apps With rbspy in RubyMine - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+
+Channels
+   0d   2020-02-04 09:01:16 UTC -    9 - http://planetruby.github.io/calendar/feed.xml
+   0d   2020-02-04 05:25:11 UTC -   10 - http://jekyllrb.com/feed.xml
+   0d   2020-02-04 04:26:01 UTC -   15 - https://blog.phusion.nl/rss/
+   1d   2020-02-03 15:56:01 UTC -  339 - https://railsgirlssummerofcode.org/blog.xml
+   1d   2020-02-03 09:32:07 UTC -   10 - https://foundation.travis-ci.org/feed.xml
+   6d   2020-01-29 07:20:08 UTC -   20 - http://feeds.feedburner.com/jetbrains_rubymine?format=xml
+   9d   2020-01-26 17:56:14 UTC -   10 - https://rubyinstaller.org/feed.xml
+  15d   2020-01-20 08:45:55 UTC -   10 - http://weblog.rubyonrails.org/feed/atom.xml
+  19d   2020-01-16 07:48:37 UTC -    9 - https://eregon.me/blog/feed.xml
+  22d   2020-01-13 14:00:39 UTC -   15 - http://tenderlovemaking.com/atom.xml
+  28d   2020-01-07 19:02:47 UTC -   14 - http://sinatrarb.com/feed.xml
+  46d   2019-12-20 02:47:47 UTC -  188 - http://blog.rubygems.org/atom.xml
+  47d   2019-12-19 15:50:40 UTC -   10 - http://www.jruby.org/atom.xml
+ 110d   2019-10-17 00:00:00 UTC -   63 - https://rubytogether.org/news.xml
+ 137d   2019-09-20 09:18:18 UTC -   10 - https://hanamirb.org/atom.xml
+ 138d   2019-09-19 16:23:58 UTC -   10 - http://blog.headius.com/feed.xml
+ 266d   2019-05-14 00:00:00 UTC -    6 - http://bundler.io/blog/feed.xml
+ 287d   2019-04-23 10:01:48 UTC -   15 - http://blog.zenspider.com/atom.xml
+   ?     -   10 - http://www.ruby-lang.org/en/feeds/news.rss
+   ?     -   10 - http://www.schneems.com/feed.xml
+   ?     -   10 - http://samsaffron.com/posts.rss

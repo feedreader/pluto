@@ -1,11 +1,14 @@
 require 'pluto/update'
 
 
+## our own code
+require 'pluto/news/version'
+
+
 
 module News
 
   def self.subscribe( *feeds )
-    site_key  = 'news'   ## note: use always news (and single-site setup) for now
     site_hash = {        ## note: keys are strings (NOT symbols) for now
       'title' => 'News, News, News'
     }
@@ -22,6 +25,7 @@ module News
     end
 
     connection   ## make sure we have a database connection (and setup) up-and-running
+    site_key  = 'news'   ## note: use always news (and single-site setup) for now
     Pluto::Model::Site.deep_create_or_update_from_hash!( site_key, site_hash )
   end
 
@@ -50,7 +54,6 @@ module News
         Arel.sql( "coalesce(items.updated,items.published,'1970-01-01') desc" )
       )
   end
-  def self.articles()  items; end   ## convenience alias for articles
   def self.latest()    items; end   ## note: "default" scope orders (sorts) by latest / time
 
 
@@ -151,157 +154,6 @@ end  # module News
 
 
 
-# News.configure do |config|
-#   config.database = ':memory:'
-# end
 
-=begin
-News.subscribe(
-  'http://www.ruby-lang.org/en/feeds/news.rss',     # Ruby Lang News
-  'http://www.jruby.org/atom.xml',                  # JRuby Lang News
-  'http://blog.rubygems.org/atom.xml',              # RubyGems News
-  'http://bundler.io/blog/feed.xml',                # Bundler News
-  'http://weblog.rubyonrails.org/feed/atom.xml',    # Ruby on Rails News
-  'http://sinatrarb.com/feed.xml',                  # Sinatra News
-  'https://hanamirb.org/atom.xml',                  # Hanami News
-  'http://jekyllrb.com/feed.xml',                   # Jekyll News
-  'http://feeds.feedburner.com/jetbrains_rubymine?format=xml',  # RubyMine IDE News
-  'https://blog.phusion.nl/rss/',                   # Phusion News
-  'https://rubyinstaller.org/feed.xml',             # Ruby Installer for Windows News
-  'http://planetruby.github.io/calendar/feed.xml',  # Ruby Conferences & Camps News
-  'https://rubytogether.org/news.xml',              # Ruby Together News
-
-  'http://blog.zenspider.com/atom.xml',          # Ryan Davis @ Seattle, WA › United States
-  'http://tenderlovemaking.com/atom.xml',        # Aaron Patterson @ Seattle, WA › United States
-  'http://blog.headius.com/feed.xml',            # Charles Nutter @ Richfield, MN › United States
-  'http://www.schneems.com/feed.xml',            # Richard Schneeman @ Austin, TX › United States
-  )
-
-
-News.update
-=end
-
-
-puts News.channels.to_sql
-puts News.feeds.to_sql
-
-puts News.articles.to_sql
-puts News.items.to_sql
-
-
-
-
-puts News.latest.limit(2).to_sql
-puts News.today.to_sql
-
-puts News.week.to_sql
-puts News.week( 1 ).to_sql
-puts News.week( 1, 2019 ).to_sql
-
-puts News.month.to_sql
-puts News.month( 1 ).to_sql
-puts News.month( 1, 2019 ).to_sql
-
-puts News.year.to_sql
-puts News.year( 2019 ).to_sql
-
-puts News.this_week.to_sql
-puts News.this_month.to_sql
-puts News.this_year.to_sql
-
-puts News.q1.to_sql
-puts News.q2.to_sql
-puts News.q3.to_sql
-puts News.q4.to_sql
-
-
-###### run queries
-pp News.latest.limit(2).to_a
-pp News.today.to_a
-
-pp News.week.to_a
-pp News.week( 1 ).to_a
-pp News.week( 1, 2019 ).to_a
-
-pp News.month.to_a
-pp News.month( 1 ).to_a
-pp News.month( 1, 2019 ).to_a
-
-pp News.year.to_a
-pp News.year( 2019 ).to_a
-
-pp News.this_week.to_a
-pp News.this_month.to_a
-pp News.this_year.to_a
-
-pp News.q1.to_a
-pp News.q2.to_a
-pp News.q3.to_a
-pp News.q4.to_a
-
-
-puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
-puts ":: #{News.items.count} news items from #{News.channels.count} channels:"
-puts
-
-puts "By Year:"
-(2010..Date.today.year).each do |year|
-  puts "  year #{year}: #{News.year(year).count}"
-end
-puts
-
-puts "By Month in #{Date.today.year}:"
-(1..Date.today.month).each do |month|
-  puts "  month #{month}: #{News.month(month).count}"
-end
-puts
-
-puts "By Week in #{Date.today.year}:"
-(1..Date.today.cweek).each do |week|
-  print "  week %-2d: %4d" % [week, News.week(week).count]
-  print "\n"
-end
-puts
-
-year = Date.today.year-1
-puts "By Week in #{year}:"
-(1..52).each do |week|    ## (always) assume 52 weeks for now
-  print "  week %-2d: %4d" % [week, News.week(week, year).count]
-  print "   - #{Date.commercial(year,week,1)} to #{Date.commercial(year,week,7)}"
-  print "\n"
-end
-puts
-
-
-puts "This Year:    #{News.this_year.count}"
-puts "This Month:   #{News.this_month.count}"
-puts "This Week:    #{News.this_week.count}"
-puts "Today:        #{News.today.count}"
-puts
-
-puts "100 Latest News Items"
-News.latest.limit( 100 ).each do |item|
-  print "%4dd " % (Date.today.jd-item.updated.to_date.jd)
-  print "  #{item.updated}"
-  print " - #{item.title}"
-  print " - #{item.feed.feed_url}"   ## fix: use title or something
-  print "\n"
-end
-puts
-
-puts "Channels"
-News.channels.each do |channel|
-  if channel.updated?
-    print "%4dd " % (Date.today.jd-channel.updated.to_date.jd)
-  else
-    print "   ?  "
-  end
-  print "  #{channel.updated}"
-  print " - %4d" % channel.items.count
-  print " - #{channel.feed_url}"   ## fix: use title or something
-  print "\n"
-end
-
-## use/add feeds.items_updated to coalesce updated - why?, why not?
-
-
+# say hello
+puts PlutoNews.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
