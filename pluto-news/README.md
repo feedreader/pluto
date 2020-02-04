@@ -104,7 +104,6 @@ resulting in:
   11d   2020-01-24 00:00:00 - Crowdfunding for 2020 scholarships has commenced - railsgirlssummerofcode.org
   15d   2020-01-20 00:00:00 - Alumni Interview with Keziah Naggita - railsgirlssummerofcode.org
   16d   2020-01-19 00:00:00 - This week in Rails - Rack 2.1 released, disallowed deprecations, and more! - weblog.rubyonrails.org
-  19d   2020-01-16 00:00:00 - Rails Camp West @ Diablo Lake, Washington, United States - Ruby Conferences 'n' Camps Update - planetruby.github.io
   19d   2020-01-16 00:00:00 - RubyConf Belarus (BY) @ Minsk, Belarus - planetruby.github.io
   22d   2020-01-13 14:00:39 - Guide to String Encoding in Ruby - tenderlovemaking.com
   23d   2020-01-12 23:00:00 - A Migration Path to Bundler 2+ - eregon.me
