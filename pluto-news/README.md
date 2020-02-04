@@ -55,9 +55,7 @@ that is, `./news.db` and auto-migrate the schema, that is, database tables and s
 ### Step 2 - Update
 
 Use the `News.update` method to fetch from the internets all news feeds / channels
-and update the `./news.db` database.
-
-Example:
+and update the `./news.db` database. Example:
 
 ```ruby
 News.update
@@ -68,9 +66,7 @@ News.update
 ### Step 3 - Query and Remix the News Items
 
 Profit!  Now you can query the `./news.db` database with any of the many
-pre-made / ready-to-use query helpers.
-
-Example:
+pre-made / ready-to-use query helpers. Example:
 
 ``` ruby
 puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
