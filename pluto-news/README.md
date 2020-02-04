@@ -11,19 +11,6 @@
 
 ## Usage
 
-# pluto-news gem - newsreader for easy (re)use - build your own facebook newsfeed in 5 minutes
-
-
-* home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
-* bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
-* gem   :: [rubygems.org/gems/pluto-news](https://rubygems.org/gems/pluto-news)
-* rdoc  :: [rubydoc.info/gems/pluto-news](http://rubydoc.info/gems/pluto-news)
-* forum :: [groups.google.com/group/wwwmake](http://groups.google.com/group/wwwmake)
-
-
-
-## Usage
-
 The `News` module offers easy to (re)use "porcelain" helpers / methods
 that hide the "plumbing" for building your own newsreader or newsfeeds in minutes.
 
@@ -165,8 +152,7 @@ and some more.
 
 
 
-
-## All Together Now - Let's Build A Newsfeed in 20 Lines
+### All Together Now - Let's Build A Newsfeed in 20 Lines
 
 ```ruby
 require 'pluto/news'
