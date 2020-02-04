@@ -17,7 +17,7 @@ that hide the "plumbing" for building your own newsreader or newsfeeds in minute
 
 ### Step 1 - Subscribe
 
-Use the `News.subscribe( *feeds )` methods to subscrib to news feeds / channels.
+Use the `News.subscribe( *feeds )` method to subscribe to news feeds / channels.
 Example:
 
 ```ruby
