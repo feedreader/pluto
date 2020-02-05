@@ -52,7 +52,7 @@ News.latest.limit( 100 ).each do |item|
   print "%4dd " % (Date.today.jd-item.updated.to_date.jd)
   print "  #{item.updated}"
   print " - #{item.title}"
-  print " - #{URI(item.feed.feed_url).host}"
+  print " - #{URI(item.feed.feed_url).host}"   ## fix: use feed.url / title or something
   print "\n"
 end
 puts
@@ -66,7 +66,7 @@ News.channels.each do |channel|
   end
   print "  #{channel.updated}"
   print " - %4d" % channel.items.count
-  print " - #{channel.feed_url}"   ## fix: use title or something
+  print " - #{channel.feed_url}"   ## fix: use feed title or something
   print "\n"
 end
 
