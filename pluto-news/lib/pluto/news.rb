@@ -1,4 +1,15 @@
+
 require 'pluto/update'
+
+
+## todo/fix: include stdlibs in pluto/update upstream!!!
+require 'date'
+require 'time'
+require 'cgi'
+
+require 'erb'
+require 'ostruct'
+
 
 
 ## our own code
@@ -14,14 +25,11 @@ module News
     }
 
     feeds.each_with_index do |feed,i|
-      key = "feed%03d" % (i+1)
+      key = "%003d" % (i+1)
       ## todo/fix:
       ##  use auto_title and auto_link
       ##   do NOT add title and link (will overwrite/rule auto_title and auto_link updates)
-      site_hash[ key ] = { 'title' => "Untitled %03d" % (i+1),
-                           'link'  => 'http://example.com',   ## todo/fix - make optional?
-                           'feed'  => feed
-                         }
+      site_hash[ key ] = { 'feed'  => feed }
     end
 
     connection   ## make sure we have a database connection (and setup) up-and-running
@@ -115,6 +123,37 @@ module News
   def self.q2( year=Date.today.year ) between( Date.new( year,  4, 1), Date.new( year, 6, 30) ); end
   def self.q3( year=Date.today.year ) between( Date.new( year,  7, 1), Date.new( year, 9, 30) ); end
   def self.q4( year=Date.today.year ) between( Date.new( year, 10, 1), Date.new( year,12, 31) ); end
+
+
+
+  class Template
+    class Context < OpenStruct
+      ## use a different name - why? why not?
+      ##  e.g. to_h, to_hash, vars, locals, assigns, etc.
+      def get_binding() binding; end
+
+      ## add builtin helpers / shortcuts
+      def h( text ) CGI.escapeHTML( text ); end
+    end # class Template::Context
+
+
+    def initialize( text )
+      @template = ERB.new( text )
+    end
+
+    ## todo: use locals / assigns or something instead of **kwargs - why? why not?
+    ##        allow/support (extra) locals / assigns - why? why not?
+    def render( **kwargs )
+      ## note: Ruby >= 2.5 has ERB#result_with_hash - use later - why? why not?
+      @template.result( Context.new( **kwargs ).get_binding )
+    end
+  end # class Template
+
+  def self.render( text, **kwargs )
+    template = Template.new( text )
+    template.render( **kwargs )
+  end
+
 
 
 

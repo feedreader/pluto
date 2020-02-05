@@ -5,7 +5,7 @@ Hoe.spec 'pluto-news' do
 
   self.version = PlutoNews::VERSION
 
-  self.summary = "pluto-news - newsreader for easy (re)use - build your own facebook newsfeed in 5 minutes"
+  self.summary = "pluto-news - newsreader for easy (re)use - build your own facebook newsfeed in 1-2-3 steps in 5 minutes"
   self.description = summary
 
   self.urls    = ['https://github.com/feedreader/pluto']
@@ -19,6 +19,7 @@ Hoe.spec 'pluto-news' do
 
   self.extra_deps = [
     ['pluto-models', '>= 1.5.4'],
+    ['sqlite3'],     # note: for easy installation include sqlite database library
   ]
 
   self.licenses = ['Public Domain']

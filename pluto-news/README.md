@@ -1,5 +1,5 @@
-# pluto-news gem - newsreader for easy (re)use - build your own facebook newsfeed in 5 minutes
-  
+# pluto-news gem - newsreader for easy (re)use - build your own facebook newsfeed in 1-2-3 steps in 5 minutes
+
 
 * home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
 * bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
@@ -187,17 +187,52 @@ News.update
 
 # step 3) mix up all news items in a new page
 
-NEWSFEED_TEMPLATE = <<TXT
-<% News.latest.limit(100).each do |item| %>
-  <div class="item">
-    <h2><a href="<%= item.url %>"><%= item.title %></a></h2>
-    <div><%= item.content %></div>
-  </div>
-<% end %>
+puts News.render( <<TXT )
+  <% News.latest.limit(100).each do |item| %>
+    <div class="item">
+      <h2><a href="<%= item.url %>"><%= item.title %></a></h2>
+      <div><%= item.content %></div>
+    </div>
+  <% end %>
 TXT
-
-puts ERB.new( NEWSFEED_TEMPLATE ).result
 ```
+
+resulting in:
+
+``` html
+<div class="item">
+  <h2><a href="http://planetruby.github.io/calendar/2020#rubyness">RubyNess @ Inverness,
+    Scotland, United Kingdom - Ruby Conferences 'n' Camps Update</a></h2>
+  <div><p>What's News? What's Upcoming in 2020?</p>
+   <p>
+     <b><a href="https://rubyness.org/" id="rubyness">RubyNess</a></b><br>
+     Jul/16+17 (2d) Thu+Fri @ Inverness, Scotland, United Kingdom •
+     <a href="https://twitter.com/rubynessconf" title="@rubynessconf">(Updates)</a>
+   </p>
+   <p>
+   See all <a href="http://planetruby.github.io/calendar/2020">Conferences 'n' Camps in 2020»</a>.
+  </p></div>
+</div>
+
+<div class="item">
+  <h2><a href="http://feedproxy.google.com/~r/jetbrains_rubymine/~3/DiNxpQHKHrk/">RubyMine
+    2020.1 EAP is Open!</a></h2>
+  <div><p>Hello everyone,</p>
+    <p>Today we are happy to announce the opening of the Early Access Program (EAP)
+       for RubyMine 2020.1! You can get EAP builds...
+    </p>
+    <p>Happy Developing!<br>
+     Your RubyMine team
+    </p></div>
+  </div>
+...
+```
+
+
+
+## More
+
+- [news.rb quick starter script](https://github.com/feedreader/news.rb) - build your own facebook newsfeed in 1-2-3 steps in 5 minutes
 
 
 
