@@ -174,13 +174,15 @@ class Feed < ActiveRecord::Base
       #  update  cached value last published for item
       ##  todo/check: force reload of items - why? why not??
       last_item_rec = items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
-      if last_item_rec.present?
-        if last_item_rec.updated?
-          self.items_last_updated = last_item_rec.updated
+      if last_item_rec
+        if last_item_rec.data.updated?
+          self.items_last_updated = last_item_rec.data.updated
           ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
-        else # try published
-          self.items_last_updated = last_item_rec.published
+        elsif last_item_rec.data.published?   # try published
+          self.items_last_updated = last_item_rec.data.published
           ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+        else
+          ## skip - no updated / published present
         end
       end
     end  # check for if data.items.size > 0  (that is, feed has feed items/entries)
