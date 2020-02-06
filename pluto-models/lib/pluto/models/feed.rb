@@ -41,7 +41,11 @@ class Feed < ActiveRecord::Base
   ##################################
   # attribute reader aliases
   #
-  #  todo: check if we can use alias_method :name, :title   - works for non-existing/on-demand-generated method too??
+  #  note: CANNOT use alias_method :name, :title 
+  #         will NOT work for non-existing/on-demand-generated methods in activerecord
+  #
+  #   use rails alias_attribute :new, :old  (incl. reader/predicate/writer)
+  #   or use alias_attr, alias_attr_reader, alias_attr_writer from activerecord/utils
 
   def name()        title;    end  # alias    for title
   def description() summary;  end  # alias    for summary
@@ -56,35 +60,45 @@ class Feed < ActiveRecord::Base
   def author_email() email;   end # alias    for email
   def author_email() email;   end # alias(2) for email
 
+  
+  #################
+  ## attributes with fallbacks or (auto-)backups  - use feed.data.<attribute> for "raw" / "original" access
+  def url()        read_attribute_w_fallbacks( :url,      :auto_url );      end
+  def title()      read_attribute_w_fallbacks( :title,    :auto_title );    end
+  def feed_url()   read_attribute_w_fallbacks( :feed_url, :auto_feed_url ); end
 
-  def url?()           read_attribute(:url).present?;       end
-  def title?()         read_attribute(:title).present?;     end
-  def feed_url?()      read_attribute(:feed_url).present?;  end
-
-  def url()      read_attribute_w_fallbacks( :url,      :auto_url );      end
-  def title()    read_attribute_w_fallbacks( :title,    :auto_title );    end
-  def feed_url() read_attribute_w_fallbacks( :feed_url, :auto_feed_url ); end
-
-  def summary?()      read_attribute(:summary).present?;  end
-
-
-  def updated?()    read_attribute(:updated).present?;    end
-  def published?()  read_attribute(:published).present?;  end
-
-  def updated
-    ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
-    #    db backed attribute
-    read_attribute_w_fallbacks( :updated, :published )
-  end
-
-  def published
-    ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
-    #    db backed attribute
-    read_attribute_w_fallbacks( :published, :updated )
-  end
-
-
-
+  def url?()       url.present?;       end
+  def title?()     title.present?;     end
+  def feed_url?()  feed_url.present?;  end
+  
+  ## note:
+  ##   only use fallback for updated, that is, updated (or published)
+  ##    do NOT use fallback for published / created    -- why? why not?
+  ##    add items_last_updated  to updated as last fall back - why? why not?
+  def updated()    read_attribute_w_fallbacks( :updated, :published );  end
+  def updated?()   updated.present?;  end
+  
+  ## "raw"  access via data "proxy" helper
+  ## e.g. use  feed.data.published
+  ##           feed.data.published? etc.
+  class Data
+    def initialize( feed ) @feed = feed; end
+    
+    def url()         @feed.read_attribute( :url );      end      # "regular" url incl. auto_url fallback / (auto-)backup
+    def title()       @feed.read_attribute( :title );    end
+    def feed_url()    @feed.read_attribute( :feed_url );  end
+    def url?()        @feed.read_attribute( :url ).present?; end
+    def title?()      @feed.read_attribute( :title ).present?;  end
+    def feed_url?()   @feed.read_attribute( :feed_url ).present?;  end
+    
+    def updated()     @feed.read_attribute(:updated); end           # "regular" updated incl. published fallback
+    def updated?()    @feed.read_attribute(:updated).present?; end
+  end # class Data
+  ## use a different name for data - why? why not?
+  ##    e.g. inner, internal, readonly or r, raw, table, direct, or ???
+  def data()   @data ||= Data.new( self ); end    
+  
+  
   def deep_update_from_struct!( data )
 
     logger = LogUtils::Logger.root
