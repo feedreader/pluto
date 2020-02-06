@@ -14,7 +14,7 @@ class TestQueries < MiniTest::Test
     puts News.items.to_sql
     
 
-    puts News.latest.limit(2).to_sql
+    puts News.latest.limit( 2 ).to_sql
     puts News.today.to_sql
     
     puts News.week.to_sql
@@ -30,16 +30,42 @@ class TestQueries < MiniTest::Test
     
     puts News.this_week.to_sql
     puts News.this_month.to_sql
+    puts News.this_quarter.to_sql
     puts News.this_year.to_sql
+ 
     
+    puts News.quarter.to_sql
+    puts News.q.to_sql
+
+    puts News.quarter( 1 ).to_sql
+    puts News.quarter( 2 ).to_sql
+    puts News.quarter( 3 ).to_sql
+    puts News.quarter( 4 ).to_sql
+    puts News.quarter1.to_sql
+    puts News.quarter2.to_sql
+    puts News.quarter3.to_sql
+    puts News.quarter4.to_sql
+
+    puts News.q( 1 ).to_sql
+    puts News.q( 2 ).to_sql
+    puts News.q( 3 ).to_sql
+    puts News.q( 4 ).to_sql
     puts News.q1.to_sql
     puts News.q2.to_sql
     puts News.q3.to_sql
     puts News.q4.to_sql
+    puts News.q( 1, 2019 ).to_sql
+    puts News.q( 2, 2019 ).to_sql
+    puts News.q( 3, 2019 ).to_sql
+    puts News.q( 4, 2019 ).to_sql
+    puts News.q1( 2019 ).to_sql
+    puts News.q2( 2019 ).to_sql
+    puts News.q3( 2019 ).to_sql
+    puts News.q4( 2019 ).to_sql
     
     
     ###### run queries
-    pp News.latest.limit(2).to_a
+    pp News.latest.limit( 2 ).to_a
     pp News.today.to_a
     
     pp News.week.to_a
