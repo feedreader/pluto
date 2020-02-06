@@ -12,6 +12,30 @@ require 'ostruct'
 
 
 
+class Date
+  def quarter() 1+(self.month-1)/3; end
+end
+
+# -- for testing:
+# (1..12).each do |num|
+#   puts "#{num} -> #{Date.new(2020,num,1).quarter}"
+# end
+# -- prints:
+#   1 -> 1
+#   2 -> 1
+#   3 -> 1
+#   4 -> 2
+#   5 -> 2
+#   6 -> 2
+#   7 -> 3
+#   8 -> 3
+#   9 -> 3
+#  10 -> 4
+#  11 -> 4
+#  12 -> 4
+
+
+
 ## our own code
 require 'pluto/news/version'
 
@@ -99,13 +123,35 @@ module News
   end
 
   def self.month( month=Date.today.month, year=Date.today.year )
-      q = "%4d-%02d" % [year,month]     # e.g. 2020-01 etc.
-      items.
-        where(
-          Arel.sql( "strftime('%Y-%m', coalesce(items.updated,items.published,'1970-01-01')) = '#{q}'" )
-        )
+    q = "%4d-%02d" % [year,month]     # e.g. 2020-01 etc.
+    items.
+      where(
+        Arel.sql( "strftime('%Y-%m', coalesce(items.updated,items.published,'1970-01-01')) = '#{q}'" )
+      )
   end
 
+  def self.quarter( quarter=Date.today.quarter, year=Date.today.year )
+    case quarter
+    when 1 then between( Date.new( year,  1, 1), Date.new( year, 3, 31) );
+    when 2 then between( Date.new( year,  4, 1), Date.new( year, 6, 30) );
+    when 3 then between( Date.new( year,  7, 1), Date.new( year, 9, 30) );
+    when 4 then between( Date.new( year, 10, 1), Date.new( year,12, 31) );
+    else  raise ArgumentError
+    end
+  end
+
+  def self.quarter1( year=Date.today.year ) quarter(1, year); end
+  def self.quarter2( year=Date.today.year ) quarter(2, year); end
+  def self.quarter3( year=Date.today.year ) quarter(3, year); end
+  def self.quarter4( year=Date.today.year ) quarter(4, year); end
+
+  def self.q( quarter=Date.today.quarter, year=Date.today.year ) quarter( quarter, year ); end
+  def self.q1( year=Date.today.year ) quarter1( year ); end
+  def self.q2( year=Date.today.year ) quarter2( year ); end
+  def self.q3( year=Date.today.year ) quarter3( year ); end
+  def self.q4( year=Date.today.year ) quarter4( year ); end
+
+  
   def self.year( year=Date.today.year )
     q = year
     items.
@@ -114,15 +160,13 @@ module News
       )
   end
 
-  def self.this_week()  week;  end    ## convenience alias - keep - why? why not?
-  def self.this_month() month; end
-  def self.this_year()  year;  end
-
-
-  def self.q1( year=Date.today.year ) between( Date.new( year,  1, 1), Date.new( year, 3, 31) ); end
-  def self.q2( year=Date.today.year ) between( Date.new( year,  4, 1), Date.new( year, 6, 30) ); end
-  def self.q3( year=Date.today.year ) between( Date.new( year,  7, 1), Date.new( year, 9, 30) ); end
-  def self.q4( year=Date.today.year ) between( Date.new( year, 10, 1), Date.new( year,12, 31) ); end
+  
+  
+  
+  def self.this_week()    week;    end   ## convenience alias - keep - why? why not?
+  def self.this_month()   month;   end
+  def self.this_quarter() quarter; end
+  def self.this_year()    year;    end
 
 
 
