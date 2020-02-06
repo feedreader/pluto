@@ -188,15 +188,16 @@ class Feed < ActiveRecord::Base
 ##  <a href="https://groups.google.com/group/polymer-dev">https://groups.google.com/group/polymer-dev</a>
 
     feed_attribs = {
-        format:       data.format,
-        updated:      data.updated,
-        published:    data.published,
-        summary:      data.summary,
-        generator:    data.generator.to_s,    ## note: use single-line/string generator stringified -- might return null (if no data)
-        ### todo/fix: add/use
-        # auto_title:     ???,
-        # auto_url:       ???,
-        # auto_feed_url:  ???,
+        format:         data.format,
+        updated:        data.updated,
+        published:      data.published,
+        summary:        data.summary,
+        generator:      data.generator.to_s,    ## note: use single-line/string generator stringified -- might return null (if no data)
+ 
+        ## note: always auto-update auto_* fields for now 
+        auto_title:     data.title,
+        auto_url:       data.url,
+        auto_feed_url:  data.feed_url,
       }
 
     if debug?
