@@ -87,12 +87,14 @@ class Feed < ActiveRecord::Base
     def url()         @feed.read_attribute( :url );      end      # "regular" url incl. auto_url fallback / (auto-)backup
     def title()       @feed.read_attribute( :title );    end
     def feed_url()    @feed.read_attribute( :feed_url );  end
-    def url?()        @feed.read_attribute( :url ).present?; end
-    def title?()      @feed.read_attribute( :title ).present?;  end
-    def feed_url?()   @feed.read_attribute( :feed_url ).present?;  end
+    def url?()        url.present?;       end
+    def title?()      title.present?;     end
+    def feed_url?()   feed_url.present?;  end
     
     def updated()     @feed.read_attribute(:updated); end           # "regular" updated incl. published fallback
-    def updated?()    @feed.read_attribute(:updated).present?; end
+    def published()   @feed.read_attribute(:published); end   
+    def updated?()    updated.present?;    end
+    def published?()  published.present?;  end
   end # class Data
   ## use a different name for data - why? why not?
   ##    e.g. inner, internal, readonly or r, raw, table, direct, or ???
