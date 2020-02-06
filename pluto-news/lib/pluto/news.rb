@@ -13,7 +13,16 @@ require 'ostruct'
 
 
 class Date
-  def quarter() 1+(self.month-1)/3; end
+  ## def quarter() 1+(self.month-1)/3; end
+
+  def quarter
+    case self.month
+    when 1,2,3    then 1
+    when 4,5,6    then 2
+    when 7,8,9    then 3
+    when 10,11,12 then 4
+    end
+  end
 end
 
 # -- for testing:
