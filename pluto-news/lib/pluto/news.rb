@@ -2,10 +2,12 @@
 require 'pluto/update'
 
 
-## todo/fix: include stdlibs in pluto/update upstream!!!
+## todo/fix: include stdlibs in pluto/update or pluto/models upstream!!!
 require 'date'
 require 'time'
 require 'cgi'
+require 'uri'
+require 'digest'
 
 require 'erb'
 require 'ostruct'
@@ -57,11 +59,23 @@ module News
       'title' => 'News, News, News'
     }
 
-    feeds.each_with_index do |feed,i|
-      key = "%003d" % (i+1)
-      ## todo/fix:
-      ##  use auto_title and auto_link
-      ##   do NOT add title and link (will overwrite/rule auto_title and auto_link updates)
+    feeds.each_with_index do |feed|
+      ## note: 
+      ##   use a "fingerprint" hash digest as key
+      ##     do NOT include scheme (e.g. https or http)
+      ##     do NOT include port
+      ##   so you can change it without "breaking" the key - why? why not?
+      ##
+      ##  e.g.   u = URI( 'https://example.com:333/a/b?f=xml'
+      ##          u.host+u.request_uri
+      ##         #=> example.com/a/b?f=xml
+      uri = URI( feed )
+      ## note: add host in "plain" text - making errors and the key more readable
+      ## note: cut-off www. if leading e.g. www.ruby-lang.org => ruby-lang.org
+      host = uri.host.downcase.sub( /^www\./, '' )
+      #   use a differt separator e.g _ or ~ and NOT $ - why? why not?
+      key = "#{host}$#{Digest::MD5.hexdigest( uri.request_uri )}" 
+
       site_hash[ key ] = { 'feed'  => feed }
     end
 

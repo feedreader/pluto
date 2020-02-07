@@ -42,6 +42,7 @@ puts
 
 
 puts "This Year:    #{News.this_year.count}"
+puts "This Quartal: #{News.this_quarter.count}"
 puts "This Month:   #{News.this_month.count}"
 puts "This Week:    #{News.this_week.count}"
 puts "Today:        #{News.today.count}"
