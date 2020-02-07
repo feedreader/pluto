@@ -26,10 +26,10 @@ class Item < ActiveRecord::Base
 
   ##################################
   # attribute reader aliases
-  def name()        title;    end  # alias for title
-  def description() summary;  end  # alias     for summary  -- also add descr shortcut??
-  def desc()        summary;  end  # alias (2) for summary  -- also add descr shortcut??
-  def link()        url;      end  # alias for url
+  alias_attr_reader :name,        :title      # alias for title
+  alias_attr_reader :description, :summary    # alias     for summary  -- also add descr shortcut??
+  alias_attr_reader :desc,        :summary    # alias (2) for summary  -- also add descr shortcut??
+  alias_attr_reader :link,        :url        # alias for url
 
 
   def self.latest
@@ -40,22 +40,27 @@ class Item < ActiveRecord::Base
     order( Arel.sql( "coalesce(items.updated,items.published,'1970-01-01') desc" ) )
   end
 
-  def updated?()    read_attribute(:updated).present?;  end
-  def published?()  read_attribute(:published).present?;  end   # note: published is basically an alias for created
+  ## note:
+  ##   only use fallback for updated, that is, updated (or published)
+  ##    do NOT use fallback for published / created    -- why? why not?
+  def updated()  read_attribute_w_fallbacks( :updated, :published ); end
+  def updated?() updated.present?;  end
 
-  def updated
-    ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
-    #    db backed attribute
-    read_attribute_w_fallbacks( :updated, :published )
-  end
-
-  def published
-    ## todo/fix: use a new name - do NOT squeeze convenience lookup into existing
-    #    db backed attribute
-    read_attribute_w_fallbacks( :published, :updated )
-  end
-
-
+  ## "raw"  access via data "proxy" helper
+  ## e.g. use  item.data.updated
+  ##           item.data.updated? etc.
+  class Data
+    def initialize( feed ) @item = item; end
+       
+    def updated()     @item.read_attribute(:updated); end           # "regular" updated incl. published fallback
+    def published()   @item.read_attribute(:published); end   
+    def updated?()    updated.present?;    end
+    def published?()  published.present?;  end
+  end # class Data
+  ## use a different name for data - why? why not?
+  ##    e.g. inner, internal, readonly or r, raw, table, direct, or ???
+  def data()   @data ||= Data.new( self ); end    
+  
 
   def update_from_struct!( data )
 

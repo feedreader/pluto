@@ -13,16 +13,17 @@ class Site < ActiveRecord::Base
   has_many :feeds, :through => :subscriptions
   has_many :items, :through => :feeds
 
+
   ##################################
   # attribute reader aliases
-  def name()        title;   end  # alias for title
+  alias_attr_reader  :name, :title          # alias for title
 
-  def owner_name()  author;  end  # alias    for author
-  def owner()       author;  end  # alias(2) for author
-  def author_name() author;  end  # alias(3) for author
+  alias_attr_reader  :owner_name,   :author   # alias    for author
+  alias_attr_reader  :owner,        :author   # alias(2) for author
+  alias_attr_reader  :author_name,  :author   # alias(3) for author
 
-  def owner_email()  email;  end  # alias    for email
-  def author_email() email;  end  # alias(2) for email
+  alias_attr_reader  :owner_email,  :email    # alias    for email
+  alias_attr_reader  :author_email, :email    # alias(2) for email
 
 
 

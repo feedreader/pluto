@@ -47,18 +47,18 @@ class Feed < ActiveRecord::Base
   #   use rails alias_attribute :new, :old  (incl. reader/predicate/writer)
   #   or use alias_attr, alias_attr_reader, alias_attr_writer from activerecord/utils
 
-  def name()        title;    end  # alias    for title
-  def description() summary;  end  # alias    for summary
-  def desc()        summary;  end  # alias(2) for summary
-  def subtitle()    summary;  end  # alias(3) for summary
-  def link()        url;      end  # alias    for url
-  def feed()        feed_url; end  # alias    for feed_url
+  alias_attr_reader :name,         :title     # alias    for title
+  alias_attr_reader :description,  :summary   # alias    for summary
+  alias_attr_reader :desc,         :summary   # alias(2) for summary
+  alias_attr_reader :subtitle,     :summary   # alias(3) for summary
+  alias_attr_reader :link,         :url       # alias    for url
+  alias_attr_reader :feed,         :feed_url  # alias    for feed_url
 
-  def author_name()  author;  end # alias    for author
-  def owner_name()   author;  end # alias(2) for author
-  def owner()        author;  end # alias(3) for author
-  def author_email() email;   end # alias    for email
-  def author_email() email;   end # alias(2) for email
+  alias_attr_reader :author_name,  :author    # alias    for author
+  alias_attr_reader :owner_name,   :author    # alias(2) for author
+  alias_attr_reader :owner,        :author    # alias(3) for author
+  alias_attr_reader :author_email, :email     # alias    for email
+  alias_attr_reader :author_email, :email     # alias(2) for email
 
   
   #################
@@ -79,8 +79,8 @@ class Feed < ActiveRecord::Base
   def updated?()   updated.present?;  end
   
   ## "raw"  access via data "proxy" helper
-  ## e.g. use  feed.data.published
-  ##           feed.data.published? etc.
+  ## e.g. use  feed.data.updated
+  ##           feed.data.updated? etc.
   class Data
     def initialize( feed ) @feed = feed; end
     
@@ -175,11 +175,8 @@ class Feed < ActiveRecord::Base
       ##  todo/check: force reload of items - why? why not??
       last_item_rec = items.latest.limit(1).first  # note limit(1) will return relation/arrar - use first to get first element or nil from ary
       if last_item_rec
-        if last_item_rec.data.updated?
-          self.items_last_updated = last_item_rec.data.updated
-          ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
-        elsif last_item_rec.data.published?   # try published
-          self.items_last_updated = last_item_rec.data.published
+        if last_item_rec.updated?   ## note: checks for updated & published with attr_reader_w_fallback
+          self.items_last_updated = last_item_rec.updated
           ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
         else
           ## skip - no updated / published present
@@ -192,7 +189,6 @@ class Feed < ActiveRecord::Base
 
 
   def update_from_struct!( data )
-
     logger = LogUtils::Logger.root
 
 ##
