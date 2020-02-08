@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+### Planet HTML template.
+###
+### This is intended to demonstrate and document Planet's templating
+### facilities, and at the same time provide a good base for you to
+### modify into your own design.
+###
+### The output's a bit boring though, if you're after less documentation
+### and more instant gratification, there's an example with a much
+### prettier output in the fancy-examples/ directory of the Planet source.
+
+### Lines like this are comments, and are automatically removed by the
+### templating engine before processing.
+
+
+### Planet makes a large number of variables available for your templates.
+### See INSTALL for the complete list.  The raw value can be placed in your
+### output file using <TMPL_VAR varname>.  We'll put the name of our
+### Planet in the page title and again in an h1.
+
+<head>
+<title><%= name %></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="<%# !!error - unknown open tag: VAR generator ESCAPE="HTML" %>">
+</head>
+
+<body>
+<h1><%= name %></h1>
+
+### One of the two loops available is the Channels loop.  This allows you
+### to easily create a list of subscriptions, which is exactly what we'll do
+### here.
+
+### Note that we can also expand variables inside HTML tags, but we need
+### to be cautious and HTML-escape any illegal characters using the form
+### <TMPL_VAR varname ESCAPE="HTML">
+
+<div style="float: right">
+<h2>Subscriptions</h2>
+<ul>
+<% Channels.each do |Channel| %>
+<li><a href="<%# !!error - unknown open tag: VAR link ESCAPE="HTML" %>" title="<%# !!error - unknown open tag: VAR title ESCAPE="HTML" %>"><%= Channel.name %></a> <a href="<%# !!error - unknown open tag: VAR url ESCAPE="HTML" %>">(feed)</a></li>
+<% end %>
+</ul>
+</div>
+
+### The other loop is the Items loop, which will get iterated for each
+### news item.
+
+<% Items.each do |Item| %>
+
+### Visually distinguish articles from different days by checking for
+### the new_date flag.  This demonstrates the <TMPL_IF varname> ... </TMPL_IF>
+### check.
+
+<% if Item.new_date %>
+<h2><%= Item.new_date %></h2>
+<% end %>
+
+### Group consecutive articles by the same author together by checking
+### for the new_channel flag.
+
+<% if Item.new_channel %>
+<h3><a href="<%# !!error - unknown open tag: VAR channel_link ESCAPE="HTML" %>" title="<%# !!error - unknown open tag: VAR channel_title ESCAPE="HTML" %>"><%= Item.channel_name %></a></h3>
+<% end %>
+
+
+<% if Item.title %>
+<h4><a href="<%# !!error - unknown open tag: VAR link ESCAPE="HTML" %>"><%= Item.title %></a></h4>
+<% end %>
+<p>
+<%= Item.content %>
+</p>
+<p>
+<em><a href="<%# !!error - unknown open tag: VAR link ESCAPE="HTML" %>"><% if Item.author %>by <%= Item.author %> at <% end %><%= Item.date %></a></em>
+</p>
+<% end %>
+
+<hr>
+<p>
+<a href="http://www.planetplanet.org/">Powered by Planet!</a><br>
+<em>Last updated: <%= date %></em>
+</p>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<opml version="1.1">
+  <head>
+    <title>OpenStreetMap Blogs</title>
+    <dateModified>Fri, 7 Feb 2020 00:00:00 +0000</dateModified>
+    <ownerName>OpenStreetMap</ownerName>
+  </head>
+
+  <body>
+
+    <outline type="rss"
+             text="Shaun McDonald"
+             xmlUrl="http://blog.shaunmcdonald.me.uk/feed/"
+             htmlUrl="http://blog.shaunmcdonald.me.uk/" />
+
+    <outline type="rss"
+             text="Mapbox"
+             xmlUrl="https://blog.mapbox.com/feed/tagged/openstreetmap/"
+             htmlUrl="https://blog.mapbox.com/" />
+
+    <outline type="rss"
+             text="Mapillary"
+             xmlUrl="https://blog.mapillary.com/rss.xml"
+             htmlUrl="https://blog.mapillary.com" />
+
+    <outline type="rss"
+             text="Richard Fairhurst"
+             xmlUrl="http://blog.systemed.net/rss"
+             htmlUrl="http://blog.systemed.net/" />
+
+  </body>
+</opml>
