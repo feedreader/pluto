@@ -1,8 +1,14 @@
 require 'pp'
 require 'date'
+require 'time'
 require 'erb'
 require 'cgi'
 require 'ostruct'
+require 'fileutils'
+
+
+# our own code
+require 'html/template/version'    # note: let version always get first
 
 
 
@@ -95,8 +101,10 @@ class HtmlTemplate
                          elsif tag == 'LOOP' && tag_open
                            ## assume plural ident e.g. channels
                            ##  cut-off last char, that is, the plural s channels => channel
-                           stack.push( ident[0..-2] )
-                           "<% #{ctx}#{ident}.each do |#{ident[0..-2]}| %>"
+                           ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
+                           it = ident[0..-2].downcase
+                           stack.push( it )
+                           "<% #{ctx}#{ident}.each do |#{it}| %>"
                          elsif tag == 'LOOP' && tag_close
                            stack.pop
                            "<% end %>"
@@ -139,13 +147,14 @@ class HtmlTemplate
 end
 
 
-
-if __FILE__ == $0
-
-  text = File.open( "./opml.xml.tmpl", "r:utf-8" ).read
-
-  t = HtmlTemplate.new( text )
-
-  puts "---"
-  puts t.text
+#####################
+## add convenience aliases - why? why not?
+HTMLTemplate = HtmlTemplate
+module HTML
+  Template = HtmlTemplate
 end
+
+
+# say hello
+puts HtmlTemplate.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+

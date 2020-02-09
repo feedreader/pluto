@@ -1,7 +1,8 @@
-require 'minitest/autorun'
-require 'rexml/document'
+###
+#  to run use
+#     ruby -I ./lib -I ./test test/test_merge.rb
 
-require_relative './tmpl.rb'
+require 'helper'
 
 
 
@@ -33,8 +34,8 @@ class TestMerge < MiniTest::Test
      site = sample1
      pp site
 
-     xml      = File.open( "./opml.xml",      "r:utf-8" ).read
-     template = File.open( "./opml.xml.tmpl", "r:utf-8" ).read
+     xml      = File.open( "#{HtmlTemplate.root}/test/templates/opml.xml",      "r:utf-8" ).read
+     template = File.open( "#{HtmlTemplate.root}/test/templates/opml.xml.tmpl", "r:utf-8" ).read
 
      t = HtmlTemplate.new( template )
 
@@ -47,8 +48,8 @@ class TestMerge < MiniTest::Test
 
 
   def test_convert
-    text     = File.open( "./opml.xml.erb", "r:utf-8" ).read
-    template = File.open( "./opml.xml.tmpl", "r:utf-8" ).read
+    text     = File.open( "#{HtmlTemplate.root}/test/templates/opml.xml.erb", "r:utf-8" ).read
+    template = File.open( "#{HtmlTemplate.root}/test/templates/opml.xml.tmpl", "r:utf-8" ).read
 
     t = HtmlTemplate.new( template )
 
@@ -97,20 +98,6 @@ TXT
 
 
     assert true   # assume it's alright if we get here
-  end
-
-
-
-
-  #####################
-  #    xml helper
-  def prettify_xml( xml )
-      d = REXML::Document.new( xml )
-
-      formatter = REXML::Formatters::Pretty.new( 2 )  # indent=2
-      formatter.compact = true # This is the magic line that does what you need!
-      pretty_xml = formatter.write( d.root, "" )  # todo/checl: what's 2nd arg used for ??
-      pretty_xml
   end
 end
 
