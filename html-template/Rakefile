@@ -1,0 +1,28 @@
+require 'hoe'
+require './lib/html/template/version.rb'
+
+Hoe.spec 'html-template' do
+
+  self.version = HtmlTemplate::VERSION
+
+  self.summary = "html-template - old-style classic HTML template language / engine like it's 1999 (incl. back-to-the-future ERB converter)"
+  self.description = summary
+
+  self.urls    = ['https://github.com/feedreader/pluto']
+
+  self.author  = 'Gerald Bauer'
+  self.email   = 'wwwmake@googlegroups.com'
+
+  # switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.md'
+  self.history_file = 'CHANGELOG.md'
+
+  self.extra_deps = []
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+    required_ruby_version: '>= 2.2.2'
+  }
+
+end
