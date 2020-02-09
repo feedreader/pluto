@@ -143,15 +143,17 @@ puts template.result( employees: [ Employee.new( 'Sam', 'programmer' ),
 
 The output is:
 
-   <p>
-     Name: Sam<br>
-     Job: programmer
-   </p>
+```
+<p>
+Name: Sam<br>
+Job: programmer
+</p>
   
-   <p>
-    Name: Steve<br>
-    Job: soda jerk
-   </p>
+<p>
+Name: Steve<br>
+Job: soda jerk
+</p>
+```
 
 As you can see above the `<TMPL_LOOP>` takes a list of values
 and then iterates over the loop body producing output.
