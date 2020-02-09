@@ -28,7 +28,7 @@ For example, `students.html.tmpl`:
 ```
 <TMPL_LOOP students>
   <p>
-  Name: <TMPL_VAR name><br/>
+  Name: <TMPL_VAR name><br>
   GPA: <TMPL_VAR gpa>
   </p>
 </TMPL_LOOP>
@@ -50,12 +50,12 @@ If all is well in the universe this should output something like this:
 
 ```
 <p>
-Name: Bluto Blutarsky<br/>
+Name: Bluto Blutarsky<br>
 GPA: 0.0
 </p>
 
 <p>
-Name: Tracey Flick<br/>
+Name: Tracey Flick<br>
 GPA: 4.0
 </p>
 ```
@@ -125,8 +125,10 @@ The `<TMPL_LOOP>` tag is a bit more complicated than `<TMPL_VAR>`. The `<TMPL_LO
 In the template:
 
     <TMPL_LOOP employees>
-      Name: <TMPL_VAR name> <br>
-      Job:  <TMPL_VAR job>  <p>
+      <p>
+      Name: <TMPL_VAR name><br>
+      Job:  <TMPL_VAR job>  
+      </p>
     </TMPL_LOOP>
 
 In your Ruby code:
@@ -141,11 +143,15 @@ puts template.result( employees: [ Employee.new( 'Sam', 'programmer' ),
 
 The output is:
 
-    Name: Sam
-    Job: programmer
-
-    Name: Steve
+   <p>
+     Name: Sam<br>
+     Job: programmer
+   </p>
+  
+   <p>
+    Name: Steve<br>
     Job: soda jerk
+   </p>
 
 As you can see above the `<TMPL_LOOP>` takes a list of values
 and then iterates over the loop body producing output.
