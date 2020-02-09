@@ -10,7 +10,7 @@
 
 
 
-
+## Intro
 
 Note: The original [`HTML::Template`](https://metacpan.org/pod/HTML::Template) package was written by Sam Tregar et al (in Perl, first 1.0 release in 1999!)
 and the documentation here
@@ -19,8 +19,6 @@ with some changes / adoptions for
 the ruby version.
 
 
-
-## Intro
 
 First you make a template - this is just a normal HTML file with a few extra tags, the simplest being `<TMPL_VAR>`
 
