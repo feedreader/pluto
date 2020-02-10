@@ -16,13 +16,13 @@ module Enumerable
      end
      def index=(value) @index=value; end
    end
- 
+
    def each_with_loop( &blk )
      loop_meta = LoopMeta.new( size )
      each_with_index do |item, index|
         loop_meta.index = index
         blk.call( item, loop_meta )
-     end 
+     end
    end
 end
 
@@ -36,8 +36,9 @@ require 'html/template/version'    # note: let version always get first
 class HtmlTemplate
 
   attr_reader :text   ## returns converted template text (with "breaking" comments!!!)
-  attr_reader :template  ## return "inner" (erb) template object 
+  attr_reader :template  ## return "inner" (erb) template object
   attr_reader :errors
+  attr_reader :names   ## for debugging - returns all referenced / used names in VAR/IF/UNLESS/LOOP/etc.
 
   def initialize( text=nil, filename: nil )
     if text.nil?   ## try to read file (by filename)
@@ -45,8 +46,8 @@ class HtmlTemplate
     end
 
     ## todo/fix: add filename to ERB too (for better error reporting)
-    @text, @errors = convert( text )    ## note: keep a copy of the converted template text
-    
+    @text, @errors, @names = convert( text )    ## note: keep a copy of the converted template text
+
     if @errors.size > 0
       puts "!! ERROR - #{@errors.size} conversion / syntax error(s):"
       pp @errors
@@ -58,31 +59,32 @@ class HtmlTemplate
 
 
   VAR_RE = %r{<TMPL_(?<tag>VAR)
-                 \s
+                 \s+
                  (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
-                 (\s
+                 (\s+
                    (?<escape>ESCAPE)
                       =
-                    "(?<format>HTML|NONE)"
+                      ("(?<format>HTML|NONE)")
+                     | ((?<format>HTML|NONE))   # note: support without quotes too
                  )?
                >}x
 
   IF_OPEN_RE = %r{(?<open><)TMPL_(?<tag>IF|UNLESS)
-                  \s
+                  \s+
                   (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
                 >}x
 
   IF_CLOSE_RE = %r{(?<close></)TMPL_(?<tag>IF|UNLESS)
-                    (\s
+                    (\s+
                       (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
-                    )?     # note: allow optional identifier 
+                    )?     # note: allow optional identifier
                   >}x
- 
+
   ELSE_RE = %r{<TMPL_(?<tag>ELSE)
                  >}x
 
   LOOP_OPEN_RE = %r{(?<open><)TMPL_(?<tag>LOOP)
-                      \s
+                      \s+
                       (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
                     >}x
 
@@ -91,7 +93,7 @@ class HtmlTemplate
 
   CATCH_OPEN_RE = %r{(?<open><)TMPL_(?<unknown>[^>]+?)
                       >}x
-  
+
   CATCH_CLOSE_RE = %r{(?<close></)TMPL_(?<unknown>[^>]+?)
                       >}x
 
@@ -106,7 +108,7 @@ class HtmlTemplate
                          CATCH_CLOSE_RE )
 
 
-  def to_recursive_ostruct( o )  
+  def to_recursive_ostruct( o )
     if o.is_a?( Array )
       o.reduce( [] ) do |ary, item|
                        ary << to_recursive_ostruct( item )
@@ -125,8 +127,38 @@ class HtmlTemplate
   end
 
 
+  class Names
+    def initialize
+      @names = Hash.new
+    end
+
+    def to_h() @names; end
+
+    def add( scope, ident, tag )
+      ## e.g. scope e.g. ['feeds'] or ['feeds','items'] - is a stack / array
+      ##      ident e.g.  title                         - is a string
+      ##      tag   e.g.  $VAR/$LOOP/$IF/$UNLESS        - is a string
+      h = fetch( scope, ident )
+      h[ tag ] ||= 0
+      h[ tag ] += 1
+    end
+
+  private
+    def fetch( scope, ident )
+      ## fetch name in scoped hierarchy
+      ##   if first time than setup new empty hash
+      h = @names
+      scope.each do |name|
+        h = h[name] ||= {}
+      end
+      h[ ident ] ||= {}
+    end
+  end  ## class Names
+
+
   def convert( text )
-    errors = []   # note: reset global errros list
+    errors = []          # note: reset global errros list
+    names  = Names.new   ## keep track of all referenced / used names in VAR/IF/UNLESS/LOOP/etc.
 
     stack = []
 
@@ -138,7 +170,7 @@ class HtmlTemplate
       lineno += 1
 
       if line.lstrip.start_with?( '#' )    ## or make it tripple ### - why? why not?
-         buf << "%#{line.lstrip}"   
+         buf << "%#{line.lstrip}"
       elsif line.strip.empty?
          buf << line
       else
@@ -159,9 +191,19 @@ class HtmlTemplate
                   ## note: peek; get top stack item
                   ##   if top level (stack empty)  => nothing
                   ##       otherwise               => channel. or item. etc. (with trailing dot included!)
-                  ctx = stack.empty? ? '' : "#{stack[-1]}."
+                  ctx = if stack.empty?
+                          ''
+                        else
+                           ## assume plural ident e.g. channels
+                           ##  cut-off last char, that is,
+                           ##   the plural s channels => channel
+                           ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
+                           "#{stack[-1][0..-2].downcase}."
+                        end
 
                   code = if tag == 'VAR'
+                           names.add( stack, ident, '$VAR' )
+
                            if escape && format == 'HTML'
                                ## check or use long form e.g. CGI.escapeHTML - why? why not?
                               "<%=h #{ctx}#{ident} %>"
@@ -169,20 +211,24 @@ class HtmlTemplate
                               "<%= #{ctx}#{ident} %>"
                            end
                          elsif tag == 'LOOP' && tag_open
+                           names.add( stack, ident, '$LOOP' )
+
                            ## assume plural ident e.g. channels
                            ##  cut-off last char, that is, the plural s channels => channel
                            ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
                            it = ident[0..-2].downcase
-                           stack.push( it )
+                           stack.push( ident )
                            "<% #{ctx}#{ident}.each_with_loop do |#{it}, #{it}_loop| %>"
                          elsif tag == 'LOOP' && tag_close
                            stack.pop
                            "<% end %>"
                          elsif tag == 'IF' && tag_open
+                           names.add( stack, ident, '$IF' )
                            "<% if #{ctx}#{ident} %>"
-                          elsif tag == 'UNLESS' && tag_open
-                            "<% unless #{ctx}#{ident} %>"
-                          elsif (tag == 'IF' || tag == 'UNLESS') && tag_close
+                         elsif tag == 'UNLESS' && tag_open
+                           names.add( stack, ident, '$UNLESS' )
+                           "<% unless #{ctx}#{ident} %>"
+                         elsif (tag == 'IF' || tag == 'UNLESS') && tag_close
                            "<% end %>"
                          elsif tag == 'ELSE'
                            "<% else %>"
@@ -206,7 +252,7 @@ class HtmlTemplate
                 end
         end
       end # each_line
-    [buf, errors]
+    [buf, errors, names.to_h]
   end # method convert
 
 
@@ -229,9 +275,9 @@ class HtmlTemplate
                                    hash[key] = to_recursive_ostruct( val )
                                    hash
                                  end
-  
+
     ## (auto-)convert array and hash values to ostruct
-    ##   for easy dot (.) access 
+    ##   for easy dot (.) access
     ##      e.g. student.name instead of student[:name]
 
     @template.result( Context.new( **kwargs ).get_binding )
