@@ -49,7 +49,7 @@ puts template.render( home: ENV['HOME'],
 
 If all is well in the universe this should output something like this:
 
-```
+``` html
 <html>
 <head><title>Test Template</title></head>
 <body>
@@ -142,7 +142,7 @@ puts template.result( employees: [ { name: 'Sam',   job: 'programmer' },
 
 The output is:
 
-```
+``` html
 <p>
 Name: Sam<br>
 Job: programmer
