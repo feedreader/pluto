@@ -24,6 +24,8 @@ files = [
    t = HtmlTemplate.new( text )
  
    puts "--- #{name}:"
+   puts text
+   puts "--- #{name} - erb:"
    puts t.text
    puts 
    puts
@@ -33,5 +35,14 @@ files = [
    FileUtils.mkdir_p( File.dirname(out_path) )
 
    File.open( out_path, 'w:utf-8') {|f| f.write(t.text) }
-end
+
+=begin   
+   if t.errors.size > 0
+    puts "!! ERROR - #{t.errors.size} conversion / syntax error(s):"
+    pp t.errors
+    raise   ## todo - find a good Error - StandardError - why? why not?
+   end
+=end
+  
+  end
 

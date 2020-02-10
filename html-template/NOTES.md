@@ -2,6 +2,9 @@
 
 ## Todos
 
+- [ ] add support for `errors` list !!!
+- [ ] finish support for loop context variables !!!
+
 
 
 ## HTML Template Links

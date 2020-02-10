@@ -1,17 +1,19 @@
+%### Planet OPML template.
+%###
 <?xml version="1.0"?>
 <opml version="1.1">
   <head>
-    <title><%= name %></title>
+    <title><%=h name %></title>
     <dateModified><%= date_822 %></dateModified>
     <ownerName><%= owner_name %></ownerName>
   </head>
 
   <body>
-    <% channels.each do |channel| %>
+    <% channels.each_with_loop do |channel, channel_loop| %>
     <outline type="rss"
-             text="<%= channel.name %>"
-             xmlUrl="<%= channel.url %>"
-             <% if channel.channel_link %> htmlUrl="<%= channel.channel_link %>"<% end %> />
+             text="<%=h channel.name %>"
+             xmlUrl="<%=h channel.url %>"
+             <% if channel.channel_link %> htmlUrl="<%=h channel.channel_link %>"<% end %> />
     <% end %>
   </body>
 </opml>

@@ -1,7 +1,9 @@
+### Planet OPML template.
+###
 <?xml version="1.0"?>
 <opml version="1.1">
   <head>
-    <title><TMPL_VAR name></title>
+    <title><TMPL_VAR name ESCAPE="HTML"></title>
     <dateModified><TMPL_VAR date_822></dateModified>
     <ownerName><TMPL_VAR owner_name></ownerName>
   </head>
@@ -9,9 +11,9 @@
   <body>
     <TMPL_LOOP channels>
     <outline type="rss"
-             text="<TMPL_VAR name>"
-             xmlUrl="<TMPL_VAR url>"
-             <TMPL_IF channel_link> htmlUrl="<TMPL_VAR channel_link>"</TMPL_IF> />
+             text="<TMPL_VAR name ESCAPE="HTML">"
+             xmlUrl="<TMPL_VAR url ESCAPE="HTML">"
+             <TMPL_IF channel_link> htmlUrl="<TMPL_VAR channel_link ESCAPE="HTML">"</TMPL_IF> />
     </TMPL_LOOP>
   </body>
 </opml>

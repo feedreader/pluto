@@ -77,8 +77,6 @@ $template->param(
 print $template->output;
 =end
 
-  Student = Struct.new( :name, :gpa )
-
   def test_students_example
 
     tmpl =<<TXT
@@ -93,8 +91,8 @@ TXT
     t = HtmlTemplate.new( tmpl )
     puts t.text
     puts "---"
-    puts t.render( students: [ Student.new( 'Bluto Blutarsky', 0.0 ),
-                               Student.new( 'Tracey Flick',    4.0 ) ])
+    puts t.render( students: [ { name: 'Bluto Blutarsky', gpa: 0.0 },
+                               { name: 'Tracey Flick',    gpa: 4.0 } ])
 
 
     assert true   # assume it's alright if we get here

@@ -12,7 +12,7 @@
 
 ## Intro
 
-Note: The original [`HTML::Template`](https://metacpan.org/pod/HTML::Template) package was written by Sam Tregar et al 
+Note: The original [`HTML::Template`](https://metacpan.org/pod/HTML::Template) package was written by Sam Tregar et al
 (in Perl with a first 1.0 release in 1999!)
 and the documentation here
 is mostly a copy from the original
@@ -39,11 +39,12 @@ Now you can use it in your script:
 ``` ruby
 require 'html/template'
 
-template = HtmlTemplate.new( File.read( 'students.html.tmpl' ))
+template = HtmlTemplate.new( filename: 'students.html.tmpl' )
 
-Student = Struct.new( :name, :gpa )
-puts template.render( students: [ Student.new( 'Bluto Blutarsky', 0.0 ),
-                                  Student.new( 'Tracey Flick',    4.0 ) ])
+puts template.render( students: [ { name: 'Bluto Blutarsky', gpa: 0.0 },
+                                  { name: 'Tracey Flick',    gpa: 4.0 }
+                                ]
+                    )
 ```
 
 If all is well in the universe this should output something like this:
@@ -134,9 +135,8 @@ In the template:
 In your Ruby code:
 
 ``` ruby
-Employee = Struct.new( :name:, :job )
-puts template.result( employees: [ Employee.new( 'Sam', 'programmer' ),
-                                   Employee.new( 'Steve', 'soda jerk' )
+puts template.result( employees: [ { name: 'Sam',   job: 'programmer' },
+                                   { name: 'Steve', job: 'soda jerk' }
                                  ]
                     )
 ```
@@ -148,7 +148,7 @@ The output is:
 Name: Sam<br>
 Job: programmer
 </p>
-  
+
 <p>
 Name: Steve<br>
 Job: soda jerk
@@ -234,7 +234,7 @@ One use of this feature is to provide a "separator" similar in effect to the rub
 ```
 <TMPL_LOOP fruits>
   <TMPL_IF __LAST__> and </TMPL_IF>
-  <TMPL_VAR kind><TMPL_UNLESS __LAST__>, <TMPL_ELSE>.</TMPL_UNLESS>
+  <TMPL_VAR name><TMPL_UNLESS __LAST__>, <TMPL_ELSE>.</TMPL_UNLESS>
 </TMPL_LOOP>
 ```
 
@@ -257,7 +257,7 @@ The `<TMPL_IF>` tag allows you to include or not include a block of the template
 Example Template:
 
     <TMPL_IF bool>
-      Some text that only gets displayed if bool is true!
+      Some text that is ouptut only if bool is true!
     </TMPL_IF>
 
 Now if you call `template.result( bool: true )` then the above block will be included by output.
@@ -275,9 +275,9 @@ You can include an alternate block in your `<TMPL_IF>` block by using `<TMPL_ELS
 Example:
 
     <TMPL_IF bool>
-      Some text that is included only if bool is true
+      Some text that is output only if bool is true.
     <TMPL_ELSE>
-      Some text that is included only if bool is false
+      Some text that is output only if bool is false.
     </TMPL_IF>
 
 
@@ -298,10 +298,73 @@ Example:
 
 
 
+
 ## Back to the Future - Convert HTML Templates to Embedded Ruby (ERB)
 
-To be done
+The HTML library always converts classic
+HTML Template to Embedded Ruby (ERB) style.
+Use the `text` attribute to get the converted template source.
 
+Example:
+
+``` ruby
+puts HtmlTemplate.new( <<TXT ).text
+<opml version="1.1">
+  <head>
+    <title><TMPL_VAR name ESCAPE="HTML"></title>
+    <dateModified><TMPL_VAR date_822></dateModified>
+    <ownerName><TMPL_VAR owner_name></ownerName>
+    <ownerEmail><TMPL_VAR owner_email></ownerEmail>
+  </head>
+
+  <body>
+    <TMPL_LOOP Channels>
+    <outline type="rss"
+             text="<TMPL_VAR name ESCAPE="HTML">"
+             xmlUrl="<TMPL_VAR url ESCAPE="HTML">"
+             <TMPL_IF channel_link> htmlUrl="<TMPL_VAR channel_link ESCAPE="HTML">"</TMPL_IF> />
+    </TMPL_LOOP>
+  </body>
+</opml>
+TXT
+```
+
+will print if debugging is turned on:
+
+```
+line 4 - match <TMPL_VAR name ESCAPE="HTML"> replacing with: <%=h name %>
+line 5 - match <TMPL_VAR date_822> replacing with: <%= date_822 %>
+line 6 - match <TMPL_VAR owner_name> replacing with: <%= owner_name %>
+line 7 - match <TMPL_VAR owner_email> replacing with: <%= owner_email %>
+line 11 - match <TMPL_LOOP Channels> replacing with: <% Channels.each_with_loop do |channel, channel_loop| %>
+line 13 - match <TMPL_VAR name ESCAPE="HTML"> replacing with: <%=h channel.name %>
+line 14 - match <TMPL_VAR url ESCAPE="HTML"> replacing with: <%=h channel.url %>
+line 15 - match <TMPL_IF channel_link> replacing with: <% if channel.channel_link %>
+line 15 - match <TMPL_VAR channel_link ESCAPE="HTML"> replacing with: <%=h channel.channel_link %>
+line 15 - match </TMPL_IF> replacing with: <% end %>
+line 16 - match </TMPL_LOOP> replacing with: <% end %>
+```
+
+and result in:
+
+``` erb
+<opml version="1.1">
+  <head>
+    <title><%=h name %></title>
+    <dateModified><%= date_822 %></dateModified>
+    <ownerName><%= owner_name %></ownerName>
+  </head>
+
+  <body>
+    <% Channels.each_with_loop do |channel, channel_loop| %>
+    <outline type="rss"
+             text="<%=h channel.name %>"
+             xmlUrl="<%=h channel.url %>"
+             <% if channel.channel_link %> htmlUrl="<%=h channel.channel_link %>"<% end %> />
+    <% end %>
+  </body>
+</opml>
+```
 
 
 
