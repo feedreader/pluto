@@ -23,15 +23,17 @@ the ruby version.
 
 First you make a template - this is just a normal HTML file with a few extra tags, the simplest being `<TMPL_VAR>`
 
-For example, `students.html.tmpl`:
+For example, `test.html.tmpl`:
 
 ```
-<TMPL_LOOP students>
-  <p>
-  Name: <TMPL_VAR name><br>
-  GPA: <TMPL_VAR gpa>
-  </p>
-</TMPL_LOOP>
+<html>
+<head><title>Test Template</title></head>
+<body>
+My Home Directory is <TMPL_VAR home>
+<p>
+My Path is set to <TMPL_VAR path>
+</body>
+</html>
 ```
 
 Now you can use it in your script:
@@ -39,26 +41,23 @@ Now you can use it in your script:
 ``` ruby
 require 'html/template'
 
-template = HtmlTemplate.new( filename: 'students.html.tmpl' )
+template = HtmlTemplate.new( filename: 'test.html.tmpl' )
 
-puts template.render( students: [ { name: 'Bluto Blutarsky', gpa: 0.0 },
-                                  { name: 'Tracey Flick',    gpa: 4.0 }
-                                ]
-                    )
+puts template.render( home: ENV['HOME'],
+                      path: ENV['PATH'] )
 ```
 
 If all is well in the universe this should output something like this:
 
 ```
+<html>
+<head><title>Test Template</title></head>
+<body>
+My Home Directory is /home/alice
 <p>
-Name: Bluto Blutarsky<br>
-GPA: 0.0
-</p>
-
-<p>
-Name: Tracey Flick<br>
-GPA: 4.0
-</p>
+My Path is set to /bin;/usr/bin
+</body>
+</html>
 ```
 
 
