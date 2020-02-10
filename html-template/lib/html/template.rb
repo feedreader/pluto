@@ -156,6 +156,15 @@ class HtmlTemplate
   end  ## class Names
 
 
+  def ident_to_loop_it( ident )  # make loop iterator (e.g. Channels => channel and so on)
+     ## assume plural ident e.g. channels
+     ##  cut-off last char, that is,
+     ##   the plural s channels => channel
+     ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
+     ident[0..-2].downcase
+  end
+
+
   def convert( text )
     errors = []          # note: reset global errros list
     names  = Names.new   ## keep track of all referenced / used names in VAR/IF/UNLESS/LOOP/etc.
@@ -198,7 +207,7 @@ class HtmlTemplate
                            ##  cut-off last char, that is,
                            ##   the plural s channels => channel
                            ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
-                           "#{stack[-1][0..-2].downcase}."
+                           "#{ident_to_loop_it( stack[-1] )}."
                         end
 
                   code = if tag == 'VAR'
@@ -216,7 +225,7 @@ class HtmlTemplate
                            ## assume plural ident e.g. channels
                            ##  cut-off last char, that is, the plural s channels => channel
                            ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
-                           it = ident[0..-2].downcase
+                           it = ident_to_loop_it( ident )
                            stack.push( ident )
                            "<% #{ctx}#{ident}.each_with_loop do |#{it}, #{it}_loop| %>"
                          elsif tag == 'LOOP' && tag_close
