@@ -8,7 +8,6 @@ test/helper.rb
 test/templates/opml.xml
 test/templates/opml.xml.erb
 test/templates/opml.xml.tmpl
-test/templates/planet/README.md
 test/templates/planet/atom.xml.tmpl
 test/templates/planet/basic/index.html.tmpl
 test/templates/planet/fancy/index.html.tmpl

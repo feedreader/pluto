@@ -35,15 +35,52 @@ require 'html/template/version'    # note: let version always get first
 
 class HtmlTemplate
 
+  class Configuration
+    def debug=(value)      @debug = value;   end
+    def debug?()           @debug || false;  end
+  
+    def strict=(value)     @strict = value;  end
+    def strict?()          @strict || true;  end
+
+    def loop_vars=(value)  @loop_vars = value; end
+    def loop_vars?()       @loop_vars || true; end
+  end # class Configuration
+  
+  ## lets you use
+  ##   HtmlTemplate.configure do |config|
+  ##      config.debug        = true
+  ##      config.strict       = true
+  ##   end
+  
+  def self.configure
+    yield( config )
+  end
+  
+  def self.config
+    @config ||= Configuration.new
+  end
+  
+
   attr_reader :text   ## returns converted template text (with "breaking" comments!!!)
   attr_reader :template  ## return "inner" (erb) template object
   attr_reader :errors
   attr_reader :names   ## for debugging - returns all referenced / used names in VAR/IF/UNLESS/LOOP/etc.
 
-  def initialize( text=nil, filename: nil )
+  ## config convenience (shortcut) helpers
+  def config() self.class.config; end
+  def debug?() config.debug?;     end
+
+  def strict?()    @strict;    end
+  def loop_vars?() @loop_vars; end
+
+  def initialize( text=nil, filename: nil, strict: config.strict?, loop_vars: config.loop_vars? )
     if text.nil?   ## try to read file (by filename)
       text = File.open( filename, 'r:utf-8' ) { |f| f.read }
     end
+
+    ## options
+    @strict    = strict
+    @loop_vars = loop_vars
 
     ## todo/fix: add filename to ERB too (for better error reporting)
     @text, @errors, @names = convert( text )    ## note: keep a copy of the converted template text
@@ -51,32 +88,38 @@ class HtmlTemplate
     if @errors.size > 0
       puts "!! ERROR - #{@errors.size} conversion / syntax error(s):"
       pp @errors
-      raise   ## todo - find a good Error - StandardError - why? why not?
+      
+      raise     if strict? ## todo - find a good Error - StandardError - why? why not?
     end
 
     @template      = ERB.new( @text, nil, '%<>' )
   end
 
 
+
+  IDENT   = '[a-zA-Z_][a-zA-Z0-9_]*'
+  ESCAPES = 'HTML|NONE'
+
   VAR_RE = %r{<TMPL_(?<tag>VAR)
                  \s+
-                 (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
+                 (?<ident>#{IDENT})
                  (\s+
                    (?<escape>ESCAPE)
-                      =
-                      ("(?<format>HTML|NONE)")
-                     | ((?<format>HTML|NONE))   # note: support without quotes too
+                      =(
+                          (?<q>['"])(?<format>#{ESCAPES})\k<q>  # note: allow single or double enclosing quote (but MUST match)
+                        |  (?<format>#{ESCAPES})              # note: support without quotes too
+                       )   
                  )?
                >}x
 
   IF_OPEN_RE = %r{(?<open><)TMPL_(?<tag>IF|UNLESS)
                   \s+
-                  (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
+                  (?<ident>#{IDENT})
                 >}x
 
   IF_CLOSE_RE = %r{(?<close></)TMPL_(?<tag>IF|UNLESS)
                     (\s+
-                      (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
+                      (?<ident>#{IDENT})
                     )?     # note: allow optional identifier
                   >}x
 
@@ -85,7 +128,7 @@ class HtmlTemplate
 
   LOOP_OPEN_RE = %r{(?<open><)TMPL_(?<tag>LOOP)
                       \s+
-                      (?<ident>[a-zA-Z_][a-zA-Z0-9_]*)
+                      (?<ident>#{IDENT})
                     >}x
 
   LOOP_CLOSE_RE = %r{(?<close></)TMPL_(?<tag>LOOP)
@@ -227,7 +270,11 @@ class HtmlTemplate
                            ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
                            it = ident_to_loop_it( ident )
                            stack.push( ident )
-                           "<% #{ctx}#{ident}.each_with_loop do |#{it}, #{it}_loop| %>"
+                           if loop_vars?
+                             "<% #{ctx}#{ident}.each_with_loop do |#{it}, #{it}_loop| %>"
+                           else
+                             "<% #{ctx}#{ident}.each do |#{it}| %>"
+                           end
                          elsif tag == 'LOOP' && tag_close
                            stack.pop
                            "<% end %>"
@@ -255,7 +302,7 @@ class HtmlTemplate
                            raise ArgumentError  ## unknown tag #{tag}
                          end
 
-                  puts " line #{lineno} - match #{m[0]} replacing with: #{code}"
+                  puts " line #{lineno} - match #{m[0]} replacing with: #{code}"  if debug?
                   code
 
                 end

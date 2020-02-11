@@ -78,24 +78,63 @@ print $template->output;
 =end
 
   def test_students_example
-
-    tmpl =<<TXT
-    <TMPL_LOOP students>
-       <p>
-       Name: <TMPL_VAR name><br/>
-       GPA: <TMPL_VAR gpa>
-       </p>
-    </TMPL_LOOP>
+    t = HtmlTemplate.new( <<TXT )
+<TMPL_LOOP students>
+<p>
+Name: <TMPL_VAR name><br/>
+GPA: <TMPL_VAR gpa>
+</p>
+</TMPL_LOOP>
 TXT
 
-    t = HtmlTemplate.new( tmpl )
     puts t.text
     puts "---"
-    puts t.render( students: [ { name: 'Bluto Blutarsky', gpa: 0.0 },
-                               { name: 'Tracey Flick',    gpa: 4.0 } ])
+    result = t.render( students: [ { name: 'Bluto Blutarsky', gpa: 0.0 },
+                                   { name: 'Tracey Flick',    gpa: 4.0 } ])
+    puts result
 
-
-    assert true   # assume it's alright if we get here
+    exp =<<TXT
+<p>
+Name: Bluto Blutarsky<br/>
+GPA: 0.0
+</p>
+<p>
+Name: Tracey Flick<br/>
+GPA: 4.0
+</p>
+TXT
+ 
+    assert_equal exp, result    
   end
+
+
+  def test_escape  
+   t = HtmlTemplate.new( <<TXT )
+<TMPL_LOOP pubs>
+Name: <TMPL_VAR name>
+Name: <TMPL_VAR name ESCAPE=HTML>
+Name: <TMPL_VAR name ESCAPE="HTML">
+Name: <TMPL_VAR name ESCAPE='HTML'>
+
+</TMPL_LOOP>
+TXT
+
+   exp =<<TXT 
+Name: Fuller's Ale & Pie House
+Name: Fuller&#39;s Ale &amp; Pie House
+Name: Fuller&#39;s Ale &amp; Pie House
+Name: Fuller&#39;s Ale &amp; Pie House
+
+Name: Mel's Craft Beers & Diner
+Name: Mel&#39;s Craft Beers &amp; Diner
+Name: Mel&#39;s Craft Beers &amp; Diner
+Name: Mel&#39;s Craft Beers &amp; Diner
+
+TXT
+
+   assert_equal exp, t.render( pubs: [{ name: "Fuller's Ale & Pie House"  }, 
+                                      { name: "Mel's Craft Beers & Diner" }]) 
 end
+
+end # class TestMerge
 

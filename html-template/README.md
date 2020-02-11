@@ -161,7 +161,7 @@ and then iterates over the loop body producing output.
 **Loop Context Variables**
 
 Inside a loop extra variables that depend on the loop's context
-are made available. These are:
+are made available if the `loop_vars` option is set to true (yes, true by default). These are:
 
 `__FIRST__`
 
@@ -328,7 +328,7 @@ puts HtmlTemplate.new( <<TXT ).text
 TXT
 ```
 
-will print if debugging is turned on:
+will print if debugging is turned on (e.g. `HtmlTemplate.config.debug = true`):
 
 ```
 line 4 - match <TMPL_VAR name ESCAPE="HTML"> replacing with: <%=h name %>

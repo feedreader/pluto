@@ -4,6 +4,7 @@ require 'minitest/autorun'
 ## our own code
 require 'html/template'
 
+HtmlTemplate.config.debug = true
 
 
 ########
