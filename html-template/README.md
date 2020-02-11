@@ -16,7 +16,7 @@ Note: The original [`HTML::Template`](https://metacpan.org/pod/HTML::Template) p
 (in Perl with a first 1.0 release in 1999!)
 and the documentation here
 is mostly a copy from the original
-with some changes / adoptions for
+with some changes / adaptions for
 the ruby version.
 
 
