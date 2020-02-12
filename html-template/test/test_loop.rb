@@ -97,7 +97,7 @@ TXT
 
   exp =<<TXT
     to be done
-  TXT
+TXT
 
   assert_equal exp, result
 end
@@ -127,7 +127,7 @@ TXT
 
   exp =<<TXT
     to be done
-  TXT
+TXT
 
   assert_equal exp, result
 end
