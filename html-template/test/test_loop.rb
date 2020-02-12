@@ -4,52 +4,104 @@ def test_loop_meta
     assert false   ## empty loop; fail/error if we get here
   end
 
-  [0].each_with_loop do |item, item_loop|
-    if item == 0
-     assert_equal 0, item_loop.index
-     assert_equal 1, item_loop.counter
-     assert          item_loop.odd?   == true
-     assert          item_loop.even?  == false
-     assert          item_loop.first? == true
-     assert          item_loop.inner? == false
-     assert          item_loop.outer? == true
-     assert          item_loop.last?  == true
-    end
+  [{index:   0,
+    counter: 1,
+    odd:     true,
+    even:    false,
+    first:   true,
+    inner:   false,
+    outer:   true,
+    last:    true}].each_with_loop do |item, item_loop|
+      assert_equal item[:index],   item_loop.index
+      assert_equal item[:counter], item_loop.counter
+      assert                       item_loop.odd?   == item[:odd]
+      assert                       item_loop.even?  == item[:even]
+      assert                       item_loop.first? == item[:first]
+      assert                       item_loop.inner? == item[:inner]
+      assert                       item_loop.outer? == item[:outer]
+      assert                       item_loop.last?  == item[:last]
   end
 
-  [0,1,2].each_with_loop do |item, item_loop|
-     if item == 0
-      assert_equal 0, item_loop.index
-      assert_equal 1, item_loop.counter
-      assert          item_loop.odd?   == true
-      assert          item_loop.even?  == false
-      assert          item_loop.first? == true
-      assert          item_loop.inner? == false
-      assert          item_loop.outer? == true
-      assert          item_loop.last?  == false
-     end
-     if item == 1
-      assert_equal 1, item_loop.index
-      assert_equal 2, item_loop.counter
-      assert          item_loop.odd?   == false
-      assert          item_loop.even?  == true
-      assert          item_loop.first? == false
-      assert          item_loop.inner? == true
-      assert          item_loop.outer? == false
-      assert          item_loop.last?  == false
-     end
-     if item == 2
-      assert_equal 2, item_loop.index
-      assert_equal 3, item_loop.counter
-      assert          item_loop.odd?   == true
-      assert          item_loop.even?  == false
-      assert          item_loop.first? == false
-      assert          item_loop.inner? == false
-      assert          item_loop.outer? == true
-      assert          item_loop.last?  == true
-     end
+  [{index:   0,
+    counter: 1,
+    odd:     true,
+    even:    false,
+    first:   true,
+    inner:   false,
+    outer:   true,
+    last:    false},
+   {index:   1, 
+    counter: 2, 
+    odd:     false,
+    even:    true,
+    first:   false,
+    inner:   true,
+    outer:   false,
+    last:    false},
+   {index:   2, 
+    counter: 3,
+    odd:     true,
+    even:    false,
+    first:   false,
+    inner:   false,
+    outer:   true,
+    last:    true}].each_with_loop do |item, item_loop|
+      assert_equal item[:index],   item_loop.index
+      assert_equal item[:counter], item_loop.counter
+      assert                       item_loop.odd?   == item[:odd]
+      assert                       item_loop.even?  == item[:even]
+      assert                       item_loop.first? == item[:first]
+      assert                       item_loop.inner? == item[:inner]
+      assert                       item_loop.outer? == item[:outer]
+      assert                       item_loop.last?  == item[:last]
   end
 end
+
+
+def test_loop_example
+  t = HtmlTemplate.new( <<TXT )
+<TMPL_LOOP foos>
+  <TMPL_IF __FIRST__>
+    This only outputs on the first pass.
+  </TMPL_IF>
+
+  <TMPL_IF __ODD__>
+    This outputs every other pass, on the odd passes.
+  </TMPL_IF>
+
+  <TMPL_UNLESS __ODD__>
+    This outputs every other pass, on the even passes.
+  </TMPL_UNLESS>
+
+  <TMPL_IF __INNER__>
+    This outputs on passes that are neither first nor last.
+  </TMPL_IF>
+
+  This is pass number <TMPL_VAR __COUNTER__>.
+
+  <TMPL_IF __LAST__>
+    This only outputs on the last pass.
+  </TMPL_IF>
+</TMPL_LOOP>
+TXT
+
+  puts t.text
+  puts "---"
+  result = t.render( foos: [{ name: 'Dave Grohl' },
+                            { name: 'Nate Mendel' },
+                            { name: 'Pat Smear' },
+                            { name: 'Taylor Hawkins' },
+                            { name: 'Chris Shiflett' },
+                            { name: 'Rami Jaffee' }] )
+  puts result
+
+  exp =<<TXT
+    to be done
+  TXT
+
+  assert_equal exp, result
+end
+
 
 def test_loop_inner
   t = HtmlTemplate.new( <<TXT )
