@@ -9,21 +9,75 @@ require 'fileutils'
 
 
 module Enumerable
-   class LoopMeta
-     def initialize( total )
-       @total = total
-       @index = 0
-     end
-     def index=(value) @index=value; end
-   end
+  class LoopMeta
+    def initialize( total )
+      @total = total
+    end
 
-   def each_with_loop( &blk )
-     loop_meta = LoopMeta.new( size )
-     each_with_index do |item, index|
-        loop_meta.index = index
-        blk.call( item, loop_meta )
-     end
-   end
+    def index=(value)
+      @index   = value;
+      @counter = @index+1
+
+      ## assume first item (index 0/counter 1) is odd - why? why not?
+      ## 0 % 2  => 0   (odd)  -- first
+      ## 1 % 2  => 1   (even) -- second
+      ## 2 % 2  => 0
+      ## 3 % 2  => 1
+      ## etc.
+      @odd     = (@index % 2) == 0
+      @even    = !@odd
+
+      if @index == 0
+          @first = true
+          @inner = false
+          @outer = true
+          @last  = (@total-1) == 0
+      elsif @index == (@total-1)
+          @first = false
+          @inner = false
+          @outer = true
+          @last  = true
+      else
+          @first = false
+          @inner = true
+          @outer = false
+          @last  = false
+      end
+    end
+
+    attr_reader :index
+    attr_reader :counter
+    attr_reader :odd
+    attr_reader :even
+    attr_reader :first
+    attr_reader :inner
+    attr_reader :outer
+    attr_reader :last
+
+    alias_method :odd?,   :odd
+    alias_method :even?,  :even
+    alias_method :first?, :first
+    alias_method :inner?, :inner
+    alias_method :outer?, :outer
+    alias_method :last?,  :last
+
+    alias_method :__index__,   :index
+    alias_method :__counter__, :counter
+    alias_method :__odd__,     :odd
+    alias_method :__even__,    :even
+    alias_method :__first__,   :first
+    alias_method :__inner__,   :inner
+    alias_method :__outer__,   :outer
+    alias_method :__last__,    :last
+  end
+
+  def each_with_loop( &blk )
+    loop_meta = LoopMeta.new( size )
+    each_with_index do |item, index|
+       loop_meta.index = index
+       blk.call( item, loop_meta )
+    end
+  end
 end
 
 
