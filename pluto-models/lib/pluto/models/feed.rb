@@ -41,7 +41,7 @@ class Feed < ActiveRecord::Base
   ##################################
   # attribute reader aliases
   #
-  #  note: CANNOT use alias_method :name, :title 
+  #  note: CANNOT use alias_method :name, :title
   #         will NOT work for non-existing/on-demand-generated methods in activerecord
   #
   #   use rails alias_attribute :new, :old  (incl. reader/predicate/writer)
@@ -60,7 +60,7 @@ class Feed < ActiveRecord::Base
   alias_attr_reader :author_email, :email     # alias    for email
   alias_attr_reader :author_email, :email     # alias(2) for email
 
-  
+
   #################
   ## attributes with fallbacks or (auto-)backups  - use feed.data.<attribute> for "raw" / "original" access
   def url()        read_attribute_w_fallbacks( :url,      :auto_url );      end
@@ -70,7 +70,7 @@ class Feed < ActiveRecord::Base
   def url?()       url.present?;       end
   def title?()     title.present?;     end
   def feed_url?()  feed_url.present?;  end
-  
+
   ## note:
   ##   only use fallback for updated, that is, updated (or published)
   ##    ~~do NOT use fallback for published / created    -- why? why not?~~
@@ -80,7 +80,7 @@ class Feed < ActiveRecord::Base
 
   def updated?()   updated.present?;  end
   def published?() published.present?;  end
-  
+
   #############
   #  add convenience date attribute helpers / readers
   #  - what to return if date is nil? - return nil or empty string or 'n/a' or '?' - why? why not?
@@ -97,21 +97,21 @@ class Feed < ActiveRecord::Base
   def date_822()    date ? date.rfc822 : ''; end
   alias_method :date_rfc2822, :date_822
   alias_method :date_rfc822,  :date_822
- 
-  
+
+
   ## "raw"  access via data "proxy" helper
   ## e.g. use  feed.data.updated
   ##           feed.data.updated? etc.
   class Data
     def initialize( feed ) @feed = feed; end
-    
+
     def url()         @feed.read_attribute( :url );      end      # "regular" url incl. auto_url fallback / (auto-)backup
     def title()       @feed.read_attribute( :title );    end
     def feed_url()    @feed.read_attribute( :feed_url );  end
     def url?()        url.present?;       end
     def title?()      title.present?;     end
     def feed_url?()   feed_url.present?;  end
-    
+
     def updated()     @feed.read_attribute(:updated); end           # "regular" updated incl. published fallback
     def published()   @feed.read_attribute(:published); end         # "regular" published incl. updated fallback
     def updated?()    updated.present?;    end
@@ -119,9 +119,9 @@ class Feed < ActiveRecord::Base
   end # class Data
   ## use a different name for data - why? why not?
   ##    e.g. inner, internal, readonly or r, raw, table, direct, or ???
-  def data()   @data ||= Data.new( self ); end    
-  
-  
+  def data()   @data ||= Data.new( self ); end
+
+
   def deep_update_from_struct!( data )
 
     logger = LogUtils::Logger.root
@@ -228,8 +228,8 @@ class Feed < ActiveRecord::Base
         published:      data.published,
         summary:        data.summary,
         generator:      data.generator.to_s,    ## note: use single-line/string generator stringified -- might return null (if no data)
- 
-        ## note: always auto-update auto_* fields for now 
+
+        ## note: always auto-update auto_* fields for now
         auto_title:     data.title,
         auto_url:       data.url,
         auto_feed_url:  data.feed_url,

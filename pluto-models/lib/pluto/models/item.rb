@@ -42,25 +42,47 @@ class Item < ActiveRecord::Base
 
   ## note:
   ##   only use fallback for updated, that is, updated (or published)
-  ##    do NOT use fallback for published / created    -- why? why not?
-  def updated()  read_attribute_w_fallbacks( :updated, :published ); end
-  def updated?() updated.present?;  end
+  ##    ~~do NOT use fallback for published / created    -- why? why not?~~
+  def updated()    read_attribute_w_fallbacks( :updated, :published ); end
+  def published()  read_attribute_w_fallbacks( :published, :updated ); end
+
+  def updated?()   updated.present?;   end
+  def published?() published.present?; end
+
+  #############
+  #  add convenience date attribute helpers / readers
+  #  - what to return if date is nil? - return nil or empty string or 'n/a' or '?' - why? why not?
+  #
+  # date
+  # date_iso   |  date_iso8601
+  # date_822   |  date_rfc2822 | date_rfc822
+
+  def date()        updated; end
+
+  def date_iso()    date ? date.iso8601 : ''; end
+  alias_method :date_iso8601, :date_iso
+
+  def date_822()    date ? date.rfc822 : ''; end
+  alias_method :date_rfc2822, :date_822
+  alias_method :date_rfc822,  :date_822
+
 
   ## "raw"  access via data "proxy" helper
   ## e.g. use  item.data.updated
   ##           item.data.updated? etc.
   class Data
     def initialize( feed ) @item = item; end
-       
+
     def updated()     @item.read_attribute(:updated); end           # "regular" updated incl. published fallback
-    def published()   @item.read_attribute(:published); end   
+    def published()   @item.read_attribute(:published); end
+
     def updated?()    updated.present?;    end
     def published?()  published.present?;  end
   end # class Data
   ## use a different name for data - why? why not?
   ##    e.g. inner, internal, readonly or r, raw, table, direct, or ???
-  def data()   @data ||= Data.new( self ); end    
-  
+  def data()   @data ||= Data.new( self ); end
+
 
   def update_from_struct!( data )
 

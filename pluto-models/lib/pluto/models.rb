@@ -8,6 +8,7 @@ require 'uri'
 require 'pp'
 require 'fileutils'
 require 'date'
+require 'time'
 require 'digest/md5'
 
 require 'logger'             # Note: use for ActiveRecord::Base.logger = Logger.new( STDOUT ) for now
@@ -110,7 +111,7 @@ module Pluto
   #########################################
   ## let's put test configuration in its own namespace / module
   class Test    ## todo/check: works with module too? use a module - why? why not?
-  
+
     ####
     #  todo/fix:  find a better way to configure shared test datasets - why? why not?
     #    note: use one-up (..) directory for now as default - why? why not?
