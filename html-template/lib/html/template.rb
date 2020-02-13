@@ -101,28 +101,28 @@ class HtmlTemplate
   class Configuration
     def debug=(value)      @debug = value;   end
     def debug?()           @debug || false;  end
-  
+
     def strict=(value)     @strict = value;  end
     def strict?()          @strict || true;  end
 
     def loop_vars=(value)  @loop_vars = value; end
     def loop_vars?()       @loop_vars || true; end
   end # class Configuration
-  
+
   ## lets you use
   ##   HtmlTemplate.configure do |config|
   ##      config.debug        = true
   ##      config.strict       = true
   ##   end
-  
+
   def self.configure
     yield( config )
   end
-  
+
   def self.config
     @config ||= Configuration.new
   end
-  
+
 
   attr_reader :text   ## returns converted template text (with "breaking" comments!!!)
   attr_reader :template  ## return "inner" (erb) template object
@@ -151,7 +151,7 @@ class HtmlTemplate
     if @errors.size > 0
       puts "!! ERROR - #{@errors.size} conversion / syntax error(s):"
       pp @errors
-      
+
       raise     if strict? ## todo - find a good Error - StandardError - why? why not?
     end
 
@@ -168,10 +168,10 @@ class HtmlTemplate
                  (?<ident>#{IDENT})
                  (\s+
                    (?<escape>ESCAPE)
-                      =(
+                      \s*=\s*(
                           (?<q>['"])(?<format>#{ESCAPES})\k<q>  # note: allow single or double enclosing quote (but MUST match)
                         |  (?<format>#{ESCAPES})              # note: support without quotes too
-                       )   
+                       )
                  )?
                >}x
 
@@ -310,7 +310,8 @@ class HtmlTemplate
                           ''
                         else
                            ## check for special loop variables
-                           if ['__INDEX__',
+                           if loop_vars? &&
+                              ['__INDEX__',
                                '__COUNTER__',
                                '__INDEX__',
                                '__COUNTER__',
@@ -319,8 +320,8 @@ class HtmlTemplate
                                '__FIRST__',
                                '__INNER__',
                                '__OUTER__',
-                               '__LAST__' 
-                              ].include?( ident ) 
+                               '__LAST__'
+                              ].include?( ident )
                              "#{ident_to_loop_it( stack[-1] )}_loop."
                            else
                            ## assume plural ident e.g. channels

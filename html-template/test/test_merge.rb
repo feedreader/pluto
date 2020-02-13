@@ -93,7 +93,7 @@ TXT
                                    { name: 'Tracey Flick',    gpa: 4.0 } ])
     puts result
 
-    exp =<<TXT
+    assert_equal <<TXT, result
 <p>
 Name: Bluto Blutarsky<br/>
 GPA: 0.0
@@ -103,12 +103,10 @@ Name: Tracey Flick<br/>
 GPA: 4.0
 </p>
 TXT
- 
-    assert_equal exp, result    
   end
 
 
-  def test_escape  
+  def test_escape
    t = HtmlTemplate.new( <<TXT )
 <TMPL_LOOP pubs>
 Name: <TMPL_VAR name>
@@ -119,7 +117,7 @@ Name: <TMPL_VAR name ESCAPE='HTML'>
 </TMPL_LOOP>
 TXT
 
-   exp =<<TXT 
+   exp =<<TXT
 Name: Fuller's Ale & Pie House
 Name: Fuller&#39;s Ale &amp; Pie House
 Name: Fuller&#39;s Ale &amp; Pie House
@@ -132,8 +130,8 @@ Name: Mel&#39;s Craft Beers &amp; Diner
 
 TXT
 
-   assert_equal exp, t.render( pubs: [{ name: "Fuller's Ale & Pie House"  }, 
-                                      { name: "Mel's Craft Beers & Diner" }]) 
+   assert_equal exp, t.render( pubs: [{ name: "Fuller's Ale & Pie House"  },
+                                      { name: "Mel's Craft Beers & Diner" }])
 end
 
 end # class TestMerge
