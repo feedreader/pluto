@@ -1,3 +1,12 @@
+###
+#  to run use
+#     ruby -I ./lib -I ./test test/test_loop.rb
+
+require 'helper'
+
+
+
+class TestLoop < MiniTest::Test
 
 def test_loop_meta
   [].each_with_loop do |item, item_loop|
@@ -131,3 +140,6 @@ TXT
 
   assert_equal exp, result
 end
+
+
+end # class TestLoop

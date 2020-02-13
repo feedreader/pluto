@@ -69,6 +69,15 @@ module Enumerable
     alias_method :__inner__,   :inner
     alias_method :__outer__,   :outer
     alias_method :__last__,    :last
+
+    alias_method :__INDEX__,   :index
+    alias_method :__COUNTER__, :counter
+    alias_method :__ODD__,     :odd
+    alias_method :__EVEN__,    :even
+    alias_method :__FIRST__,   :first
+    alias_method :__INNER__,   :inner
+    alias_method :__OUTER__,   :outer
+    alias_method :__LAST__,    :last
   end
 
   def each_with_loop( &blk )
@@ -300,11 +309,26 @@ class HtmlTemplate
                   ctx = if stack.empty?
                           ''
                         else
+                           ## check for special loop variables
+                           if ['__INDEX__',
+                               '__COUNTER__',
+                               '__INDEX__',
+                               '__COUNTER__',
+                               '__ODD__',
+                               '__EVEN__',
+                               '__FIRST__',
+                               '__INNER__',
+                               '__OUTER__',
+                               '__LAST__' 
+                              ].include?( ident ) 
+                             "#{ident_to_loop_it( stack[-1] )}_loop."
+                           else
                            ## assume plural ident e.g. channels
                            ##  cut-off last char, that is,
                            ##   the plural s channels => channel
                            ##  note:  ALWAYS downcase (auto-generated) loop iterator/pass name
-                           "#{ident_to_loop_it( stack[-1] )}."
+                             "#{ident_to_loop_it( stack[-1] )}."
+                           end
                         end
 
                   code = if tag == 'VAR'
