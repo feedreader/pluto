@@ -73,10 +73,31 @@ class Feed < ActiveRecord::Base
   
   ## note:
   ##   only use fallback for updated, that is, updated (or published)
-  ##    do NOT use fallback for published / created    -- why? why not?
+  ##    ~~do NOT use fallback for published / created    -- why? why not?~~
   ##    add items_last_updated  to updated as last fall back - why? why not?
-  def updated()    read_attribute_w_fallbacks( :updated, :published );  end
+  def updated()    read_attribute_w_fallbacks( :updated,   :published );  end
+  def published()  read_attribute_w_fallbacks( :published, :updated, );   end
+
   def updated?()   updated.present?;  end
+  def published?() published.present?;  end
+  
+  #############
+  #  add convenience date attribute helpers / readers
+  #  - what to return if date is nil? - return nil or empty string or 'n/a' or '?' - why? why not?
+  #
+  # date
+  # date_iso   |  date_iso8601
+  # date_822   |  date_rfc2822 | date_rfc822
+
+  def date()        updated; end
+
+  def date_iso()    date ? date.iso8601 : ''; end
+  alias_method :date_iso8601, :date_iso
+
+  def date_822()    date ? date.rfc822 : ''; end
+  alias_method :date_rfc2822, :date_822
+  alias_method :date_rfc822,  :date_822
+ 
   
   ## "raw"  access via data "proxy" helper
   ## e.g. use  feed.data.updated
@@ -92,7 +113,7 @@ class Feed < ActiveRecord::Base
     def feed_url?()   feed_url.present?;  end
     
     def updated()     @feed.read_attribute(:updated); end           # "regular" updated incl. published fallback
-    def published()   @feed.read_attribute(:published); end   
+    def published()   @feed.read_attribute(:published); end         # "regular" published incl. updated fallback
     def updated?()    updated.present?;    end
     def published?()  published.present?;  end
   end # class Data
