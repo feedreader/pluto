@@ -20,11 +20,10 @@ using an example as a format string e.g "January 02, 2006" instead of the classi
 - `DateTime#format`
 - `NilClass#format`
 
-to the built-in classes. The code reads:
+to the built-in classes.
 
 
-
-### `String#to_strftime`
+### The `String#to_strftime` Method
 
 ```ruby
 class String
@@ -48,7 +47,7 @@ p '2 Mon 2006 03:00'.to_strftime          #=> "%-d %b %Y %H:%M"
 ```
 
 
-### `Date#format`
+### The `Date#format` Method
 
 ``` ruby
 class Date
@@ -69,7 +68,7 @@ p date.format( 'Monday, January 2, 2006' )  #=> "Sunday, February 9, 2020"
 
 
 
-### `Time#format`
+### The `Time#format` Method
 
 ``` ruby
 class Time
@@ -92,7 +91,7 @@ p time.format( '2 Mon 2006 03:00' )         #=> "9 Sun 2020 00:00"
 ```
 
 
-### `NilClass#format`
+### The `NilClass#format` Method
 
 ``` ruby
 class NilClass
