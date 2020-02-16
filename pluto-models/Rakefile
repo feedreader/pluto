@@ -18,11 +18,12 @@ Hoe.spec 'pluto-models' do
   self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
-    ['props',         '>= 1.2.0'],
-    ['logutils',      '>= 0.6.1'],
-    ['feedparser',    '>= 2.1.2'],
-    ['feedfilter',    '>= 1.1.1'],
-    ['textutils',     '>= 1.4.0'],
+    ['props',          '>= 1.2.0'],
+    ['logutils',       '>= 0.6.1'],
+    ['feedparser',     '>= 2.1.2'],
+    ['feedfilter',     '>= 1.1.1'],
+    ['date-formatter', '>= 0.1.1'],
+    ['textutils',      '>= 1.4.0'],
     ['activerecord'],
     ['logutils-activerecord', '>= 0.2.1'],
     ['props-activerecord',    '>= 0.2.0'],

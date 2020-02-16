@@ -23,6 +23,7 @@ require 'logutils'
 require 'textutils'
 require 'feedparser'
 require 'feedfilter'
+require 'date/formatter'
 
 
 ## add more activerecords addons/utils
