@@ -24,7 +24,11 @@ class TestFormat < MiniTest::Test
                'YYYYMMDD'   => ['%Y%m%d',    '20060102'],
                'YYMMDD'     => ['%y%m%d',    '060102'],
                'YYMMD'      => ['%y%m%-d',   '06012'],
-               'YYYY'       => ['%Y',        '2006'], 
+               'YYYY'       => ['%Y',        '2006'],
+               
+               'hh:mm:ss'   => ['%H:%M:%S',  '03:00:00'],
+               'h:mm:ss'    => ['%-H:%M:%S', '3:00:00'],
+               'hh:mm'      => ['%H:%M',     '03:00'],
             }
  
       dates.each do |date, exp|

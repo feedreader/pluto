@@ -85,6 +85,11 @@ module DateByExample
     spec = spec.gsub( 'DD',   '%d' )
     spec = spec.gsub( 'D',    '%-d')
 
+    spec = spec.gsub( 'hh',   '%H' )
+    spec = spec.gsub( 'h',    '%-H' )
+    spec = spec.gsub( 'mm',   '%M' )
+    spec = spec.gsub( 'ss',   '%S' )
+
     spec
   end
 end
