@@ -15,4 +15,5 @@ test/templates/planet/foafroll.xml.tmpl
 test/templates/planet/opml.xml.tmpl
 test/templates/planet/rss10.xml.tmpl
 test/templates/planet/rss20.xml.tmpl
+test/test_loop.rb
 test/test_merge.rb
