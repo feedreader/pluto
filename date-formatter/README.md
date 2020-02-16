@@ -76,7 +76,7 @@ class Time
 end
 ```
 
-The new `Time#format` method format the time like the passed in example:
+The new `Time#format` method formats the time like the passed in example:
 
 ``` ruby
 time = Time.now     ## test run on 2020-02-09 00:00
