@@ -1,0 +1,28 @@
+require 'hoe'
+require './lib/date-formatter/version.rb'
+
+Hoe.spec 'date-formatter' do
+
+  self.version = DateByExample::VERSION
+
+  self.summary = "date-formatter - date formatter by example; auto-builds the strftime format string from an example date"
+  self.description = summary
+
+  self.urls    = ['https://github.com/feedreader/pluto']
+
+  self.author  = 'Gerald Bauer'
+  self.email   = 'wwwmake@googlegroups.com'
+
+  # switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.md'
+  self.history_file = 'CHANGELOG.md'
+
+  self.extra_deps = []
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+    required_ruby_version: '>= 2.2.2'
+  }
+
+end
