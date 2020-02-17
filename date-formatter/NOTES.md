@@ -141,3 +141,8 @@ end
 **date_molder** <https://rubygems.org/gems/date_molder>, Source: <https://github.com/gregolsen/date_molder>
 
 **stamp** <https://rubygems.org/gems/stamp>, Source: <https://github.com/jeremyw/stamp>
+
+
+## Date Formatting in Other Languages
+
+See the Rosetta Stone Date Format page <https://www.rosettacode.org/wiki/Date_format>
