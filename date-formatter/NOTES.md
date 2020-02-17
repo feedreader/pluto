@@ -17,8 +17,8 @@ by creating and reusing a `DateFormatter`
 
 ``` ruby
 f = DateFormatter.new("DD/MM/YY")     # or using a golang-style "01/02/06" format string
-f.format(Date.today)   => "06/11/18"
-f.format(Time.now)     => "06/11/18
+f.format(Date.today)   #=> "06/11/18"
+f.format(Time.now)     #=> "06/11/18"
 ```
 
 
