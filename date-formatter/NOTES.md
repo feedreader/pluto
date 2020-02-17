@@ -6,10 +6,23 @@
 - [ ] change `Date#format` to `Date#format_like` or `Date#formatted`  or something else - why? why not?
 - [ ] add underscore for space-padded e.g. `_2` like `02` for zero-padded - why? why not?
 - [ ] fully adopt go reference date/time convention? why? why not?
+- [ ] add alternate usage with DateFormatter.new( spec ).format( date|time|nil ) - for performance ("precompiled" strftime strings) - why? why not?
 
 
+## Alternate Usage - DateFormatter?
 
-## Go Time Formatter - Reference Time
+The slow part of using this gem is generating the format string from
+the example, if you want to reuse a format multiple times, you can do so
+by creating and reusing an `DateFormatter`
+
+``` ruby
+f = DateFormatter.new("DD/MM/YY")    # or using golang-style "01/02/06"
+f.format(Date.today)   => "06/11/18"
+f.format(Time.now)     => "06/11/18
+```
+
+
+## Go Date / Time Formatter - Reference Date / Time?
 
 I'd say go is pretty on target using an (unambigious) reference date. From the Rosseta stone sample:
 
