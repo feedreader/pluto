@@ -13,10 +13,10 @@
 
 The slow part of using this gem is generating the format string from
 the example, if you want to reuse a format multiple times, you can do so
-by creating and reusing an `DateFormatter`
+by creating and reusing a `DateFormatter`
 
 ``` ruby
-f = DateFormatter.new("DD/MM/YY")    # or using golang-style "01/02/06"
+f = DateFormatter.new("DD/MM/YY")     # or using a golang-style "01/02/06" format string
 f.format(Date.today)   => "06/11/18"
 f.format(Time.now)     => "06/11/18
 ```
