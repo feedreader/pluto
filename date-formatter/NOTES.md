@@ -5,9 +5,11 @@
 
 - [ ] change `Date#format` to `Date#format_like` or `Date#formatted`  or something else - why? why not?
 - [ ] add underscore for space-padded e.g. `_2` like `02` for zero-padded - why? why not?
+- [ ] fully adopt go reference date/time convention? why? why not?
 
 
-Fully adopt go reference date/time convention? Why? Why not?
+
+## Go Time Formatter - Reference Time
 
 I'd say go is pretty on target using an (unambigious) reference date. From the Rosseta stone sample:
 
@@ -25,8 +27,26 @@ Still kind of undecided if it is worth to reserve 1, 01, etc. for months and 2, 
 
 and it works too in Ruby's date formatter (but NOT using Golang's time format). In Golang you always MUST use the Monday, January 2, 2006 15:04:05 -7:00 reference date that you can supposedly learn and keep in memory by using the 0-1-2-3-4-5-6-7 trick.  0 = Monday, 1 = January, 2 = Day 2, 3 = Hour 15, 4 = Minute 4, 5 = Second 5, 6 = Year 2006, 7 = Timezone -7:00 (MST). Anyone has any opinions? Pro or contra?
 
+---
 
-## Go Time Formatter - Reference Time
+The reference date is Jan 2, 2006 at 3:04:05 PM MST, which can be
+remembered as 1 2 3 4 5 6 -7.
+
+I realize that remembering the reference date is not the easy part,
+but I think it's easier than remembering all the strftime format
+strings
+
+Supported formats:
+
+- Year: 2006 and 06 (but not Ruby's %c for the century)
+- Month: January, JANUARY, Jan, JAN, 1, and 01, but not " 1" for space padding
+- Day: 2, 02, 002 (for day of year), Monday, MONDAY, Mon, MON, but not " 2" for space padding
+- Hour: 15, 3, pm, PM
+- Minute: 04
+- Second: 05, 05.000 for milliseconds and 05.000000 and 05.000000000
+- Time Zone: -7000, -07:00, -07:00:00, MST
+
+---
 
 The reference time used in the layouts is the specific time:
 
