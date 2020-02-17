@@ -7,6 +7,25 @@
 - [ ] add underscore for space-padded e.g. `_2` like `02` for zero-padded - why? why not?
 
 
+Fully adopt go reference date/time convention? Why? Why not?
+
+I'd say go is pretty on target using an (unambigious) reference date. From the Rosseta stone sample:
+
+     time.Now().Format("2006-01-02"))
+     time.Now().Format("Monday, January 2, 2006")
+
+That would be in ruby's date-formatter:
+
+     Time.now.format("YYYY-MM-DD")
+     Time.now.format("Monday, January 2, 2006")
+
+Still kind of undecided if it is worth to reserve 1, 01, etc. for months and 2, 02, etc. for days and 3, 03,  etc. for hours and 4, 04, for minutes and 5, 05, etc. for seconds and so on. For now you can write:
+
+    Time.now.format("Friday, February 4, 2020")
+
+and it works too in Ruby's date formatter (but NOT using Golang's time format). In Golang you always MUST use the Monday, January 2, 2006 15:04:05 -7:00 reference date that you can supposedly learn and keep in memory by using the 0-1-2-3-4-5-6-7 trick.  0 = Monday, 1 = January, 2 = Day 2, 3 = Hour 15, 4 = Minute 4, 5 = Second 5, 6 = Year 2006, 7 = Timezone -7:00 (MST). Anyone has any opinions? Pro or contra?
+
+
 ## Go Time Formatter - Reference Time
 
 The reference time used in the layouts is the specific time:
