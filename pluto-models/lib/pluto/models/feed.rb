@@ -52,6 +52,7 @@ class Feed < ActiveRecord::Base
   alias_attr_reader :desc,         :summary   # alias(2) for summary
   alias_attr_reader :subtitle,     :summary   # alias(3) for summary
   alias_attr_reader :link,         :url       # alias    for url
+  alias_attr_reader :html_url,     :url       # alias(2) for url
   alias_attr_reader :feed,         :feed_url  # alias    for feed_url
 
   alias_attr_reader :author_name,  :author    # alias    for author
@@ -130,6 +131,11 @@ class Feed < ActiveRecord::Base
     ##                                                    (e.g. data.items.size == 0).
     if data.items.size > 0
 
+      #####
+      ## apply some fix-up for "broken" feed data
+      fix_dates( data )
+      
+      
       ######
       ## check for filters (includes/excludes) if present
       ##  for now just check for includes
@@ -207,6 +213,42 @@ class Feed < ActiveRecord::Base
 
     update_from_struct!( data )
   end # method deep_update_from_struct!
+
+  ###################################################
+  #   helpers to fix-up some "broken" feed data 
+  def fix_dates( data )
+
+    ## check if all updated dates are the same (uniq count is 1)
+    ##   AND if all published dates are present
+    ##  than assume "fake" updated dates and nullify updated dates
+    ##   example real-world "messed-up" feeds include:
+    ##   -  https://bundler.io/blog/feed.xml
+    ##   -  https://dry-rb.org/feed.xml
+    ##
+    ##  todo/check - limit to atom feed format only - why? why not?
+
+    count           = data.items.size
+    count_published = data.items.reduce( 0 ) {|count,item| count += 1 if item.published; count }
+
+    if count == count_published
+      uniq_count_updated  = 0
+      last_updated        = nil
+
+      data.items.each do |item|
+        uniq_count_updated += 1   if item.updated != last_updated
+        last_updated = item.updated
+      end
+
+      if uniq_count_updated == 1
+        puts "bingo!! nullify all updated dates"
+        ## todo/fix: log report updated date fix!!!!
+        data.items.each do |item|
+          item.updated       = nil
+          item.updated_local = nil
+        end
+      end
+    end
+  end
 
 
   def update_from_struct!( data )
