@@ -18,7 +18,8 @@ Hoe.spec 'pluto-news' do
   self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
-    ['pluto-models', '>= 1.5.5'],
+    ['pluto-models', '>= 1.6.1'],
+    ['pluto-update', '>= 1.6.3'],
     ['sqlite3'],     # note: for easy installation include sqlite database library
   ]
 
