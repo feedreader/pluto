@@ -14,7 +14,7 @@
 The date by example lets you format dates e.g. "January 02, 2006" 
 using an example as a format string e.g "January 02, 2006" instead of the classic strftime format specifier e.g. "%B %d, %Y". The date by example adds:
 
-- `String#to_strfime`
+- `String#to_strftime`
 - `Date#format`
 - `Time#format`
 - `DateTime#format`
