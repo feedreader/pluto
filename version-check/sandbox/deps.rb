@@ -13,6 +13,15 @@ VERSIONS = [
   ['pluto-merge',  '>= 1.1.0',  ->{ PlutoMerge::VERSION} ],
 ]
 
+##
+## or add all dependencies and check version live only if third item is present (either as string or proc) - why? why not?
+# VERSIONS = [
+#  ['pluto-models', '>= 1.5.4',  ->{ Pluto::VERSION } ],
+#  ['pluto-update', '>= 1.6.3',  ->{ PlutoUpdate::VERSION } ],
+#  ['pluto-merge',  '>= 1.1.0',  ->{ PlutoMerge::VERSION} ],
+#  ['gli',          '>= 2.12.2'],   ## do NOT check
+#  ['sqlite3']                      ## do NOT check and open (ANY) version / no min version requirement
+# ]
 
 
 ## or split VERSIONS into two arrays / lists - why? why not?
