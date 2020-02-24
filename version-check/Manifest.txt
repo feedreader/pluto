@@ -1,0 +1,8 @@
+CHANGELOG.md
+Manifest.txt
+README.md
+Rakefile
+lib/version/check.rb
+lib/version/check/version.rb
+test/helper.rb
+test/test_check.rb
