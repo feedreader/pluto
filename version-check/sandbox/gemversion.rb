@@ -29,3 +29,24 @@ pp versions_a.sort
 
 pp version_a = versions_a.sort.map { |v| v.to_s }
 #=> ["0.9", "1.0.a.2", "1.0.a10", "1.0.b1", "1.0.b.2", "1.0.b10", "1.0", "1.0.1"]
+
+
+pp Gem::Version.correct?( '1' )           #=> true
+pp Gem::Version.correct?( '1.x' )         #=> true
+pp Gem::Version.correct?( '1.0' )         #=> true
+pp Gem::Version.correct?( '1.0.0' )       #=> true
+pp Gem::Version.correct?( '1.0.x' )       #=> true
+pp Gem::Version.correct?( '0.9' )         #=> true
+pp Gem::Version.correct?( 'x' )           #=> false !!!
+
+pp Gem::Version::ANCHORED_VERSION_PATTERN
+#=> /\A
+#       \s*
+#       ([0-9]+
+#          (?>\.[0-9a-zA-Z]+)*
+#           (-[0-9A-Za-z-]+
+#           (\.[0-9A-Za-z-]+)*
+#         )?
+#        )?
+#       \s*
+#    \z/
