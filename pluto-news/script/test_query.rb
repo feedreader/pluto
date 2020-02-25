@@ -6,6 +6,11 @@
 require 'pluto/news'
 
 
+## note: pass in nytimes, lang, etc for multi-site
+News.site = ARGV[0]   if ARGV.size > 0
+
+
+
 puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"
 puts ":: #{News.items.count} news items from #{News.channels.count} channels:"
 puts

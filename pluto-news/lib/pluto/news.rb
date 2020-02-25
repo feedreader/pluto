@@ -54,13 +54,18 @@ require 'pluto/news/version'
 
 module News
 
+  def self.site=(value)  @site   = value;  end
+  def self.site()        @site ||= 'news'; end   ## note: defaults to news
+
+
+
   def self.subscribe( *feeds )
     site_hash = {        ## note: keys are strings (NOT symbols) for now
-      'title' => 'News, News, News'
+      'title' => 'Untitled'
     }
 
     feeds.each_with_index do |feed|
-      ## note: 
+      ## note:
       ##   use a "fingerprint" hash digest as key
       ##     do NOT include scheme (e.g. https or http)
       ##     do NOT include port
@@ -74,14 +79,14 @@ module News
       ## note: cut-off www. if leading e.g. www.ruby-lang.org => ruby-lang.org
       host = uri.host.downcase.sub( /^www\./, '' )
       #   use a differt separator e.g _ or ~ and NOT $ - why? why not?
-      key = "#{host}$#{Digest::MD5.hexdigest( uri.request_uri )}" 
+      key = "#{host}$#{Digest::MD5.hexdigest( uri.request_uri )}"
 
       site_hash[ key ] = { 'feed'  => feed }
     end
 
     connection   ## make sure we have a database connection (and setup) up-and-running
-    site_key  = 'news'   ## note: use always news (and single-site setup) for now
-    Pluto::Model::Site.deep_create_or_update_from_hash!( site_key, site_hash )
+    ## note: always use "multi-site" setup; defaults to 'news' site key
+    Pluto::Model::Site.deep_create_or_update_from_hash!( site, site_hash )
   end
 
   def self.update
@@ -94,8 +99,10 @@ module News
 
   def self.feeds
     connection
+    ## note: always use "multi-site" setup; defaults to 'news' site key
     ## note: add "default" scope - orders (sorts) by latest / time
-    Pluto::Model::Feed.order(
+    rec = Pluto::Model::Site.where(key: site).first
+    rec.feeds.order(
         Arel.sql( "coalesce(feeds.updated,feeds.published,'1970-01-01') desc" )
       )
   end
@@ -104,8 +111,10 @@ module News
 
   def self.items
     connection    ## make sure we have a database connection (and setup) up-and-running
+    ## note: always use "multi-site" setup; defaults to 'news' site key
     ## note: add "default" scope - orders (sorts) by latest / time
-    Pluto::Model::Item.order(
+    rec = Pluto::Model::Site.where(key: site).first
+    rec.items.order(
         Arel.sql( "coalesce(items.updated,items.published,'1970-01-01') desc" )
       )
   end
@@ -174,7 +183,7 @@ module News
   def self.q3( year=Date.today.year ) quarter3( year ); end
   def self.q4( year=Date.today.year ) quarter4( year ); end
 
-  
+
   def self.year( year=Date.today.year )
     q = year
     items.
@@ -183,9 +192,9 @@ module News
       )
   end
 
-  
-  
-  
+
+
+
   def self.this_week()    week;    end   ## convenience alias - keep - why? why not?
   def self.this_month()   month;   end
   def self.this_quarter() quarter; end
