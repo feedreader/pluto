@@ -2,12 +2,35 @@
 
 ## Todos
 
-- add `>=` to minimum requirement version e.g. `>=6`, `>=6.0`, `>=6.0.0` - why? why not? - optional? is more readable / explicit?
-- add `x` to minimum requiremet version e.g. `>=6.x`, `>=6.0.x` - why? why not? is more readable / explicit?
-- support "sem version" e.g. 2.0.0-beta.3 e.g. split by (`-`) first lets you add alpha, beta etc. - why? why not?
-- validate minimum requirement version with a regex / text pattern - why? why not?
-- allow customize exit_code :-)?
-- allow more customize e.g. message etc.
+- [ ] add `>=` to minimum requirement version e.g. `>=6`, `>=6.0`, `>=6.0.0` - why? why not? - optional? is more readable / explicit?
+- [ ] add `x` to minimum requiremet version e.g. `>=6.x`, `>=6.0.x` - why? why not? is more readable / explicit?
+- [ ] support "sem version" e.g. 2.0.0-beta.3 e.g. split by (`-`) first lets you add alpha, beta etc. - why? why not?
+- [ ] validate minimum requirement version with a regex / text pattern - why? why not?
+- [ ] allow customize exit_code :-)?
+- [ ] use ruby gems style spliting in parts / segements ? - why? why not?
+
+```ruby
+# File rubygems/version.rb, line 375
+def _segments
+  # segments is lazy so it can pick up version values that come from
+  # old marshaled versions, which don't go through marshal_load.
+  # since this version object is cached in @@all, its @segments should be frozen
+
+  @segments ||= @version.scan(/[0-9]+|[a-z]+/i).map do |s|
+    /^\d+$/ =~ s ? s.to_i : s
+  end.freeze
+end
+
+ # File rubygems/version.rb, line 385
+def _split_segments
+  string_start = _segments.index {|s| s.is_a?(String) }
+  string_segments  = segments
+  numeric_segments = string_segments.slice!(0, string_start || string_segments.size)
+  return numeric_segments, string_segments
+end
+```
+
+- [ ] allow more customize e.g. message etc.
 
 ```js
 pleaseUpgradeNode(pkg, {
