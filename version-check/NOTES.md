@@ -36,8 +36,19 @@ console.log(notifier.update);
 - add a dependencies method to version.rb module? for use in gemspec - why? why not?
 
 
+## Manage Dependencies (Beyond RubyGems)
+
+- Bundler
+  - see <https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html>
+
+- Isolate - <https://github.com/jbarnette/isolate>
+  
+
+
 
 ## Alternatives
+
+Update-to-Date / Version Checker
 
 ### Ruby
 
