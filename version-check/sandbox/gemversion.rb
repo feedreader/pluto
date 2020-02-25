@@ -18,5 +18,14 @@ versions_a = versions_a.map { |v| Gem::Version.create( v ) }
 
 pp versions_a
 pp versions_a.sort
+#=> [Gem::Version.new("0.9"),
+#    Gem::Version.new("1.0.a.2"),
+#    Gem::Version.new("1.0.a10"),
+#    Gem::Version.new("1.0.b1"),
+#    Gem::Version.new("1.0.b.2"),
+#    Gem::Version.new("1.0.b10"),
+#    Gem::Version.new("1.0"),
+#    Gem::Version.new("1.0.1")]
 
 pp version_a = versions_a.sort.map { |v| v.to_s }
+#=> ["0.9", "1.0.a.2", "1.0.a10", "1.0.b1", "1.0.b.2", "1.0.b10", "1.0", "1.0.1"]
