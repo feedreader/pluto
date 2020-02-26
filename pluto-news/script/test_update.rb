@@ -16,7 +16,7 @@ News.subscribe(
   'http://www.jruby.org/atom.xml',                  # JRuby Lang News
   'http://blog.rubygems.org/atom.xml',              # RubyGems News
   'http://bundler.io/blog/feed.xml',                # Bundler News
-  'https://www.ruby-toolbox.com/blog.rss',          # Ruby Toolbox News 
+  'https://www.ruby-toolbox.com/blog.rss',          # Ruby Toolbox News
   'https://idiosyncratic-ruby.com/feed.xml',        # Idiosyncratic Ruby
   'http://weblog.rubyonrails.org/feed/atom.xml',    # Ruby on Rails News
   'http://sinatrarb.com/feed.xml',                  # Sinatra News
@@ -50,5 +50,4 @@ News.subscribe(
   )
 
 News.update
-
 

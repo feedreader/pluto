@@ -8,6 +8,8 @@ require 'time'
 require 'cgi'
 require 'uri'
 require 'digest'
+require 'yaml'    ## check - already included upstream?
+require 'json'    ## check - already included upstream?
 
 require 'erb'
 require 'ostruct'
@@ -54,35 +56,109 @@ require 'pluto/news/version'
 
 module News
 
+  ##
+  ## todo/check: allow (add) site = nil for no site "filter" (all items / feeds) - why? why not?
   def self.site=(value)  @site   = value;  end
   def self.site()        @site ||= 'news'; end   ## note: defaults to news
 
 
+####
+# helpers
+
+  def self.autogen_feed_key( feed_url )
+    ## note:
+    ##   use a "fingerprint" hash digest as key
+    ##     do NOT include scheme (e.g. https or http)
+    ##     do NOT include port
+    ##   so you can change it without "breaking" the key - why? why not?
+    ##
+    ##  e.g.   u = URI( 'https://example.com:333/a/b?f=xml'
+    ##          u.host+u.request_uri
+    ##         #=> example.com/a/b?f=xml
+    uri = URI( feed_url )
+    ## note: add host in "plain" text - making errors and the key more readable
+    ## note: cut-off www. if leading e.g. www.ruby-lang.org => ruby-lang.org
+    host = uri.host.downcase.sub( /^www\./, '' )
+    #   use a differt separator e.g _ or ~ and NOT $ - why? why not?
+    key = "#{host}$#{Digest::MD5.hexdigest( uri.request_uri )}"
+    key
+  end
+
+  def self.norm_feed_hash( old_h )   ## todo/check: rename to normalize/unify_feeds or resolve_feedlist or something?
+    ## unify feed list entries
+    ## case 1) if section name is some thing like [Andrew Kane]
+    ##           and  NO title/name key than assume it's the title/name
+    ##           and auto-generated key/id
+
+    ## move all "global" settings to [planet] section - why? why not?
+    ##  e.g.
+    ##   title = Planet Open Data News
+    ##  becomes
+    ##   [planet]
+    ##     title = Planet Open Data News
+
+    h = {}
+    old_h.each do |k,v|
+       if    v.is_a?( String )
+          h[ k ] = v   ## pass along as-is (assume "top-level" / global setting)
+       elsif v.is_a?( Hash )
+          ## puts "#{k}:"
+          ## pp v
+          ## todo/fix: use "proper" ident e.g. allow 0-9 and .-_ too? why? why not?
+          if k =~ /^[a-z_][a-z0-9$_.]*$/   ## all lower case; assume id - add 0-9 and .-_ - why? why not?
+            h[ k ] = v
+          else
+             ## puts "bingo! section name shortcut - #{k}"
+             if k.start_with?( 'http' )
+                if v.has_key?( 'feed' ) then raise ArgumentError.new( "duplicate >feed< hash table entry in section >#{k}<; cannot autogen key" );  end
+
+                new_k = autogen_feed_key( k )
+                # note: use merge - why? why not? to NOT overwrite existing entry - why? why not?
+                h[ new_k ]  = { 'feed' => k }.merge( v )
+             else
+                ## transform key to title and auto-generate id (new key)
+                if v.has_key?( 'title' ) || v.has_key?( 'name' ) then raise ArgumentError.new( "duplicate >name< or >title< hash table entry in section >#{k}<; cannot autogen key" );  end
+                if v.has_key?( 'feed' ) == false                 then raise ArgumentError.new( "expected / required >feed< hash table entry missing for section >#{k}<");  end
+
+                new_k = autogen_feed_key( v['feed'] )
+                # note: use merge - why? why not? to NOT overwrite existing entry - why? why not?
+                h[ new_k ]  = { 'title' => k }.merge( v )
+             end
+          end
+       else
+         raise ArgumentError.new( "expected String or Hash for value (in hash table) but got >#{v.class.name}< for key >#{k}<" )
+       end
+    end
+
+    ## todo/check - auto-add required (?) missing title if missing - why? why not?
+    h['title'] = 'Untitled'   if h.has_key?( 'title' ) == false
+
+    h
+  end
+
 
   def self.subscribe( *feeds )
-    site_hash = {        ## note: keys are strings (NOT symbols) for now
-      'title' => 'Untitled'
-    }
 
-    feeds.each_with_index do |feed|
-      ## note:
-      ##   use a "fingerprint" hash digest as key
-      ##     do NOT include scheme (e.g. https or http)
-      ##     do NOT include port
-      ##   so you can change it without "breaking" the key - why? why not?
-      ##
-      ##  e.g.   u = URI( 'https://example.com:333/a/b?f=xml'
-      ##          u.host+u.request_uri
-      ##         #=> example.com/a/b?f=xml
-      uri = URI( feed )
-      ## note: add host in "plain" text - making errors and the key more readable
-      ## note: cut-off www. if leading e.g. www.ruby-lang.org => ruby-lang.org
-      host = uri.host.downcase.sub( /^www\./, '' )
-      #   use a differt separator e.g _ or ~ and NOT $ - why? why not?
-      key = "#{host}$#{Digest::MD5.hexdigest( uri.request_uri )}"
+    site_hash =   if feeds.size == 1 && feeds[0].is_a?( Hash )
+                     ## puts "bingo!  it's a hash"
+                     norm_feed_hash( feeds[0] )
+                  elsif feeds.size == 1 && feeds[0].is_a?( String ) && feeds[0] =~ /\n/
+                     ## string includes newline (e.g. more than a single line?)
+                     ## if yes, parse and assume ini (config) format
+                     norm_feed_hash( INI.load( feeds[0] ))
+                  else   ## assume list / array of strings (feed_urls)
+                     ## puts "bingo! it's a string list"
+                     ##   auto-build a (simple) site hash
+                     feeds.reduce( {        ## note: keys are strings (NOT symbols) for now
+                                      'title' => 'Untitled'
+                                      ## todo/check: remove title? required? check in model update if missing?
+                                    } ) do |h, feed|
+                                         key = autogen_feed_key( feed )
 
-      site_hash[ key ] = { 'feed'  => feed }
-    end
+                                         h[ key ] = { 'feed'  => feed }
+                                         h
+                                        end
+                  end
 
     connection   ## make sure we have a database connection (and setup) up-and-running
     ## note: always use "multi-site" setup; defaults to 'news' site key
@@ -118,7 +194,7 @@ module News
     ## note: always use "multi-site" setup; defaults to 'news' site key
     ## note: add "default" scope - orders (sorts) by latest / time
     rec = Pluto::Model::Site.where(key: site).first
-    if rec.nil? 
+    if rec.nil?
       Pluto::Model::Item.none    ## use null (relation) pattern to avoid crash on nil - why? why not?
     else
       rec.items.order(
