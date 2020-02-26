@@ -102,9 +102,13 @@ module News
     ## note: always use "multi-site" setup; defaults to 'news' site key
     ## note: add "default" scope - orders (sorts) by latest / time
     rec = Pluto::Model::Site.where(key: site).first
-    rec.feeds.order(
+    if rec.nil?
+      Pluto::Model::Feed.none     ## use null (relation) pattern to avoid crash on nil - why? why not?
+    else
+      rec.feeds.order(
         Arel.sql( "coalesce(feeds.updated,feeds.published,'1970-01-01') desc" )
       )
+    end
   end
   def self.channels()  feeds; end   ## convenience alias for feeds
 
@@ -114,9 +118,13 @@ module News
     ## note: always use "multi-site" setup; defaults to 'news' site key
     ## note: add "default" scope - orders (sorts) by latest / time
     rec = Pluto::Model::Site.where(key: site).first
-    rec.items.order(
+    if rec.nil? 
+      Pluto::Model::Item.none    ## use null (relation) pattern to avoid crash on nil - why? why not?
+    else
+      rec.items.order(
         Arel.sql( "coalesce(items.updated,items.published,'1970-01-01') desc" )
       )
+    end
   end
   def self.latest()    items; end   ## note: "default" scope orders (sorts) by latest / time
 
