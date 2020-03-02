@@ -3,7 +3,7 @@
 #     ruby -I ./lib script/test_query_ii.rb
 
 
-require 'pluto/news'
+require 'newscast'
 
 
 puts ":::::::::::::::::::::::::::::::::::::::::::::::::::"

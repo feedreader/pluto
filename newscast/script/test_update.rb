@@ -3,7 +3,7 @@
 #     ruby -I ./lib script/test_update.rb
 
 
-require 'pluto/news'
+require 'newscast'
 
 
 # News.configure do |config|

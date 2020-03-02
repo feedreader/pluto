@@ -1,4 +1,4 @@
-C:\Sites\feedreader\pluto\pluto-news>ruby -I ./lib script/test_query_ii.rb
+$ ruby -I ./lib script/test_query_ii.rb
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 :: 938 news items from 30 channels:
 

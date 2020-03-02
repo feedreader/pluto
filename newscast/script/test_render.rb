@@ -3,7 +3,7 @@
 #     ruby -I ./lib script/test_render.rb
 
 
-require 'pluto/news'
+require 'newscast'
 
 
 NEWSFEED_TEMPLATE = <<TXT

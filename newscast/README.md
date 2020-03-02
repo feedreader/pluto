@@ -1,10 +1,10 @@
-# pluto-news gem - newsreader for easy (re)use - build your own facebook newsfeed in 1-2-3 steps in 5 minutes
+# newscast gem - newsreader for easy (re)use - build your own facebook newsfeed in 1-2-3 steps in 5 minutes
 
 
 * home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
 * bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
-* gem   :: [rubygems.org/gems/pluto-news](https://rubygems.org/gems/pluto-news)
-* rdoc  :: [rubydoc.info/gems/pluto-news](http://rubydoc.info/gems/pluto-news)
+* gem   :: [rubygems.org/gems/newscast](https://rubygems.org/gems/newscast)
+* rdoc  :: [rubydoc.info/gems/newscast](http://rubydoc.info/gems/newscast)
 * forum :: [groups.google.com/group/wwwmake](http://groups.google.com/group/wwwmake)
 
 
@@ -150,7 +150,7 @@ and some more.
 ### All Together Now - Let's Build A Newsfeed in 20 Lines
 
 ```ruby
-require 'pluto/news'
+require 'newscast'
 
 # step 1) subscribe to a list of news feeds / channels
 
@@ -240,7 +240,7 @@ resulting in:
 
 ![](https://publicdomainworks.github.io/buttons/zero88x31.png)
 
-The `pluto-news` scripts are dedicated to the public domain.
+The `newscast` scripts are dedicated to the public domain.
 Use it as you please with no restrictions whatsoever.
 
 ## Questions? Comments?

@@ -3,7 +3,7 @@
 #     ruby -I ./lib script/test_query.rb
 
 
-require 'pluto/news'
+require 'newscast'
 
 
 ## note: pass in nytimes, lang, etc for multi-site

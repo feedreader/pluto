@@ -2,7 +2,7 @@ CHANGELOG.md
 Manifest.txt
 README.md
 Rakefile
-lib/pluto/news.rb
-lib/pluto/news/version.rb
+lib/newscast.rb
+lib/newscast/version.rb
 test/helper.rb
 test/test_queries.rb

@@ -2,7 +2,7 @@
 require 'minitest/autorun'
 
 ## our own code
-require 'pluto/news'
+require 'newscast'
 
 
 Pluto.config.debug        = true

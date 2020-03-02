@@ -3,7 +3,7 @@
 #     ruby -I ./lib script/test_update_multi.rb
 
 
-require 'pluto/news'
+require 'newscast'
 
 
 News.site = 'nytimes'

@@ -1,11 +1,11 @@
 require 'hoe'
-require './lib/pluto/news/version.rb'
+require './lib/newscast/version.rb'
 
-Hoe.spec 'pluto-news' do
+Hoe.spec 'newscast' do
 
-  self.version = PlutoNews::VERSION
+  self.version = Newscast::VERSION
 
-  self.summary = "pluto-news - newsreader for easy (re)use - build your own facebook newsfeed in 1-2-3 steps in 5 minutes"
+  self.summary = "newscast - newsreader for easy (re)use - build your own facebook newsfeed in 1-2-3 steps in 5 minutes"
   self.description = summary
 
   self.urls    = ['https://github.com/feedreader/pluto']

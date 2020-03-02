@@ -50,7 +50,7 @@ end
 
 
 ## our own code
-require 'pluto/news/version'
+require 'newscast/version'
 
 
 
@@ -355,4 +355,4 @@ end  # module News
 
 
 # say hello
-puts PlutoNews.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+puts Newscast.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
