@@ -1,0 +1,29 @@
+require 'hoe'
+require './lib/feedchecker/version.rb'
+
+Hoe.spec 'feedchecker' do
+
+  self.version = FeedChecker::VERSION
+
+  self.summary = "feedchecker - tools and helpers to check your web feeds"
+  self.description = summary
+
+  self.urls    = ['https://github.com/feedreader/pluto']
+
+  self.author  = 'Gerald Bauer'
+  self.email   = 'wwwmake@googlegroups.com'
+
+
+  # switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.md'
+  self.history_file = 'CHANGELOG.md'
+
+  self.extra_deps = []
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+   required_ruby_version: '>= 2.2.2'
+  }
+
+end
