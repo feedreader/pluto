@@ -24,14 +24,6 @@ def bar( value, max_value, max_width: 60, chars: '▏▎▍▋▊▉' )
 end
 
 
-###
-# add to notes:
-#   node.js npm ascii-horizontal-barchart
-#     https://github.com/morishin/ascii-horizontal-barchart/blob/master/src/chart.js
-#
-
-
-
 def barchart( data, title:,
                     sort: nil,
                     n: nil )
