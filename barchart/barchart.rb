@@ -26,7 +26,8 @@ end
 
 def barchart( data, title:,
                     sort: nil,
-                    n: nil )
+                    n: nil,
+                    chars: nil )
 
   pp data
 
@@ -57,6 +58,12 @@ def barchart( data, title:,
 
   n = sum   if n.nil?   ## no n passed in? use (default to) sum
 
+  bar_opts = {
+    max_width: 50
+  }
+  bar_opts[:chars ] = chars   if chars
+  
+  
   puts "#{title}  (n=#{n})"
   puts "---------------------------------"
   data.each do |rec|
@@ -68,9 +75,8 @@ def barchart( data, title:,
     print "  %-#{max_label}s " % label
     print " (%2d%%)" %  percent     if n == sum  ## only print percent if NOT passed in custom n
     print " | "
-    print bar( value, sum, max_width: 60 )
+    print bar( value, sum, **bar_opts )
     print " %d" % value     if value > 0
     print "\n"
   end
 end
-
