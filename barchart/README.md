@@ -53,16 +53,16 @@ Resulting in:
 ```
 Location  (n=18)
 ---------------------------------
-  Australia       (16%) | ********* 3
-  Austria         ( 5%) | *** 1
-  Canada          ( 5%) | *** 1
-  Croatia         ( 5%) | *** 1
-  India           ( 5%) | *** 1
-  Poland          (11%) | ****** 2
-  Spain           ( 5%) | *** 1
-  Switzerland     ( 5%) | *** 1
-  Ukraine         ( 5%) | *** 1
-  United States   (33%) | ******************* 6
+  Australia      (16%) | ******** 3
+  Austria        ( 5%) | ** 1
+  Canada         ( 5%) | ** 1
+  Croatia        ( 5%) | ** 1
+  India          ( 5%) | ** 1
+  Poland         (11%) | ***** 2
+  Spain          ( 5%) | ** 1
+  Switzerland    ( 5%) | ** 1
+  Ukraine        ( 5%) | ** 1
+  United States  (33%) | **************** 6
 ```
 
 or using Unicode block elements:
@@ -76,7 +76,16 @@ Resulting in:
 ```
 Location  (n=18)
 ---------------------------------
-
+  Australia      (16%) | ▉▉▉▉▉▉▉▉▍ 3
+  Austria        ( 5%) | ▉▉▊ 1
+  Canada         ( 5%) | ▉▉▊ 1
+  Croatia        ( 5%) | ▉▉▊ 1
+  India          ( 5%) | ▉▉▊ 1
+  Poland         (11%) | ▉▉▉▉▉▋ 2
+  Spain          ( 5%) | ▉▉▊ 1
+  Switzerland    ( 5%) | ▉▉▊ 1
+  Ukraine        ( 5%) | ▉▉▊ 1
+  United States  (33%) | ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▊ 6
 ```
 
 
@@ -121,14 +130,14 @@ Resulting in:
 ```
 Generators  (n=51)
 ---------------------------------
-  ?           (58%) | ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▎ 30
-  Jekyll      (23%) | ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▏ 12
-  WordPress   ( 5%) | ▉▉▉▋ 3
-  Ghost       ( 3%) | ▉▉▍ 2
-  Hugo        ( 1%) | ▉▎ 1
-  Transistor  ( 1%) | ▉▎ 1
-  Webgen      ( 1%) | ▉▎ 1
-  Simplecast  ( 1%) | ▉▎ 1
+  ?           (58%) | ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▍ 30
+  Jekyll      (23%) | ▉▉▉▉▉▉▉▉▉▉▉▊ 12
+  WordPress   ( 5%) | ▉▉▉ 3
+  Ghost       ( 3%) | ▉▉ 2
+  Hugo        ( 1%) | ▉ 1
+  Transistor  ( 1%) | ▉ 1
+  Simplecast  ( 1%) | ▉ 1
+  Webgen      ( 1%) | ▉ 1
 ```
 
 
@@ -148,7 +157,7 @@ data = [
   ['ml',           2],
 ]
 
-p barchart( data, 'Top Words in Headlines 2020', n: 47)
+p barchart( data, title: 'Top Words in Headlines 2020', n: 47)
 ```
 
 resulting in:
@@ -156,12 +165,12 @@ resulting in:
 ```
 Top Words in Headlines 2020  (n=47)
 ---------------------------------
-  rails           | ***************** 13
-  ruby            | **************** 12
-  conferences     | ******* 6
-  dry             | ****** 5
-  rom             | ***** 4
-  ml              | ** 2
+  rails        | ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▍ 13
+  ruby         | ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▎ 12
+  conferences  | ▉▉▉▉▉▉▉▏ 6
+  dry          | ▉▉▉▉▉▉ 5
+  rom          | ▉▉▉▉▊ 4
+  ml           | ▉▉▍ 2
 ```
 
 
