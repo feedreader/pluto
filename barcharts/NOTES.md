@@ -4,7 +4,8 @@
 ## Todos
 
 Try more candidate chars
-- how about?  `❚❚❚❚❚❚❚❚❚❚❚`  instead of `***********`
+- how about? `❚` e.g. `❚❚❚❚❚❚❚❚❚❚❚`  instead of `***********`
+- how about? `█` e.g. `██████████`  instead of `***********`
 
 
 ## Alternatives
