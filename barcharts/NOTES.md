@@ -9,9 +9,14 @@ Try more candidate chars
 
 ## Alternatives
 
-- node.js npm ascii-horizontal-barchart
-  - <https://github.com/morishin/ascii-horizontal-barchart/blob/master/src/chart.js>
+Node.js
 
+- npm ascii-horizontal-barchart, source <https://github.com/morishin/ascii-horizontal-barchart/blob/master/src/chart.js>
+
+Python
+
+- py-ascii-graph <https://pypi.org/project/ascii_graph/>
+- <https://alexwlchan.net/2018/05/ascii-bar-charts/>
 
 Ruby
 
