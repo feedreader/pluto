@@ -15,7 +15,7 @@ Let's use the
 example from the Planet Ruby page:
 
 ``` ruby
-require 'barchart'
+require 'barcharts'
 
 data = [
   ['Australia',     3],
