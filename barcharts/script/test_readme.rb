@@ -1,8 +1,9 @@
+###
+#  to run use
+#     ruby -I ./lib script/test_readme.rb
 
-require 'pp'
 
-
-require_relative './barchart'
+require 'barcharts'
 
 
 
@@ -19,9 +20,9 @@ data = [
   ['United States', 6],
 ]
 
-barchart( data, title: 'Location', chars: '*' )
+puts barchart( data, title: 'Location', chars: '*' )
 
-barchart( data, title: 'Location', chars: '▏▎▍▋▊▉' )
+puts barchart( data, title: 'Location', chars: '▏▎▍▋▊▉' )
 
 
 
@@ -36,7 +37,7 @@ data = [
   ['?',          30],
 ]
 
-barchart( data, title: 'Generators', sort: true )
+puts barchart( data, title: 'Generators', sort: true )
 
 data = [
   ['rails',       13],
@@ -47,4 +48,4 @@ data = [
   ['ml',           2],
 ]
 
-barchart( data, title: 'Top Words in Headlines 2020', n: 47)
+puts barchart( data, title: 'Top Words in Headlines 2020', n: 47)

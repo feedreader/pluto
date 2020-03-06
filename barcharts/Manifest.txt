@@ -1,0 +1,9 @@
+CHANGELOG.md
+Manifest.txt
+README.md
+Rakefile
+lib/barcharts.rb
+lib/barcharts/version.rb
+script/test_readme.rb
+test/helper.rb
+test/test_barchart.rb

@@ -1,9 +1,9 @@
-# barchart gem - print barcharts in your terminal in ascii or with unicode block elements
+# barcharts gem - print barcharts in your terminal in ascii or with unicode block elements
 
 * home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
 * bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
-* gem   :: [rubygems.org/gems/barchart](https://rubygems.org/gems/barchart)
-* rdoc  :: [rubydoc.info/gems/barchart](http://rubydoc.info/gems/barchart)
+* gem   :: [rubygems.org/gems/barcharts](https://rubygems.org/gems/barcharts)
+* rdoc  :: [rubydoc.info/gems/barcharts](http://rubydoc.info/gems/barcharts)
 * forum :: [groups.google.com/group/wwwmake](http://groups.google.com/group/wwwmake)
 
 
@@ -45,7 +45,7 @@ data = {
   'United States': 6,
 }
 
-p barchart( data, title: 'Location', chars: '*' )
+puts barchart( data, title: 'Location', chars: '*' )
 ```
 
 Resulting in:
@@ -68,7 +68,7 @@ Location  (n=18)
 or using Unicode block elements:
 
 ``` ruby
-p barchart( data, title: 'Location', chars: '▏▎▍▋▊▉' )
+puts barchart( data, title: 'Location', chars: '▏▎▍▋▊▉' )
 ```
 
 Resulting in:
@@ -122,7 +122,7 @@ data = [
   ['?',          30],
 ]
 
-p barchart( data, title: 'Generators', sort: true )
+puts barchart( data, title: 'Generators', sort: true )
 ```
 
 Resulting in:
@@ -157,7 +157,7 @@ data = [
   ['ml',           2],
 ]
 
-p barchart( data, title: 'Top Words in Headlines 2020', n: 47)
+puts barchart( data, title: 'Top Words in Headlines 2020', n: 47)
 ```
 
 resulting in:
@@ -180,7 +180,7 @@ That's all for now.
 
 ## License
 
-The `barchart` scripts are dedicated to the public domain.
+The `barcharts` scripts are dedicated to the public domain.
 Use it as you please with no restrictions whatsoever.
 
 ## Questions? Comments?
