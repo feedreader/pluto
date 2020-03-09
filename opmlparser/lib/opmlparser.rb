@@ -147,19 +147,21 @@ class Outline
   def each( &blk ) @h['outline'].each( &blk ); end
 
 
-  def text()     @h['text'];   end
-  def xmlUrl()   @h['xmlUrl']; end
+  def text()         @h['text'];   end
+  def xmlUrl()       @h['xmlUrl']; end
   alias_method :xml_url, :xmlUrl
 
-  def url()      @h['url']; end
-  def htmlUrl()  @h['htmlUrl']; end
+  def url()          @h['url']; end
+  def htmlUrl()      @h['htmlUrl']; end
   alias_method :html_url, :htmlUrl
 
-  def created()  @h['created']; end
-  def title()    @h['title']; end
-  def type()     @h['type']; end
-  def category() @h['category']; end
-
+  def created()      @h['created']; end
+  def title()        @h['title']; end
+  def type()         @h['type']; end
+  def category()     @h['category']; end
+  def description()  @h['description']; end
+  def language()     @h['language']; end
+  def version()      @h['version']; end
 
   def meta()  @h['meta']; end
 end # class Outline
