@@ -1,10 +1,12 @@
 require 'pp'
+require 'date'
+require 'time'
 require 'rexml/Document'
 
 
-##
-## see http://dev.opml.org/spec2.html
-##   for examples
+# our own code
+require 'opmlparser/version'   # note: let version always go first
+
 
 
 module OPML
@@ -25,13 +27,13 @@ end
 def self.parse( xml, outlinify: false )
   opml = REXML::Document.new( xml )
 
-  puts "head:"
+  ### parse head
   meta    = {}
   opml.elements['opml/head'].elements.each do |el|
     meta[ el.name ] = el.text
   end
 
-  puts "body:"
+  ## parse body
   outline = []
   parse_outline( outline, opml.elements['opml/body'], outlinify: outlinify )
 
@@ -101,6 +103,24 @@ class Outline
     end
 
     def [](key) @h[key]; end
+
+    def title()        @h['title']; end
+    def dateCreated()  @h['dateCreated' ]; end
+    alias_method :date_created, :dateCreated
+    alias_method :created,      :dateCreated
+
+    def dateModified() @h['dateModified']; end
+    alias_method :date_modified, :dateModified
+    alias_method :modified,      :dateModified
+
+    def ownerName() @h['ownerName']; end
+    alias_method :owner_name, :ownerName
+
+    def ownerEmail() @h['ownerEmail']; end
+    alias_method :owner_email, :ownerEmail
+
+    def ownerId() @h['ownerId']; end
+    alias_method :owner_id, :ownerId
   end # class Meta
 
 
@@ -127,11 +147,19 @@ class Outline
   def each( &blk ) @h['outline'].each( &blk ); end
 
 
-  def text()   @h['text'];   end
-  def xmlUrl() @h['xmlUrl']; end
+  def text()     @h['text'];   end
+  def xmlUrl()   @h['xmlUrl']; end
   alias_method :xml_url, :xmlUrl
 
-  def url()    @h['url']; end
+  def url()      @h['url']; end
+  def htmlUrl()  @h['htmlUrl']; end
+  alias_method :html_url, :htmlUrl
+
+  def created()  @h['created']; end
+  def title()    @h['title']; end
+  def type()     @h['type']; end
+  def category() @h['category']; end
+
 
   def meta()  @h['meta']; end
 end # class Outline
@@ -140,3 +168,8 @@ end # module OPML
 
 ## add some convenience shortcuts
 Outline = OPML::Outline
+
+
+
+# say hello
+puts OPML.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

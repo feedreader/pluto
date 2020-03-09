@@ -1,14 +1,12 @@
-# opml gem - read / parse outlines (incl. feed subscription lists) in the OPML (Outline Processor Markup Language) format in xml
+# opmlparser gem - read / parse outlines (incl. feed subscription lists) in the OPML (Outline Processor Markup Language) format in xml
 
 
 * home  :: [github.com/feedreader/pluto](https://github.com/feedreader/pluto)
 * bugs  :: [github.com/feedreader/pluto/issues](https://github.com/feedreader/pluto/issues)
-* gem   :: [rubygems.org/gems/opml](https://rubygems.org/gems/opml)
-* rdoc  :: [rubydoc.info/gems/opml](http://rubydoc.info/gems/opml)
+* gem   :: [rubygems.org/gems/opmlparser](https://rubygems.org/gems/opmlparser)
+* rdoc  :: [rubydoc.info/gems/opmlparser](http://rubydoc.info/gems/opmlparser)
 * forum :: [groups.google.com/group/wwwmake](http://groups.google.com/group/wwwmake)
 
-
-## Usage
 
 ## Usage
 
@@ -47,7 +45,7 @@ hash = OPML.load_file( './planet.opml.xml' )
 All together now. Example:
 
 ``` ruby
-require 'opml'
+require 'opmlparser'
 
 xml = <<TXT
   <opml version="1.1">
@@ -88,7 +86,7 @@ resulting in:
 to access use:
 
 ``` ruby
-hash['meta']['title]          #=> "Planet Ruby"
+hash['meta']['title']         #=> "Planet Ruby"
 hash['outline'][0]['text']    #=> "Ruby Lang News"
 hash['outline'][0]['xmlUrl']  #=> "http://www.ruby-lang.org/en/feeds/news.rss"
 hash['outline'][1]['text']    #=> "JRuby Lang News"
@@ -252,7 +250,7 @@ That's all for now.
 
 ## License
 
-The `opml` scripts are dedicated to the public domain.
+The `opmlparser` scripts are dedicated to the public domain.
 Use it as you please with no restrictions whatsoever.
 
 ## Questions? Comments?

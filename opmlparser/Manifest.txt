@@ -1,0 +1,11 @@
+CHANGELOG.md
+Manifest.txt
+README.md
+Rakefile
+lib/opmlparser.rb
+lib/opmlparser/version.rb
+test/helper.rb
+test/outlines/category.opml.xml
+test/outlines/places_lived.opml.xml
+test/outlines/states.opml.xml
+test/test_opml.rb
