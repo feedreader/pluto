@@ -1,0 +1,49 @@
+<opml version="2.0">
+  <head>
+    <title>About feedBase...</title>
+    <dateCreated>Wed, 28 Feb 2018 15:34:12 GMT</dateCreated>
+    <dateModified>Tue, 26 Mar 2019 12:23:58 GMT</dateModified>
+    <ownerId>https://twitter.com/davewiner/</ownerId>
+    <ownerName>scripting.com</ownerName>
+    <ownerTwitterScreenName>davewiner</ownerTwitterScreenName>
+    <expansionState>1,3,8,11,12,16,21</expansionState>
+    <lastCursor>2</lastCursor>
+    <flDisqusComments>true</flDisqusComments>
+    <type>blogpost</type>
+    </head>
+  <body>
+    <outline text="What is this?" created="Wed, 28 Feb 2018 15:34:12 GMT">
+      <outline text="&lt;a href=&quot;http://feedbase.io/&quot;&gt;feedBase&lt;/a&gt; is a project to get feeds into a database." created="Wed, 28 Feb 2018 15:34:17 GMT"/>
+      </outline>
+    <outline text="All info you upload is public" created="Wed, 28 Feb 2018 15:35:03 GMT">
+      <outline text="This is important." created="Wed, 28 Feb 2018 15:35:11 GMT"/>
+      <outline text="All information you upload to this feedBase is public." created="Tue, 26 Mar 2019 12:23:37 GMT"/>
+      <outline text="Do not upload private information." created="Tue, 26 Mar 2019 12:23:43 GMT"/>
+      <outline text="This is a publishing system and a way of sharing information. By definition it's all public. That's the point of uploading the information." created="Tue, 26 Mar 2019 12:23:51 GMT"/>
+      </outline>
+    <outline text="Logging in" created="Wed, 28 Feb 2018 15:37:40 GMT">
+      <outline text="We use Twitter for identity. We will not post anything on your behalf. The only information we access through Twitter is your public profile, which may be used to set defaults for preferences in feedBase. " created="Wed, 28 Feb 2018 15:37:50 GMT"/>
+      <outline text="You can use feedBase with or without logging in. You must be logged in to upload subscription lists, or to subscribe to or unsubscribe from feeds. " created="Wed, 28 Feb 2018 15:37:07 GMT"/>
+      </outline>
+    <outline text="How to" created="Wed, 28 Feb 2018 15:35:50 GMT">
+      <outline text="Upload your OPML file." created="Wed, 28 Feb 2018 15:37:31 GMT" flNumberedSubs="true">
+        <outline text="Export your &lt;a href=&quot;http://scripting.com/2016/10/13/whatIsAnOpmlSubscriptionList.html&quot;&gt;subscription list&lt;/a&gt; in whatever RSS reader or podcast client you use." created="Wed, 28 Feb 2018 16:35:16 GMT"/>
+        <outline text="In feedBase, sign in with Twitter and drag-drop your OPML file onto the &lt;a href=&quot;http://scripting.com/images/2018/03/07/uploadIcon.png&quot;&gt;Upload icon&lt;/a&gt; in the menu bar. You can also click the icon to get a dialog where you choose the OPML file to upload." created="Wed, 28 Feb 2018 16:35:43 GMT"/>
+        <outline text="You can watch a short &lt;a href=&quot;http://scripting.com/2018/03/27/164606.html&quot;&gt;video&lt;/a&gt; demo that shows how to do this." created="Wed, 28 Mar 2018 15:10:24 GMT"/>
+        </outline>
+      <outline text="Browse the network" created="Wed, 28 Feb 2018 16:36:29 GMT" flNumberedSubs="true">
+        <outline text="Start with the hotlist, it's on the &lt;a href=&quot;http://feedbase.io/&quot;&gt;home page&lt;/a&gt; of the feedBase site." created="Wed, 28 Feb 2018 16:36:34 GMT"/>
+        <outline text="Click on one of the feeds to get to its feed description &lt;a href=&quot;http://feedbase.io/?feedurl=http%3A%2F%2Finessential.com%2Fxml%2Frss.xml&quot;&gt;page&lt;/a&gt;." created="Wed, 28 Feb 2018 16:36:47 GMT"/>
+        <outline text="Click on a subscriber &lt;a href=&quot;http://feedbase.io/?username=davewiner&quot;&gt;name&lt;/a&gt; to see the feeds they subscribe to." created="Wed, 28 Feb 2018 16:37:00 GMT"/>
+        </outline>
+      <outline text="See what you're subscribed to" created="Wed, 28 Feb 2018 18:02:03 GMT" flNumberedSubs="true">
+        <outline text="Choose &lt;i&gt;Show my subs&lt;/i&gt; in the Main menu." created="Wed, 28 Feb 2018 18:02:10 GMT"/>
+        </outline>
+      </outline>
+    <outline text="More info" created="Wed, 28 Mar 2018 15:11:42 GMT">
+      <outline text="I wrote a &lt;a href=&quot;http://scripting.com/2018/03/26/145515.html&quot;&gt;vision statement&lt;/a&gt; for the project on my blog. It's a bootstrap. A Hail Mary pass. A chicken and egg thing. I hope people who make feed readers make it so that people can subscribe to OPML lists, so there can be an explosion of new applications that use feeds. The subscriptions have been too hard to get to. This was part of the original vision for RSS&gt;" created="Wed, 28 Mar 2018 15:11:44 GMT"/>
+      <outline text="Lots of links on Scripting News for &lt;a href=&quot;http://scripting.com/2018/03/28/131928.html&quot;&gt;3/28/20018&lt;/a&gt;." created="Wed, 28 Mar 2018 15:14:04 GMT"/>
+      <outline text="If you have questions post a comment here, or if they're very technical, as an &lt;a href=&quot;https://github.com/scripting/feedBase/issues/new&quot;&gt;issue&lt;/a&gt; on the GitHub repo." created="Wed, 28 Mar 2018 15:14:48 GMT"/>
+      </outline>
+    </body>
+  </opml>
