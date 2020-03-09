@@ -2,6 +2,17 @@
 
 ## Todos
 
+add more / all outline props from opml 2.0 spec/samples:
+
+- title
+- text
+- xmlurl
+- htmlurl
+- description
+- type
+- language
+- version
+
 
 ## Alternatives
 
@@ -19,6 +30,11 @@ search Google <https://www.google.com/search?q=ruby+opml>
 
 - Parsing an OPML with Ruby by Sebastián Martínez (WyeWorks), Feb 2009 @ <https://www.wyeworks.com/blog/2009/02/20/parse-opml-with-ruby/>
 
+
+### Node.js
+
+- <https://www.npmjs.com/package/opmlparser>
+- <https://www.npmjs.com/package/node-opml-parser>
 
 ## References
 
