@@ -12,9 +12,12 @@
 For more search Rubygems <https://rubygems.org/search?query=opml> or
 search Google <https://www.google.com/search?q=ruby+opml>
 
+- [**opml gem**](https://rubygems.org/gems/opml), source <https://github.com/SteveBenner/opml>
+
+
 **Articles**
 
-- Parsing an OPML with Ruby by Sebastián Martínez (Wye Works), Feb 2009 @ <https://www.wyeworks.com/blog/2009/02/20/parse-opml-with-ruby/>
+- Parsing an OPML with Ruby by Sebastián Martínez (WyeWorks), Feb 2009 @ <https://www.wyeworks.com/blog/2009/02/20/parse-opml-with-ruby/>
 
 
 ## References
