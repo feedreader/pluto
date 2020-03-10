@@ -2,17 +2,6 @@
 
 ## Todos
 
-add more / all outline props from opml 2.0 spec/samples:
-
-- title
-- text
-- xmlurl
-- htmlurl
-- description
-- type
-- language
-- version
-
 
 ## Alternatives
 

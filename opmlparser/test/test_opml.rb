@@ -40,5 +40,22 @@ class TestOpml < MiniTest::Test
     o = Outline.load_file( './test/outlines/category.opml.xml' )
     o = Outline.load_file( './test/outlines/places_lived.opml.xml' )
     o = Outline.load_file( './test/outlines/states.opml.xml' )
+
+    ## check more
+    o = Outline.read( './test/outlines/directory.opml.xml' )
+    o = Outline.read( './test/outlines/feedbase_about.opml.xml' )
+    o = Outline.read( './test/outlines/feedbase_hotlist.opml.xml' )
+    o = Outline.read( './test/outlines/simple_script.opml.xml' )
+    o = Outline.read( './test/outlines/subscription_list.opml.xml' )
+
+    assert_equal "CNET News.com", o[0].text
+    assert_equal "Tech news and business reports by CNET News.com. Focused on information technology, core topics include computers, hardware, software, networking, and Internet media.",
+                  o[0].description
+    assert_equal "http://news.com.com/", o[0].html_url 
+    assert_equal "unknown",              o[0].language
+    assert_equal "CNET News.com",        o[0].title
+    assert_equal "rss",                  o[0].type
+    assert_equal "RSS2",                 o[0].version
+    assert_equal "http://news.com.com/2547-1_3-0-5.xml", o[0].xml_url
   end
 end  # class TestOpml

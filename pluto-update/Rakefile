@@ -18,8 +18,9 @@ Hoe.spec 'pluto-update' do
   self.history_file = 'CHANGELOG.md'
 
   self.extra_deps = [
-    ['pluto-models',      '>= 1.5.4'],
+    ['pluto-models',      '>= 1.6.2'],
     ['pluto-feedfetcher', '>= 0.1.4'],
+    ['opmlparser',        '>= 1.0.0'],
   ]
 
   self.licenses = ['Public Domain']

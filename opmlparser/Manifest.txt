@@ -6,6 +6,11 @@ lib/opmlparser.rb
 lib/opmlparser/version.rb
 test/helper.rb
 test/outlines/category.opml.xml
+test/outlines/directory.opml.xml
+test/outlines/feedbase_about.opml.xml
+test/outlines/feedbase_hotlist.opml.xml
 test/outlines/places_lived.opml.xml
+test/outlines/simple_script.opml.xml
 test/outlines/states.opml.xml
+test/outlines/subscription_list.opml.xml
 test/test_opml.rb

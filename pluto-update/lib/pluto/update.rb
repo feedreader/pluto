@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'opmlparser'
+
 
 require 'pluto/models'
 require 'pluto/feedfetcher'
