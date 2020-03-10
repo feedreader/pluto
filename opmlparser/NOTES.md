@@ -25,12 +25,20 @@ search Google <https://www.google.com/search?q=ruby+opml>
 - <https://www.npmjs.com/package/opmlparser>
 - <https://www.npmjs.com/package/node-opml-parser>
 
+
 ## References
 
 ### OPML
 
-- Spec @ <http://dev.opml.org/spec2.html> incl. examples
+- Official OPML Home @ <http://dev.opml.org>
+  - Spec v1 @ <http://dev.opml.org/spec1.html>
+  - Spec v2 @ <http://dev.opml.org/spec2.html> incl. examples
 - Wikipedia @ <https://en.wikipedia.org/wiki/OPML>
 - IndieWeb @ <https://indieweb.org/OPML>
 
+### Outliners
 
+_A software program for organizing text into a (tree) hierarchy._
+
+- Wikipedia @ <https://en.wikipedia.org/wiki/Outliner>
+- Outliners.com (Outliners @ Scripting.com) <http://outliners.scripting.com/>
