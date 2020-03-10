@@ -85,79 +85,139 @@ module News
   end
 
   def self.norm_feed_hash( old_h )   ## todo/check: rename to normalize/unify_feeds or resolve_feedlist or something?
-    ## unify feed list entries
-    ## case 1) if section name is some thing like [Andrew Kane]
-    ##           and  NO title/name key than assume it's the title/name
-    ##           and auto-generated key/id
-
-    ## move all "global" settings to [planet] section - why? why not?
-    ##  e.g.
-    ##   title = Planet Open Data News
-    ##  becomes
-    ##   [planet]
-    ##     title = Planet Open Data News
-
     h = {}
-    old_h.each do |k,v|
-       if    v.is_a?( String )
-          h[ k ] = v   ## pass along as-is (assume "top-level" / global setting)
-       elsif v.is_a?( Hash )
-          ## puts "#{k}:"
-          ## pp v
-          ## todo/fix: use "proper" ident e.g. allow 0-9 and .-_ too? why? why not?
-          if k =~ /^[a-z_][a-z0-9$_.]*$/   ## all lower case; assume id - add 0-9 and .-_ - why? why not?
-            h[ k ] = v
-          else
-             ## puts "bingo! section name shortcut - #{k}"
-             if k.start_with?( 'http' )
-                if v.has_key?( 'feed' ) then raise ArgumentError.new( "duplicate >feed< hash table entry in section >#{k}<; cannot autogen key" );  end
 
-                new_k = autogen_feed_key( k )
-                # note: use merge - why? why not? to NOT overwrite existing entry - why? why not?
-                h[ new_k ]  = { 'feed' => k }.merge( v )
-             else
-                ## transform key to title and auto-generate id (new key)
-                if v.has_key?( 'title' ) || v.has_key?( 'name' ) then raise ArgumentError.new( "duplicate >name< or >title< hash table entry in section >#{k}<; cannot autogen key" );  end
-                if v.has_key?( 'feed' ) == false                 then raise ArgumentError.new( "expected / required >feed< hash table entry missing for section >#{k}<");  end
+    ## check for opml hash table (via OPML.load/load_file)
+    ##   MUST have outline entry and value MUST be an array (even if empty e.g. [])
+    if old_h.has_key?( 'outline' ) && old_h[ 'outline' ].is_a?( Array )
+      old_h['outline'].each do |outline|
+        xml_url   = outline['xmlUrl']
 
-                new_k = autogen_feed_key( v['feed'] )
-                # note: use merge - why? why not? to NOT overwrite existing entry - why? why not?
-                h[ new_k ]  = { 'title' => k }.merge( v )
-             end
-          end
-       else
-         raise ArgumentError.new( "expected String or Hash for value (in hash table) but got >#{v.class.name}< for key >#{k}<" )
-       end
+        new_k = autogen_feed_key( xml_url )
+        h[ new_k ] = { 'feed' => xml_url }
+
+
+        text      = outline['text']
+        html_url  = outline['htmlUrl']
+
+        h[ new_k ]['title'] = text      if text      && !text.empty?
+        h[ new_k ]['link']  = html_url  if html_url  && !html_url.empty?
+      end
+
+      h['title'] =  if old_h['meta']['title']
+                        old_h['meta']['title']
+                    else
+                       'Untitled'
+                    end
+    else
+      ## unify feed list entries
+      ## case 1) if section name is some thing like [Andrew Kane]
+      ##           and  NO title/name key than assume it's the title/name
+      ##           and auto-generated key/id
+
+      ## move all "global" settings to [planet] section - why? why not?
+      ##  e.g.
+      ##   title = Planet Open Data News
+      ##  becomes
+      ##   [planet]
+      ##     title = Planet Open Data News
+
+      old_h.each do |k,v|
+         if    v.is_a?( String )
+            h[ k ] = v   ## pass along as-is (assume "top-level" / global setting)
+         elsif v.is_a?( Hash )
+            ## puts "#{k}:"
+            ## pp v
+            ## todo/fix: use "proper" ident e.g. allow 0-9 and .-_ too? why? why not?
+            if k =~ /^[a-z_][a-z0-9$_.]*$/   ## all lower case; assume id - add 0-9 and .-_ - why? why not?
+              h[ k ] = v
+            else
+               ## puts "bingo! section name shortcut - #{k}"
+               if k.start_with?( 'http' )
+                  if v.has_key?( 'feed' ) then raise ArgumentError.new( "duplicate >feed< hash table entry in section >#{k}<; cannot autogen key" );  end
+
+                  new_k = autogen_feed_key( k )
+                  # note: use merge - why? why not? to NOT overwrite existing entry - why? why not?
+                  h[ new_k ]  = { 'feed' => k }.merge( v )
+               else
+                  ## transform key to title and auto-generate id (new key)
+                  if v.has_key?( 'title' ) || v.has_key?( 'name' ) then raise ArgumentError.new( "duplicate >name< or >title< hash table entry in section >#{k}<; cannot autogen key" );  end
+                  if v.has_key?( 'feed' ) == false                 then raise ArgumentError.new( "expected / required >feed< hash table entry missing for section >#{k}<");  end
+
+                  new_k = autogen_feed_key( v['feed'] )
+                  # note: use merge - why? why not? to NOT overwrite existing entry - why? why not?
+                  h[ new_k ]  = { 'title' => k }.merge( v )
+               end
+            end
+         else
+           raise ArgumentError.new( "expected String or Hash for value (in hash table) but got >#{v.class.name}< for key >#{k}<" )
+         end
+      end
+      ## todo/check - auto-add required (?) missing title if missing - why? why not?
+      h['title'] = 'Untitled'   if h.has_key?( 'title' ) == false
     end
-
-    ## todo/check - auto-add required (?) missing title if missing - why? why not?
-    h['title'] = 'Untitled'   if h.has_key?( 'title' ) == false
 
     h
   end
 
+  ##################
+  ## helper build a feed (list) hash from an array / list of strings / urls
+  def self.build_feed_hash( feeds )
+    h = {  ## note: keys are strings (NOT symbols) for now
+          'title' => 'Untitled'
+          ## todo/check: remove title? required? check in model update if missing?
+        }
+
+    feeds.reduce( h ) do |h, feed|
+                           key = autogen_feed_key( feed )
+
+                           h[ key ] = { 'feed' => feed }
+                           h
+                      end
+  end
+
 
   def self.subscribe( *feeds )
-
     site_hash =   if feeds.size == 1 && feeds[0].is_a?( Hash )
                      ## puts "bingo!  it's a hash"
                      norm_feed_hash( feeds[0] )
+                  elsif feeds.size == 1 && feeds[0].is_a?( Array )
+                    ## assume feed list in array (of strings) via JSON.parse e.g.
+                    ## ["http://feeds.feedburner.com/nymag/intel",
+                    ##  "http://radio3.io/users/davewiner/rss.xml",
+                    ##  "http://www.schockwellenreiter.de/feed/",
+                    ##  "http://feed.dilbert.com/dilbert/blog"]
+                    build_feed_hash( feeds[0] )
                   elsif feeds.size == 1 && feeds[0].is_a?( String ) && feeds[0] =~ /\n/
+                     ## use / keep "simple" heuristic for different "inline" formats - why? why not?
+                     ##  1) opml
+                     ##  2) url list  (allow blank lines and comments via #)
+                     ##  3) ini/config
+
                      ## string includes newline (e.g. more than a single line?)
                      ## if yes, parse and assume ini (config) format
-                     norm_feed_hash( INI.load( feeds[0] ))
+                     if %r{<opml[^>]*>}.match( feeds[0] ) &&
+                        %r{</opml>}.match( feeds[0] )
+                          norm_feed_hash( OPML.load( feeds[0] ))
+                     ## assume "simple" string list
+                     ##  for now only support http and https protocols
+                     elsif %r{^[ ]*https?://}.match( feeds[0] )
+                          lines = []
+                          feeds[0].each_line do |line|
+                            line = line.strip
+                            next if line.empty?
+                            next if line.start_with?('#')
+                            lines << line
+                          end
+                          build_feed_hash( lines )
+                     ## assume / default to ini config style for now
+                     else
+                          norm_feed_hash( INI.load( feeds[0] ))
+                     end
                   else   ## assume list / array of strings (feed_urls)
                      ## puts "bingo! it's a string list"
                      ##   auto-build a (simple) site hash
-                     feeds.reduce( {        ## note: keys are strings (NOT symbols) for now
-                                      'title' => 'Untitled'
-                                      ## todo/check: remove title? required? check in model update if missing?
-                                    } ) do |h, feed|
-                                         key = autogen_feed_key( feed )
-
-                                         h[ key ] = { 'feed'  => feed }
-                                         h
-                                        end
+                     build_feed_hash( feeds )
                   end
 
     connection   ## make sure we have a database connection (and setup) up-and-running
@@ -181,8 +241,9 @@ module News
     if rec.nil?
       Pluto::Model::Feed.none     ## use null (relation) pattern to avoid crash on nil - why? why not?
     else
+      # was coalesce(feeds.updated,feeds.published,'1970-01-01')
       rec.feeds.order(
-        Arel.sql( "coalesce(feeds.updated,feeds.published,'1970-01-01') desc" )
+        Arel.sql( "coalesce(feeds.items_last_updated,'1970-01-01') desc" )
       )
     end
   end
