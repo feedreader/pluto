@@ -71,7 +71,7 @@ class Item < ActiveRecord::Base
   ## e.g. use  item.data.updated
   ##           item.data.updated? etc.
   class Data
-    def initialize( feed ) @item = item; end
+    def initialize( item ) @item = item; end
 
     def updated()     @item.read_attribute(:updated); end           # "regular" updated incl. published fallback
     def published()   @item.read_attribute(:published); end

@@ -4,7 +4,7 @@ module Pluto
 
   MAJOR = 1
   MINOR = 6
-  PATCH = 1
+  PATCH = 2
   VERSION = [MAJOR,MINOR,PATCH].join('.')
 
   def self.version

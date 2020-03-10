@@ -214,10 +214,41 @@ class Feed < ActiveRecord::Base
     update_from_struct!( data )
   end # method deep_update_from_struct!
 
+
+  # try to get date from slug in url
+  #  e.g. /news/2019-10-17-growing-ruby-together
+  FIX_DATE_SLUG_RE = %r{\b
+                          (?<year>[0-9]{4})
+                             -
+                          (?<month>[0-9]{2})
+                             -
+                          (?<day>[0-9]{2})   
+                        \b}x
+
   ###################################################
   #   helpers to fix-up some "broken" feed data 
   def fix_dates( data )
 
+    ## check for missing / no dates 
+    ##   examples
+    ##    - rubytogether feed @ https://rubytogether.org/news.xml
+    data.items.each do |item|
+      if item.updated.nil?  &&
+         item.published.nil?
+          ## try to get date from slug in url
+          ##  e.g. /news/2019-10-17-growing-ruby-together
+          if (m=FIX_DATE_SLUG_RE.match( item.url ))
+            ## todo/fix: make sure DateTime gets utc (no timezone/offset +000)
+            published = DateTime.new( m[:year].to_i(10),
+                                      m[:month].to_i(10),
+                                      m[:day].to_i(10) )
+            item.published_local  = published
+            item.published        = published
+          end
+      end
+    end
+
+    
     ## check if all updated dates are the same (uniq count is 1)
     ##   AND if all published dates are present
     ##  than assume "fake" updated dates and nullify updated dates

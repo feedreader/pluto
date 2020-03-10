@@ -17,4 +17,5 @@ test/helper.rb
 test/test_delete_removed.rb
 test/test_filter.rb
 test/test_helpers.rb
+test/test_regex.rb
 test/test_site.rb
