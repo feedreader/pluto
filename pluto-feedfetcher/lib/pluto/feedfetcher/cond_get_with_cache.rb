@@ -32,7 +32,7 @@ class FeedFetcherCondGetWithCache
 
     begin
       response = @worker.get( feed_url )
-    rescue SocketError, SystemCallError => e
+    rescue Net::ReadTimeout, SocketError, SystemCallError => e
       ## catch socket error for unknown domain names (e.g. pragdave.blogs.pragprog.com)
       ###  will result in SocketError -- getaddrinfo: Name or service not known
       logger.error "*** error: fetching feed '#{feed_key}' - [#{e.class.name}] #{e.to_s}"
