@@ -1,0 +1,112 @@
+-- todo - fix dates (nullify updates!!!) - why? why not?
+ 8d   2020-03-02 22:13:08 UTC -   11 (416d) - Piotr Murach @ https://piotrmurach.com/feed.xml
+   9d    >2020-03-01 20:44:00 UTC< / ><   -- atom >< @ >AmazonS3<
+  *    8d   >2020-03-02 22:13:08 UTC<  >2020-01-08 21:31:00 UTC<  - >My 2019 Annual Review: Not Too Shabby<
+  *    8d   >2020-03-02 21:54:18 UTC<  >2020-03-01 20:44:00 UTC<  - >Writing a Ruby Gem Specification<
+  *    9d   >2020-03-01 15:58:16 UTC<  >2019-05-18 14:35:00 UTC<  - >Nobody Cares About Your Software<
+  *    9d   >2020-03-01 15:57:52 UTC<  >2019-03-07 00:00:00 UTC<  - >The Path to Learning a Programming Language<
+  *    9d   >2020-03-01 15:57:00 UTC<  >2019-01-10 00:00:00 UTC<  - >My 2018 Annual Review<
+  *    9d   >2020-03-01 15:54:25 UTC<  >2019-06-06 00:00:00 UTC<  - >Bad Blood - A Tale of a Modern Vampire<
+
+
+
+[debug] fetch - get(_response) src: http://www.jruby.org/atom.xml
+[debug] using direct net http access; no proxy configured
+[debug] GET /atom.xml uri=http://www.jruby.org/atom.xml, redirect_limit=5
+[info] found cache entry for >http://www.jruby.org/atom.xml<
+[debug] 301 Moved Permanently location=https://www.jruby.org/atom.xml
+[debug] GET /atom.xml uri=https://www.jruby.org/atom.xml, redirect_limit=4
+C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/net/http.rb:933:in `connect_nonblock':
+ SSL_connect SYSCALL returned=5 errno=0 state=SSLv2/v3 read server hello A
+(OpenSSL::SSL::SSLError)
+
+[debug] fetch - get(_response) src: http://blog.rubygems.org/atom.xml
+[debug] using direct net http access; no proxy configured
+[debug] GET /atom.xml uri=http://blog.rubygems.org/atom.xml, redirect_limit=5
+[info] found cache entry for >http://blog.rubygems.org/atom.xml<
+[debug] 301 Moved Permanently location=https://blog.rubygems.org/atom.xml
+[debug] GET /atom.xml uri=https://blog.rubygems.org/atom.xml, redirect_limit=4
+C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/net/http.rb:933:in `connect_nonblock':
+SSL_connect SYSCALL returned=5 errno=0 state=SSLv2/v3 read server hello A
+(OpenSSL::SSL::SSLError)
+
+
+
+https://stackoverflow.com/questions/25814210/opensslsslsslerror-ssl-connect-syscall-returned-5-errno-0-state-sslv3-read
+https://makandracards.com/makandra/26255-working-around-openssl-ssl-sslerrors
+
+
+debug] <?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>JetRockets</title>
+    <link>http://jetrockets.pro</link>
+    <image>
+      <url>http://jetrockets.pro/JetRockets.jpg</url>
+      <title>JetRockets</title>
+      <link>http://jetrockets.pro</link>
+    </image>
+    <lang
+
+ <item turbo="true">
+      <title>Migrating user passwords from Django to Ruby</title>
+      <description/>
+      <pubDate>Wed, 19 Feb 2020 09:32:18 +0300</pubDate>
+      <link>https://jetrockets.pro/blog/migrating-user-passwords-from-django-to-ruby</link>
+      <guid>https://jetrockets.pro/blog/migrating-user-passwords-from-django-to-ruby</guid>
+      <turbo:content>
+
+[info] Before parsing feed >jetrockets.pro$a166a3dbb7c0a1083d051993e4c45a74<...
+[debug] using stdlib rss/0.2.7
+[debug] Parsing feed in xml...
+C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/rss/rexmlparser.rb:20:in `rescue in _parse': This is not well formed XML (RSS::NotWellFormedError)
+Undefined prefix turbo found
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/rss/rexmlparser.rb:17:in `_parse'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/rss/parser.rb:165:in `parse'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/feedparser-2.1.2/lib/feedparser/parser.rb:108:in `parse_xml'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/pluto-update-1.6.3/lib/pluto/update/feed_refresher.rb:64:in `refresh_feed_worker'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/pluto-update-1.6.3/lib/pluto/update/feed_refresher.rb:32:in `block in refresh_feeds'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/activerecord-5.2.4.1/lib/active_record/relation/delegation.rb:71:in `each'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/activerecord-5.2.4.1/lib/active_record/relation/delegation.rb:71:in `each'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/pluto-update-1.6.3/lib/pluto/update/feed_refresher.rb:31:in `refresh_feeds'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/pluto-update-1.6.3/lib/pluto/update.rb:19:in `refresh_feeds'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/pluto-update-1.6.3/lib/pluto/update.rb:27:in `update_feeds'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/newscast-1.1.1/lib/newscast.rb:170:in `update'
+        from ./rubyland.rb:42:in `<main>'
+
+[debug] fetch - get(_response) src: https://blog.mikecordell.com/atom.xml
+[debug] using direct net http access; no proxy configured
+[debug] GET /atom.xml uri=https://blog.mikecordell.com/atom.xml, redirect_limit=5
+[info] found cache entry for >https://blog.mikecordell.com/atom.xml<
+[debug] 200 OK
+[debug]   content_type: application/xml, content_length: 474895
+[info] OK - fetching feed 'blog.mikecordell.com$f4c366dcaa496fa13d470ecddbb0ac5b' - HTTP status 200 OK
+[debug] feed_xml.encoding.name (before): ASCII-8BIT
+[debug] feed_xml.encoding.name (after): UTF-8
+[debug] http header - server: AmazonS3 - String
+[debug] http header - etag: "560a40c974148d5237c1f94a1ddbd368" - String
+[debug] http header - last-modified: Wed, 19 Feb 2020 07:14:06 GMT - String
+[debug] feed_xml:
+[debug] <?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Michael Cordell's Blog</title>
+ <link href="/atom.xml" rel="self"/>
+ <link href="/"/>
+ <updated>2020-02-18T23:13:49-08:00</updated>
+ <id></id>
+ <author>
+   <name>Michael Cordell</name>
+   <email>mike@mikecordel
+[info] Before parsing feed >blog.mikecordell.com$f4c366dcaa496fa13d470ecddbb0ac5b<...
+[debug] using stdlib rss/0.2.7
+[debug] Parsing feed in xml...
+C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/rss/rexmlparser.rb:20:in `rescue in _parse': This is not well formed XML (RSS::NotWellFormedError)
+malformed XML: missing tag start
+Line: 4929
+Position: 474895
+Last 80 unconsumed characters:
+<---> Ubuntu 11.10</title>    <link href="/2013/01/08/setting-up-afp-for-osx-10-8
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/rss/rexmlparser.rb:17:in `_parse'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/2.3.0/rss/parser.rb:165:in `parse'
+        from C:/ri/v340/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/feedparser-2.1.2/lib/feedparser/parser.rb:108:in `parse_xml'
