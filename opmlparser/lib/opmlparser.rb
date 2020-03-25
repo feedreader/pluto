@@ -1,7 +1,7 @@
 require 'pp'
 require 'date'
 require 'time'
-require 'rexml/Document'
+require 'rexml/document'
 
 
 # our own code
