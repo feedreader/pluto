@@ -32,7 +32,18 @@ class FeedFetcherCondGetWithCache
 
     begin
       response = @worker.get( feed_url )
-    rescue Net::ReadTimeout, SocketError, SystemCallError => e
+
+     ## todo/fix: add a retry for open timeout - why? why not?
+     ##  When you run into Net::OpenTimeout, you should handle it 
+     ## by retrying the request a few times, 
+     ## or giving up and showing a helpful error to the user.
+     ## --  <https://www.exceptionalcreatures.com/bestiary/Net/OpenTimeout.html>
+
+    rescue Net::OpenTimeout,
+           Net::ReadTimeout, 
+           SocketError, 
+           SystemCallError => e
+
       ## catch socket error for unknown domain names (e.g. pragdave.blogs.pragprog.com)
       ###  will result in SocketError -- getaddrinfo: Name or service not known
       logger.error "*** error: fetching feed '#{feed_key}' - [#{e.class.name}] #{e.to_s}"
