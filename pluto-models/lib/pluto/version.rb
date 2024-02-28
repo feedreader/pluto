@@ -1,11 +1,10 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 module Pluto
-
   MAJOR = 1
   MINOR = 6
   PATCH = 2
-  VERSION = [MAJOR,MINOR,PATCH].join('.')
+  VERSION = [MAJOR, MINOR, PATCH].join('.')
 
   def self.version
     VERSION
@@ -18,13 +17,12 @@ module Pluto
 
   ## Note: moved from pluto-merge (add here because pluto-merge gem is optional)
   ##  fix: remove generator in pluto-merge!!! (duplicate)
-  def self.generator   # convenience alias for banner (matches HTML generator meta tag)
+  # convenience alias for banner (matches HTML generator meta tag)
+  def self.generator
     "Pluto #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
   end
 
-
   def self.root
-    "#{File.expand_path( File.dirname(File.dirname(File.dirname(__FILE__))) )}"
+    File.expand_path(File.dirname(File.dirname(File.dirname(__FILE__)))).to_s
   end
-
-end # module Pluto
+end
