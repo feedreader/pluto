@@ -5,7 +5,7 @@
 
 require 'helper'
 
-class TestFilter < MiniTest::Test
+class TestFilter < Minitest::Test
 
   def test_includes
 
