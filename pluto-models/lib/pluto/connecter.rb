@@ -63,11 +63,10 @@ class Connecter
       logger.debug ActiveRecord::Base.configurations.pretty_inspect
     end
 
-    # note: for now always use pluto key for config storage
-    configs = ActiveRecord::Base.configurations.to_h.reject { |db_config| db_config.env_name == 'pluto' }
-    configs['pluto'] = config
+    configurations = ActiveRecord::Base.configurations.configs_for(env_name: 'pluto')
+    configurations << config
 
-    ActiveRecord::Base.configurations = configs
+    ActiveRecord::Base.configurations = configurations
 
     if debug?
       logger.debug 'ar configurations (after):'
