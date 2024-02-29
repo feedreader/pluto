@@ -1,14 +1,13 @@
+# frozen_string_literal: true
+
 ###
 #  to run use
 #     ruby -I ./lib -I ./test test/test_filter.rb
 
-
 require 'helper'
 
-class TestFilter < MiniTest::Test
-
+class TestFilter < Minitest::Test
   def test_includes
-
     feed1 = Feed.create!(
       key: 'test',
       title: 'Test',
@@ -40,7 +39,6 @@ class TestFilter < MiniTest::Test
 
     feed_data.items << item_data
 
-
     item_data = FeedParser::Item.new
     item_data.title = 'Test #3'
     item_data.summary = "Test\nTest\nTest"
@@ -49,10 +47,9 @@ class TestFilter < MiniTest::Test
 
     feed_data.items << item_data
 
-    feed1.deep_update_from_struct!( feed_data )   ## check w/ includes
-    feed2.deep_update_from_struct!( feed_data )   ## check w/o includes
+    feed1.deep_update_from_struct!(feed_data)   ## check w/ includes
+    feed2.deep_update_from_struct!(feed_data)   ## check w/o includes
 
-    assert true    ## if we get here it should workd
+    assert true ## if we get here it should workd
   end
-
-end # class TestFilter
+end

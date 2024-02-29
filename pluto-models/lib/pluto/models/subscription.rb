@@ -1,16 +1,12 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 module Pluto
   module Model
+    class Subscription < ActiveRecord::Base
+      self.table_name = 'subscriptions'
 
-
-class Subscription < ActiveRecord::Base
-  self.table_name = 'subscriptions'
-
-  belongs_to :site
-  belongs_to :feed
+      belongs_to :site
+      belongs_to :feed
+    end
+  end
 end
-
-
-  end # module Model
-end # module Pluto

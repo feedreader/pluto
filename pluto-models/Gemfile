@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+ruby '>=2.2'
+gem 'activerecord' # , '>= 6.1.4'
+gem 'activerecord-utils' # , '>= 0.4.0'
+gem 'activityutils' # , '>= 0.1.1'
+gem 'date-formatter' # , '>= 0.1.1'
+gem 'feedfilter' # , '>= 1.1.1'
+gem 'feedparser' # , '>= 2.1.2'
+gem 'logutils' # , '>= 0.6.1'
+gem 'logutils-activerecord' # , '>= 0.2.1'
+gem 'props' # , '>= 1.2.0'
+gem 'props-activerecord' # , '>= 0.2.0'
+gem 'rubocop', require: false
+gem 'rubocop-rake', require: false
+gem 'textutils' # , '>= 1.4.0'

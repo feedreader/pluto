@@ -1,14 +1,13 @@
+# frozen_string_literal: true
+
 ###
 #  to run use
 #     ruby -I ./lib -I ./test test/test_delete_removed.rb
 
-
 require 'helper'
 
-class TestDeleteRemoved < MiniTest::Test
-
+class TestDeleteRemoved < Minitest::Test
   def test_delete_removed
-
     feed = Feed.create!(
       key: 'test',
       title: 'Feed title'
@@ -37,10 +36,9 @@ class TestDeleteRemoved < MiniTest::Test
 
     feed_data.items << item_data
 
-    feed.deep_update_from_struct!( feed_data )
+    feed.deep_update_from_struct!(feed_data)
 
     assert_equal(3, Item.count)
-
 
     feed_data.items = []
 
@@ -56,8 +54,8 @@ class TestDeleteRemoved < MiniTest::Test
     item_data.published = Time.now - 20.minutes
     feed_data.items << item_data
 
-    feed.deep_update_from_struct!( feed_data )
+    feed.deep_update_from_struct!(feed_data)
 
     assert_equal(2, Item.count)
   end
-end # class TestDeleteRemoved
+end
