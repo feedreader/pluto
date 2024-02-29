@@ -1,0 +1,112 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (7.1.3.2)
+      activesupport (= 7.1.3.2)
+    activerecord (7.1.3.2)
+      activemodel (= 7.1.3.2)
+      activesupport (= 7.1.3.2)
+      timeout (>= 0.4.0)
+    activerecord-utils (0.4.1)
+      activerecord
+      logutils
+    activesupport (7.1.3.2)
+      base64
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      mutex_m
+      tzinfo (~> 2.0)
+    activityutils (0.1.2)
+      logutils (>= 0.6.1)
+    ast (2.4.2)
+    base64 (0.2.0)
+    bigdecimal (3.1.6)
+    concurrent-ruby (1.2.3)
+    connection_pool (2.4.1)
+    date-formatter (0.1.1)
+    drb (2.2.0)
+      ruby2_keywords
+    feedfilter (1.1.1)
+      textutils (>= 1.0.1)
+    feedparser (2.2.0)
+      logutils (>= 0.6.1)
+      textutils (>= 1.0.0)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
+    iniparser (1.0.1)
+    json (2.7.1)
+    language_server-protocol (3.17.0.3)
+    logutils (0.6.1)
+    logutils-activerecord (0.2.1)
+      activerecord
+      logutils (>= 0.6.1)
+    minitest (5.22.2)
+    mutex_m (0.2.0)
+    parallel (1.24.0)
+    parser (3.3.0.5)
+      ast (~> 2.4.1)
+      racc
+    props (1.2.0)
+      iniparser (>= 0.1.0)
+    props-activerecord (0.2.0)
+      activerecord
+      props (>= 1.2.0)
+    racc (1.7.3)
+    rainbow (3.1.1)
+    regexp_parser (2.9.0)
+    rexml (3.2.6)
+    rubocop (1.60.2)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.3.0.2)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.30.0)
+      parser (>= 3.2.1.0)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
+    ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
+    rubyzip (2.3.2)
+    textutils (1.4.0)
+      activesupport
+      logutils (>= 0.6.1)
+      props (>= 1.1.2)
+      rubyzip (>= 1.0.0)
+    timeout (0.4.1)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+    unicode-display_width (2.5.0)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  activerecord
+  activerecord-utils
+  activityutils
+  date-formatter
+  feedfilter
+  feedparser
+  logutils
+  logutils-activerecord
+  props
+  props-activerecord
+  rubocop
+  rubocop-rake
+  textutils
+
+RUBY VERSION
+   ruby 3.0.2p107
+
+BUNDLED WITH
+   2.3.5
