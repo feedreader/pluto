@@ -132,10 +132,10 @@ module Pluto
           ## check for filters (includes/excludes) if present
           ##  for now just check for includes
           ##
-          includesFilter = (FeedFilter::IncludeFilters.new(includes) if includes.present?)
+          includes_filter = (FeedFilter::IncludeFilters.new(includes) if includes.present?)
 
           data.items.each do |item|
-            if includesFilter && includesFilter.match_item?(item) == false
+            if includes_filter && includes_filter.match_item?(item) == false
               logger.info "** SKIPPING | #{item.title}"
               logger.info "  no include terms match: #{includes}"
               next ## skip to next item
@@ -187,13 +187,11 @@ module Pluto
           #  update  cached value last published for item
           ##  todo/check: force reload of items - why? why not??
           last_item_rec = items.latest.limit(1).first # NOTE: limit(1) will return relation/arrar - use first to get first element or nil from ary
-          if last_item_rec
-            if last_item_rec.updated? ## note: checks for updated & published with attr_reader_w_fallback
-              self.items_last_updated = last_item_rec.updated
-              ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
-            else
-              ## skip - no updated / published present
-            end
+          if last_item_rec&.updated? ## note: checks for updated & published with attr_reader_w_fallback
+            self.items_last_updated = last_item_rec.updated
+            ## save!  ## note: will get save w/ update_from_struct!  - why? why not??
+            # else
+            ## skip - no updated / published present
           end
         end
 
@@ -240,9 +238,9 @@ module Pluto
         ##  todo/check - limit to atom feed format only - why? why not?
 
         count           = data.items.size
-        count_published = data.items.reduce(0) do |count, item|
-          count += 1 if item.published
-          count
+        count_published = data.items.reduce(0) do |cnt, item|
+          cnt += 1 if item.published
+          cnt
         end
 
         return unless count == count_published
