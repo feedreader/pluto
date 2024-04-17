@@ -39,7 +39,8 @@ class FeedFetcherCondGetWithCache
      ## or giving up and showing a helpful error to the user.
      ## --  <https://www.exceptionalcreatures.com/bestiary/Net/OpenTimeout.html>
 
-    rescue Net::OpenTimeout,
+    rescue OpenSSL::SSL::SSLError,
+           Net::OpenTimeout,
            Net::ReadTimeout, 
            SocketError, 
            SystemCallError => e
