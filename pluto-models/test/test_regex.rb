@@ -5,7 +5,7 @@
 
 require 'helper'
 
-class TestRegex < MiniTest::Test
+class TestRegex < Minitest::Test
 
   FIX_DATE_SLUG_RE = Pluto::Model::Feed::FIX_DATE_SLUG_RE
 

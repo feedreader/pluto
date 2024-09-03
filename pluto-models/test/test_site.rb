@@ -5,7 +5,7 @@
 
 require 'helper'
 
-class TestSite < MiniTest::Test
+class TestSite < Minitest::Test
 
   def setup
     Log.delete_all

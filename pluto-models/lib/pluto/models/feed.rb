@@ -259,7 +259,7 @@ class Feed < ActiveRecord::Base
     ##  todo/check - limit to atom feed format only - why? why not?
 
     count           = data.items.size
-    count_published = data.items.reduce( 0 ) {|count,item| count += 1 if item.published; count }
+    count_published = data.items.reduce( 0 ) {|cnt,item| cnt += 1 if item.published; cnt }
 
     if count == count_published
       uniq_count_updated  = 0

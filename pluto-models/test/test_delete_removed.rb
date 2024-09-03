@@ -5,7 +5,7 @@
 
 require 'helper'
 
-class TestDeleteRemoved < MiniTest::Test
+class TestDeleteRemoved < Minitest::Test
 
   def test_delete_removed
 
