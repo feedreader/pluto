@@ -9,7 +9,7 @@ module Pluto
 class Connecter
 
   include LogUtils::Logging
-  
+
 
 
   def initialize
@@ -49,30 +49,31 @@ class Connecter
     logger.info 'db settings:'
     logger.info config.pretty_inspect
 
+    ##
     ### for dbbrowser and other tools add to ActiveRecord
+    ##    todo/fix - find out how to add db config with code
+    ##                  in ActiveRecord 6+ !!!!
+    ##   for now (old) registration removed / commented out
+    ##
+    ## if ActiveRecord::Base.configurations.nil?   # todo/check: can this ever happen? remove?
+    ##   logger.debug "ActiveRecord configurations nil - set to empty hash"
+    ##   ActiveRecord::Base.configurations = {}  # make it an empty hash
+    ##  end
 
-    if ActiveRecord::Base.configurations.nil?   # todo/check: can this ever happen? remove?
-       logger.debug "ActiveRecord configurations nil - set to empty hash"
-       ActiveRecord::Base.configurations = {}  # make it an empty hash
-    end
 
     ## todo/fix: remove debug? option - why? why not?
     ##    (just) use logger level eg. logger.debug
-    if debug?
-      logger.debug 'ar configurations (before):'
-      logger.debug ActiveRecord::Base.configurations.pretty_inspect
-    end
+    # if debug?
+    #  logger.debug 'ar configurations (before):'
+    #  logger.debug ActiveRecord::Base.configurations.pretty_inspect
+    # end
 
-    configurations = ActiveRecord::Base.configurations.configs_for(env_name: 'pluto')
-    configurations << config
+    ## ActiveRecord::Base.configurations[ 'pluto' ] = config
 
-    ActiveRecord::Base.configurations = configurations
-
-    if debug?
-      logger.debug 'ar configurations (after):'
-      logger.debug ActiveRecord::Base.configurations.pretty_inspect
-    end
-
+    # if debug?
+    #  logger.debug 'ar configurations (after):'
+    #  logger.debug ActiveRecord::Base.configurations.pretty_inspect
+    # end
 
     # for debugging - disable for production use
     if debug?

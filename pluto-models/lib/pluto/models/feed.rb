@@ -134,8 +134,8 @@ class Feed < ActiveRecord::Base
       #####
       ## apply some fix-up for "broken" feed data
       fix_dates( data )
-      
-      
+
+
       ######
       ## check for filters (includes/excludes) if present
       ##  for now just check for includes
@@ -222,14 +222,14 @@ class Feed < ActiveRecord::Base
                              -
                           (?<month>[0-9]{2})
                              -
-                          (?<day>[0-9]{2})   
+                          (?<day>[0-9]{2})
                         \b}x
 
   ###################################################
-  #   helpers to fix-up some "broken" feed data 
+  #   helpers to fix-up some "broken" feed data
   def fix_dates( data )
 
-    ## check for missing / no dates 
+    ## check for missing / no dates
     ##   examples
     ##    - rubytogether feed @ https://rubytogether.org/news.xml
     data.items.each do |item|
@@ -248,7 +248,7 @@ class Feed < ActiveRecord::Base
       end
     end
 
-    
+
     ## check if all updated dates are the same (uniq count is 1)
     ##   AND if all published dates are present
     ##  than assume "fake" updated dates and nullify updated dates
@@ -259,7 +259,7 @@ class Feed < ActiveRecord::Base
     ##  todo/check - limit to atom feed format only - why? why not?
 
     count           = data.items.size
-    count_published = data.items.reduce( 0 ) {|cnt,item| cnt += 1 if item.published; cnt }
+    count_published = data.items.reduce( 0 ) {|sum,item| sum += 1  if item.published; sum }
 
     if count == count_published
       uniq_count_updated  = 0
